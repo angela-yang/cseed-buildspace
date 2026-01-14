@@ -1,0 +1,130 @@
+"use client"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
+export default function Background() {
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window;
+      const x = ((e.clientX - innerWidth / 2) / innerWidth) * -30;
+      const y = ((e.clientY - innerHeight / 2) / innerHeight) * -30;
+      setOffset({ x, y });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  const parallaxStyle = (xFactor: number, yFactor: number) => ({
+    transform: `translate(${offset.x * xFactor}px, ${offset.y * yFactor}px)`,
+  });
+
+  return (
+    <main className="bg-white min-h-[300vh] relative">
+      <div className="absolute w-full h-full">
+        {/* Main graphic on top */}
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 2 }}
+          className="absolute left-1/2 top-[50vh] -translate-x-1/2"
+        >
+          <div style={parallaxStyle(0.5, 0.4)}>
+            <img
+              src={"/images/graphic.png"}
+              alt="Buildspace Graphic"
+              className="object-contain"
+              style={{ maxWidth: "80vw" }}
+            />
+          </div>
+        </motion.div>
+
+        {/* Color images in a row underneath */}
+        <div className="absolute left-1/2 top-[140vh] -translate-x-1/2 flex gap-4 justify-center items-center">
+          <motion.div
+            initial={{ y: 200, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 1.5, type: "spring", stiffness: 50 }}
+          >
+            <div style={parallaxStyle(1.2, 0.4)}>
+              <img
+                src={"/images/green.png"}
+                alt="Green Square"
+                className="object-contain"
+                style={{ width: "200px" }}
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 250, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.7, duration: 1.5, type: "spring", stiffness: 50 }}
+          >
+            <div style={parallaxStyle(0.8, 0.7)}>
+              <img
+                src={"/images/purple.png"}
+                alt="Purple Circle"
+                className="object-contain"
+                style={{ width: "150px" }}
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 300, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.9, duration: 1.5, type: "spring", stiffness: 50 }}
+          >
+            <div style={parallaxStyle(1.5, 1.0)}>
+              <img
+                src={"/images/pink.png"}
+                alt="Pink Flower"
+                className="object-contain"
+                style={{ width: "210px" }}
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 250, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 1.1, duration: 1.2, type: "spring", stiffness: 50 }}
+          >
+            <div style={parallaxStyle(1.5, 1.0)}>
+              <img
+                src={"/images/yellow.png"}
+                alt="Yellow Star"
+                className="object-contain"
+                style={{ width: "210px" }}
+              />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Content for scrolling */}
+      <div className="relative pt-[1500px] px-8">
+        <div className="max-w-4xl mx-auto space-y-12 pb-24">
+          <div className="bg-gray-100 p-8 rounded-2xl">
+            <h2 className="text-3xl font-bold mb-4 text-blue-500">Section 1</h2>
+            <p className="text-gray-600">Featured Projects</p>
+          </div>
+          <div className="bg-gray-100 p-8 rounded-2xl">
+            <h2 className="text-3xl font-bold mb-4 text-blue-500">Section 2</h2>
+            <p className="text-gray-600">Cohorts</p>
+          </div>
+          <div className="bg-gray-100 p-8 rounded-2xl">
+            <h2 className="text-3xl font-bold mb-4 text-blue-500">Section 3</h2>
+            <p className="text-gray-600">Apply now</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}

@@ -16,14 +16,14 @@ export default function HomeNav() {
                 setIsOpen(false);
             }}
         >
-            <button className="bg-[rgb(57,123,255)] text-[rgb(255,231,164)] p-3 rounded-full shadow-lg hover:bg-[rgb(43,95,199)] transition cursor-pointer">
+            <button className="bg-[rgb(57,123,255)] text-white p-3 rounded-full shadow-lg hover:bg-[rgb(43,95,199)] transition cursor-pointer">
                 <Link href="/">
                     <FaHome size={24} />
                 </Link>
             </button>
 
             {isOpen && (
-                <div className="mt-2 bg-[rgb(57,123,255)] text-[rgb(255,231,164)] rounded-xl shadow-lg w-48 p-4 flex flex-col gap-3 cursor-pointer">
+                <div className="mt-2 bg-[rgb(57,123,255)] text-white rounded-xl shadow-lg w-48 p-4 flex flex-col gap-3 cursor-pointer">
                     <Link href="/" className="flex items-center gap-2 p-2 rounded-xl hover:bg-[rgb(43,95,199)] transition">
                         <FaHome /> Home
                     </Link>

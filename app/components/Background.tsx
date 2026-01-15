@@ -21,7 +21,7 @@ export default function Background() {
   });
 
   return (
-    <main className="bg-white min-h-[300vh] relative">
+    <main className="bg-[rgb(229,237,255)] min-h-[300vh] relative">
       <div className="absolute w-full h-full">
         {/* Main graphic on top */}
         <motion.div
@@ -30,12 +30,12 @@ export default function Background() {
           transition={{ delay: 0.2, duration: 2 }}
           className="absolute left-1/2 top-[50vh] -translate-x-1/2"
         >
-          <div style={parallaxStyle(0.5, 0.4)}>
+          <div style={parallaxStyle(0.9, 0.8)}>
             <img
               src={"/images/graphic.png"}
               alt="Buildspace Graphic"
               className="object-contain"
-              style={{ maxWidth: "80vw" }}
+              style={{ maxWidth: "85vw" }}
             />
           </div>
         </motion.div>
@@ -46,7 +46,7 @@ export default function Background() {
             initial={{ y: 200, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5, duration: 1.5, type: "spring", stiffness: 50 }}
+            transition={{ delay: 0.1, duration: 1.5, type: "spring", stiffness: 50 }}
           >
             <div style={parallaxStyle(1.2, 0.4)}>
               <img
@@ -62,7 +62,7 @@ export default function Background() {
             initial={{ y: 250, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.7, duration: 1.5, type: "spring", stiffness: 50 }}
+            transition={{ delay: 0.2, duration: 1.5, type: "spring", stiffness: 50 }}
           >
             <div style={parallaxStyle(0.8, 0.7)}>
               <img
@@ -78,7 +78,7 @@ export default function Background() {
             initial={{ y: 300, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.9, duration: 1.5, type: "spring", stiffness: 50 }}
+            transition={{ delay: 0.3, duration: 1.5, type: "spring", stiffness: 50 }}
           >
             <div style={parallaxStyle(1.5, 1.0)}>
               <img
@@ -94,7 +94,7 @@ export default function Background() {
             initial={{ y: 250, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 1.1, duration: 1.2, type: "spring", stiffness: 50 }}
+            transition={{ delay: 0.4, duration: 1.2, type: "spring", stiffness: 50 }}
           >
             <div style={parallaxStyle(1.5, 1.0)}>
               <img

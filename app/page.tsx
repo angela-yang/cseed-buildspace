@@ -100,7 +100,7 @@ export default function Home() {
           className="mt-10 z-20"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
         >
           <Link href="/projects">
             <button className="bg-[rgb(57,123,255)] hover:bg-[rgb(109,156,249)] text-white text-xl font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
@@ -108,6 +108,68 @@ export default function Home() {
             </button>
           </Link>
         </motion.div>
+
+        <div className="absolute left-1/2 -translate-x-1/2 w-[70vw] h-[400px] z-20">
+          <motion.div
+            initial={{ y: 200, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 1.5, type: "spring", stiffness: 50 }}
+            className="absolute top-[26%] left-[10%]"
+          >
+            <img
+              src={"/images/green.png"}
+              alt="Green Square"
+              className="object-contain"
+              style={{ width: "100px" }}
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 250, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 1.5, type: "spring", stiffness: 50 }}
+            className="absolute top-[53%] left-[78%]"
+          >
+            <img
+              src={"/images/purple.png"}
+              alt="Purple Circle"
+              className="object-contain"
+              style={{ width: "80px" }}
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 300, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 1.5, type: "spring", stiffness: 50 }}
+            className="absolute top-[10%] left-[72%]"
+          >
+            <img
+              src={"/images/pink.png"}
+              alt="Pink Flower"
+              className="object-contain"
+              style={{ width: "90px" }}
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 250, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 1.2, type: "spring", stiffness: 50 }}
+            className="absolute top-[57%] left-[29%]"
+          >
+            <img
+              src={"/images/yellow.png"}
+              alt="Yellow Star"
+              className="object-contain"
+              style={{ width: "97px" }}
+            />
+          </motion.div>
+        </div>
       </div>
     </main>
   )

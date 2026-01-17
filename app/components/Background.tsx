@@ -21,7 +21,17 @@ export default function Background() {
   });
 
   return (
-    <main className="bg-[rgb(229,237,255)] min-h-[300vh] relative">
+    <main className="bg-[rgb(255,255,255)] min-h-[300vh] relative">
+      <div 
+        className="absolute inset-0 opacity-80 pointer-events-none z-0"
+        style={{
+          backgroundImage: 'url(/images/grid.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+
       <div className="absolute w-full h-full">
         {/* Main graphic on top */}
         <motion.div

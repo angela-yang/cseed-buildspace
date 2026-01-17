@@ -109,7 +109,7 @@ export default function Home() {
           </Link>
         </motion.div>
 
-        <div className="absolute left-1/2 -translate-x-1/2 w-[70vw] h-[400px] z-20">
+        <div className="absolute left-1/2 -translate-x-1/2 w-[70vw] h-[400px]">
           <motion.div
             initial={{ y: 200, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}

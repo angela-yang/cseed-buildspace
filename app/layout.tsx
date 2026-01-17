@@ -12,6 +12,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import localFont from "next/font/local";
+
+const migra = localFont({
+  src: [
+    {
+      path: '../public/fonts/Migra-Extrabold.woff2',
+      weight: '700',
+      style: 'bold',
+    },
+    {
+      path: '../public/fonts/Migra-Extralight.woff2',
+      weight: '600',
+      style: 'regular',
+    },
+    {
+      path: '../public/fonts/Migra-Extralight.woff2',
+      weight: '500',
+      style: 'light',
+    },
+  ],
+  variable: '--font-migra',
+});
+
 export const metadata: Metadata = {
   title: "Buildspace",
   description: "A community of builders and entrepreneurs",
@@ -28,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${migra.variable} font-[family-name:var(--font-migra)] antialiased`}
       >
         {children}
       </body>

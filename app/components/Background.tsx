@@ -23,7 +23,7 @@ export default function Background() {
   return (
     <main className="min-h-[300vh] relative">
       <div 
-        className="absolute inset-0 opacity-80 pointer-events-none z-0"
+        className="absolute inset-0 opacity-90 pointer-events-none z-0"
         style={{
           backgroundImage: 'url(/images/grid.png)',
           backgroundSize: 'cover',
@@ -38,7 +38,7 @@ export default function Background() {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 2 }}
-          className="absolute left-1/2 top-[50vh] -translate-x-1/2"
+          className="absolute left-1/2 top-[55vh] -translate-x-1/2"
         >
           <div style={parallaxStyle(0.9, 0.8)}>
             <img
@@ -50,9 +50,18 @@ export default function Background() {
           </div>
         </motion.div>
 
+        <motion.div
+          className="relative pt-[150vh] text-center text-5xl text-[rgb(57,123,255)] font-bold z-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+        >
+          What is Buildspace?
+        </motion.div>
+
         {/* 4 Program Tracks */}
         <motion.h3
-          className="absolute left-1/2 top-[150vh] -translate-x-1/2 text-3xl md:text-3xl text-[rgb(34,36,42)] font-light"
+          className="absolute left-1/2 top-[200vh] -translate-x-1/2 text-6xl md:text-5xl text-[rgb(55,58,65)] font-bold"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -60,7 +69,7 @@ export default function Background() {
           4 Program Tracks
         </motion.h3>
 
-        <div className="absolute left-1/2 top-[160vh] -translate-x-1/2 flex gap-4 justify-center items-center">
+        <div className="absolute left-1/2 top-[210vh] -translate-x-1/2 flex gap-4 justify-center items-center">
           <motion.div
             initial={{ y: 200, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -125,15 +134,6 @@ export default function Background() {
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          className="relative pt-[200vh] text-center text-4xl text-[rgb(57,123,255)] font-light z-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-        >
-          What is Buildspace?
-        </motion.div>
       </div>
     </main>
   );

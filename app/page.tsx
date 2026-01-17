@@ -79,7 +79,7 @@ export default function Home() {
 
       <div className="absolute inset-0 flex flex-col items-center justify-center -translate-y-30 text-center z-10 px-4">
         <motion.h1
-          className="text-7xl md:text-8xl font-bold text-[rgb(57,123,255)]"
+          className="text-10xl md:text-9xl font-bold text-[rgb(57,123,255)]"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -88,7 +88,7 @@ export default function Home() {
         </motion.h1>
 
         <motion.h3
-          className="mt-4 text-2xl md:text-3xl text-[rgb(57,123,255)] font-light"
+          className="mt-4 text-3xl md:text-4xl text-[rgb(57,123,255)] font-light"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -115,7 +115,7 @@ export default function Home() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1, duration: 1.5, type: "spring", stiffness: 50 }}
-            className="absolute top-[26%] left-[10%]"
+            className="absolute top-[22%] left-[5%]"
           >
             <img
               src={"/images/green.png"}
@@ -130,7 +130,7 @@ export default function Home() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 1.5, type: "spring", stiffness: 50 }}
-            className="absolute top-[53%] left-[78%]"
+            className="absolute top-[48%] left-[78%]"
           >
             <img
               src={"/images/purple.png"}
@@ -145,7 +145,7 @@ export default function Home() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5, duration: 1.5, type: "spring", stiffness: 50 }}
-            className="absolute top-[10%] left-[72%]"
+            className="absolute top-[6%] left-[68%]"
           >
             <img
               src={"/images/pink.png"}
@@ -160,13 +160,13 @@ export default function Home() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 1.2, type: "spring", stiffness: 50 }}
-            className="absolute top-[57%] left-[29%]"
+            className="absolute top-[56%] left-[18%]"
           >
             <img
               src={"/images/yellow.png"}
               alt="Yellow Star"
               className="object-contain"
-              style={{ width: "97px" }}
+              style={{ width: "100px" }}
             />
           </motion.div>
         </div>

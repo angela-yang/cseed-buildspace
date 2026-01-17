@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');*/
 @import "tailwindcss";
 
 :root {
@@ -26,7 +26,7 @@
 
 body {
   background: var(--background);
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(241, 239, 235);
   color: var(--foreground);
-  font-family: 'Archivo Black', sans-serif;
+  font-family: 'Migra', sans-serif;
 }

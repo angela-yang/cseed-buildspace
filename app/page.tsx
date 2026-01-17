@@ -8,11 +8,22 @@ import React, { useState, useEffect } from 'react';
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'text'>('default');
 
   useEffect(() => {
     const updateMousePosition = (e : MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
+
+      const target = e.target as HTMLElement;
+      
+      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.style.cursor === 'pointer') {
+        setCursorType('pointer');
+      } else if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+        setCursorType('text');
+      } else {
+        setCursorType('default');
+      }
     };
 
     const handleMouseLeave = () => {
@@ -28,6 +39,21 @@ export default function Home() {
     };
   }, []);
 
+  const cursorConfig = {
+    default: {
+      image: 'images/cursor.png',
+      size: 'h-10'
+    },
+    pointer: {
+      image: 'images/pointer-cursor.png',
+      size: 'h-10'
+    },
+    text: {
+      image: 'images/text-cursor.png',
+      size: 'h-8'
+    },
+  };
+
   return (
     <main className="cursor-none">
       {/* Custom Cursor */}
@@ -42,9 +68,9 @@ export default function Home() {
         }}
       >
         <img
-          src="images/cursor.png"
+          src={cursorConfig[cursorType].image}
           alt="cursor"
-          className="w-6"
+          className={`${cursorConfig[cursorType].size}`}
         />
       </div>
 
@@ -77,7 +103,7 @@ export default function Home() {
           transition={{ delay: 1, duration: 0.8 }}
         >
           <Link href="/projects">
-            <button className="bg-[rgb(57,123,255)] hover:bg-[rgb(109,156,249)] text-white text-xl font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 cursor-pointer">
+            <button className="bg-[rgb(57,123,255)] hover:bg-[rgb(109,156,249)] text-white text-xl font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
               Explore projects
             </button>
           </Link>

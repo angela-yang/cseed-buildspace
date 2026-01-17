@@ -21,7 +21,7 @@ export default function Background() {
   });
 
   return (
-    <main className="bg-[rgb(255,255,255)] min-h-[300vh] relative">
+    <main className="min-h-[300vh] relative">
       <div 
         className="absolute inset-0 opacity-80 pointer-events-none z-0"
         style={{
@@ -50,8 +50,17 @@ export default function Background() {
           </div>
         </motion.div>
 
-        {/* Color images in a row underneath */}
-        <div className="absolute left-1/2 top-[140vh] -translate-x-1/2 flex gap-4 justify-center items-center">
+        {/* 4 Program Tracks */}
+        <motion.h3
+          className="absolute left-1/2 top-[150vh] -translate-x-1/2 text-3xl md:text-3xl text-[rgb(34,36,42)] font-light"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          4 Program Tracks
+        </motion.h3>
+
+        <div className="absolute left-1/2 top-[160vh] -translate-x-1/2 flex gap-4 justify-center items-center">
           <motion.div
             initial={{ y: 200, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -116,24 +125,15 @@ export default function Background() {
             </div>
           </motion.div>
         </div>
-      </div>
 
-      {/* Content for scrolling */}
-      <div className="relative pt-[1500px] px-8">
-        <div className="max-w-4xl mx-auto space-y-12 pb-24">
-          <div className="bg-gray-100 p-8 rounded-2xl">
-            <h2 className="text-3xl font-bold mb-4 text-blue-500">Section 1</h2>
-            <p className="text-gray-600">Featured Projects</p>
-          </div>
-          <div className="bg-gray-100 p-8 rounded-2xl">
-            <h2 className="text-3xl font-bold mb-4 text-blue-500">Section 2</h2>
-            <p className="text-gray-600">Cohorts</p>
-          </div>
-          <div className="bg-gray-100 p-8 rounded-2xl">
-            <h2 className="text-3xl font-bold mb-4 text-blue-500">Section 3</h2>
-            <p className="text-gray-600">Apply now</p>
-          </div>
-        </div>
+        <motion.div
+          className="relative pt-[200vh] text-center text-4xl text-[rgb(57,123,255)] font-light z-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+        >
+          What is Buildspace?
+        </motion.div>
       </div>
     </main>
   );

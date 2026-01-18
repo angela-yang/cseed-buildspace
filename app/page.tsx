@@ -57,7 +57,7 @@ export default function Home() {
   };
 
   return (
-    <main className="cursor-none">
+    <main className="cursor-none max-w-[100vw] overflow-hidden">
       <div 
         className="absolute min-h-[300vh] inset-0 opacity-95 pointer-events-none z-0"
         style={{

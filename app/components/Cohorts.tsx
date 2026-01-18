@@ -165,15 +165,15 @@ export default function Projects() {
       >
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
-              className="absolute w-36 h-36 bg-yellow-400 rounded-full opacity-60 top-[10%] left-[10%]"
+              className="absolute w-36 h-36 bg-yellow-400 rounded-full opacity-60 top-[40%] left-[85%]"
               style={{ transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * 0.7}px)` }}
           />
           <div
-              className="absolute w-24 h-24 bg-pink-500 rounded-2xl opacity-60 top-[20%] right-[15%]"
+              className="absolute w-24 h-24 bg-pink-500 rounded-2xl opacity-60 top-[80%] right-[20%]"
               style={{ transform: `translate(${mousePos.x * -1}px, ${mousePos.y * 1}px)` }}
           />
           <div
-              className="absolute w-28 h-28 bg-purple-500 opacity-60 top-[75%] left-[55%]"
+              className="absolute w-28 h-28 bg-purple-500 opacity-60 top-[25%] left-[10%]"
               style={{
               borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
               transform: `translate(${mousePos.x * 1}px, ${mousePos.y * -0.3}px)`

@@ -39,7 +39,7 @@ export default function Contact() {
     <section id="contact" className="section py-24 px-10">
       <ScrollReveal>
         <h2 className="text-5xl font-bold text-center mb-12 text-[rgb(57,123,255)]">Get In Touch</h2>
-        <p className="text-center text-lg text-gray-700 mb-100">
+        <p className="text-center text-lg text-gray-700 mb-50">
           Follow us on our socials!
         </p>
       </ScrollReveal>

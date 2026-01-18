@@ -39,10 +39,10 @@ interface DraggableProps {
   imageSrc: string;
   initialX: number;
   initialY: number;
-  size?: number;
+  size?: string;
 }
 
-const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProps) => {
+const DraggableToy = ({ imageSrc, initialX, initialY, size = "80px" }: DraggableProps) => {
   const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [isDragging, setIsDragging] = useState(false);
   const velocityRef = useRef({ x: 0, y: 0 });
@@ -110,8 +110,8 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
-        width: `${size}px`,
-        height: `${size}px`,
+        width: size,
+        height: size,
         transition: isDragging ? 'none' : 'transform 0.1s ease-out'
       }}
       onMouseDown={handleMouseDown}
@@ -192,7 +192,7 @@ export default function About() {
               { image: '/images/accountability.png', title: 'Acountability', desc: 'Be held accountable to finish your project' }
             ].map((card, index) => (
               <ScrollReveal key={index} delay={index * 100}>
-                <div className="bg-white rounded-2xl p-10 mb-30 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
+                <div className="bg-white rounded-2xl p-10 mb-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
                   <img
                     src={card.image}
                     className="object-contain mb-5"
@@ -209,7 +209,7 @@ export default function About() {
 
       {/* 4 Program Tracks */}
       <motion.h3
-        className="relative flex justify-center text-6xl md:text-5xl text-[rgb(55,58,65)] font-bold"
+        className="relative flex justify-center mt-15 text-6xl md:text-5xl text-[rgb(55,58,65)] font-bold"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
@@ -217,7 +217,7 @@ export default function About() {
         4 Program Tracks
       </motion.h3>
 
-      <div className="relative left-1/2 pt-10 pb-50 -translate-x-1/2 flex gap-4 justify-center items-end">
+      <div className="relative left-1/2 pt-10 pb-10 -translate-x-1/2 flex gap-4 justify-center items-end">
         <motion.div
           initial={{ y: 200, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -307,15 +307,37 @@ export default function About() {
         </motion.div>
       </div>
 
+      {/* Timeline */}
+      <section className="section min-h-[50vh] flex flex-col justify-center items-center text-center relative mb-50">
+        <h2 className="text-5xl font-bold text-center mt-15 mb-8 text-[rgb(57,123,255)]">
+          Weekly Cohort Meetings
+        </h2>
+        <p className="text-3xl text-center text-gray-600">
+          Weekly opportunity to make progress (2 hrs/wk) and receive feedback from experienced mentors.
+        </p>
+
+        <motion.div
+          style={parallaxStyle(1.5, 1.0)}
+          className="relative flex justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 1.2, type: "spring", stiffness: 50 }}
+        >
+          <DraggableToy imageSrc="/images/ruler.png" initialX={-400} initialY={-250} size="50vw" />
+        </motion.div>
+      </section>
+
       {/* Hero Section */}
       <section
         id="hero"
-        className="section min-h-screen flex flex-col justify-center items-center text-center relative bg-gradient-to-br from-indigo-600 to-purple-700 text-white pt-20"
+        className="section min-h-[80vh] flex flex-col justify-center items-center text-center relative bg-gradient-to-br from-indigo-600 to-purple-700 text-white pt-20"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <DraggableToy imageSrc="/images/purple.png" initialX={200} initialY={300} size={80} />
-          <DraggableToy imageSrc="/images/green.png" initialX={1200} initialY={400} size={80} />
-          <DraggableToy imageSrc="/images/pink.png" initialX={700} initialY={600} size={80} />
+          <DraggableToy imageSrc="/images/purple.png" initialX={200} initialY={150} size="80px" />
+          <DraggableToy imageSrc="/images/yellow.png" initialX={1000} initialY={100} size="80px" />
+          <DraggableToy imageSrc="/images/green.png" initialX={1200} initialY={400} size="80px" />
+          <DraggableToy imageSrc="/images/pink.png" initialX={700} initialY={500} size="80px" />
         </div>
         <h1 className="text-8xl font-black mb-5 animate-[fadeInUp_1s_ease-out]">BUILD THE FUTURE</h1>
       </section>

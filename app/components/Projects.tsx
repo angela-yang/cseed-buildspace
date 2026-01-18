@@ -160,19 +160,19 @@ export default function Projects() {
     <main>
       <section
         id="projects"
-        className="section py-24 px-10 relative"
+        className="section py-24 px-10 relative bg-[rgb(57,123,255)]"
       >
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
-              className="absolute w-36 h-36 bg-yellow-400 rounded-full opacity-60 top-[15%] left-[10%]"
+              className="absolute w-36 h-36 bg-[rgb(255,231,164)] rounded-full top-[15%] left-[10%]"
               style={{ transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * 0.7}px)` }}
           />
           <div
-              className="absolute w-24 h-24 bg-pink-500 rounded-2xl opacity-60 top-[25%] right-[15%]"
+              className="absolute w-24 h-24 bg-[rgb(253,186,211)] rounded-2xl top-[25%] right-[15%]"
               style={{ transform: `translate(${mousePos.x * -1}px, ${mousePos.y * 1}px)` }}
           />
           <div
-              className="absolute w-28 h-28 bg-purple-500 opacity-60 top-[80%] left-[55%]"
+              className="absolute w-28 h-28 bg-[rgb(216,109,255)] top-[84%] left-[60%]"
               style={{
               borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
               transform: `translate(${mousePos.x * 1}px, ${mousePos.y * -0.3}px)`
@@ -181,7 +181,7 @@ export default function Projects() {
         </div>
 
         <ScrollReveal>
-          <h2 className="text-5xl font-bold text-center mt-20 mb-12 text-[rgb(57,123,255)]">
+          <h2 className="text-5xl font-bold text-center mt-20 mb-12 text-white">
             Featured Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">

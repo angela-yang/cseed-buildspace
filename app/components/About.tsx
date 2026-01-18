@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
 
 const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
@@ -47,6 +47,15 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = "80px" }: Draggable
   const [isDragging, setIsDragging] = useState(false);
   const velocityRef = useRef({ x: 0, y: 0 });
   const lastPosRef = useRef({ x: 0, y: 0 });
+  
+  const { floatY, floatScale, duration, delay } = useMemo(() => {
+    return {
+      floatY: -5 - Math.random() * 10, 
+      floatScale: 1 + Math.random() * 0.05,
+      duration: 3 + Math.random() * 2,
+      delay: Math.random() * 2,
+    };
+  }, []);
 
   useEffect(() => {
     if (!isDragging) return;
@@ -105,7 +114,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = "80px" }: Draggable
   };
 
   return (
-    <div
+    <motion.div
       className="absolute cursor-grab active:cursor-grabbing select-none pointer-events-auto"
       style={{
         left: `${position.x}px`,
@@ -113,6 +122,17 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = "80px" }: Draggable
         width: size,
         height: size,
         transition: isDragging ? 'none' : 'transform 0.1s ease-out'
+      }}
+      animate={{
+        y: [0, floatY, 0], // moves up floatY px and back
+        scale: [1, floatScale, 1], // slightly grows and shrinks
+      }}
+      transition={{
+        duration,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut",
+        delay,
       }}
       onMouseDown={handleMouseDown}
     >
@@ -123,7 +143,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = "80px" }: Draggable
         style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))' }}
         draggable={false}
       />
-    </div>
+    </motion.div>
   );
 };
 
@@ -173,7 +193,7 @@ export default function About() {
               style={{ transform: `translate(${mousePos.x * -1}px, ${mousePos.y * 1}px)` }}
           />
           <div
-              className="absolute w-28 h-28 bg-purple-500 opacity-60 top-[68%] left-[55%]"
+              className="absolute w-28 h-28 bg-purple-500 opacity-60 top-[75%] right-[53%]"
               style={{
               borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
               transform: `translate(${mousePos.x * 1}px, ${mousePos.y * -0.3}px)`
@@ -317,7 +337,6 @@ export default function About() {
         </p>
 
         <motion.div
-          style={parallaxStyle(1.5, 1.0)}
           className="relative flex justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -329,7 +348,7 @@ export default function About() {
       </section>
 
       {/* Hero Section */}
-      <section
+      {/* <section
         id="hero"
         className="section min-h-[80vh] flex flex-col justify-center items-center text-center relative bg-gradient-to-br from-indigo-600 to-purple-700 text-white pt-20"
       >
@@ -340,7 +359,7 @@ export default function About() {
           <DraggableToy imageSrc="/images/pink.png" initialX={700} initialY={500} size="80px" />
         </div>
         <h1 className="text-8xl font-black mb-5 animate-[fadeInUp_1s_ease-out]">BUILD THE FUTURE</h1>
-      </section>
-   </main>
+      </section> */}
+   </main> 
   );
 }

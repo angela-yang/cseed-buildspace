@@ -1,7 +1,6 @@
 "use client"
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link"
 
 interface DraggableProps {
   imageSrc: string;
@@ -15,6 +14,15 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
   const [isDragging, setIsDragging] = useState(false);
   const velocityRef = useRef({ x: 0, y: 0 });
   const lastPosRef = useRef({ x: 0, y: 0 });
+
+  const { floatY, floatScale, duration, delay } = useMemo(() => {
+      return {
+        floatY: -5 - Math.random() * 10, 
+        floatScale: 1 + Math.random() * 0.05,
+        duration: 3 + Math.random() * 2,
+        delay: Math.random() * 2,
+      };
+    }, []);
 
   useEffect(() => {
     if (!isDragging) return;
@@ -73,7 +81,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
   };
 
   return (
-    <div
+    <motion.div
       className="absolute cursor-grab active:cursor-grabbing select-none pointer-events-auto"
       style={{
         left: `${position.x}px`,
@@ -81,6 +89,17 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
         width: `${size}px`,
         height: `${size}px`,
         transition: isDragging ? 'none' : 'transform 0.1s ease-out'
+      }}
+      animate={{
+        y: [0, floatY, 0], // moves up floatY px and back
+        scale: [1, floatScale, 1], // slightly grows and shrinks
+      }}
+      transition={{
+        duration,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut",
+        delay,
       }}
       onMouseDown={handleMouseDown}
     >
@@ -91,7 +110,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
         style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))' }}
         draggable={false}
       />
-    </div>
+    </motion.div>
   );
 };
 

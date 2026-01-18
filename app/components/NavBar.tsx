@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 
 const sections = [
   { id: "home", label: "Home" },
@@ -8,102 +8,95 @@ const sections = [
   { id: "projects", label: "Projects" },
   { id: "cohorts", label: "Cohorts" },
   { id: "apply", label: "Apply" },
-]
+];
 
 export default function NavBar() {
-  const navRef = useRef<HTMLDivElement>(null)
-  const labelRefs = useRef<(HTMLButtonElement | null)[]>([])
-  const sectionRefs = useRef<HTMLElement[]>([])
+  const navRef = useRef<HTMLDivElement>(null);
+  const labelRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [labelXs, setLabelXs] = useState<number[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [iconX, setIconX] = useState(0);
 
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [iconX, setIconX] = useState(0)
-  const [labelXs, setLabelXs] = useState<number[]>([])
-  const [sectionTops, setSectionTops] = useState<number[]>([])
-
-  // Measure label positions and section tops
+  /* Measure label positions once */
   useEffect(() => {
     const measure = () => {
-      if (!navRef.current) return
+      if (!navRef.current) return;
+      const xs = labelRefs.current.map((el) => {
+        if (!el) return 0;
+        const rect = el.getBoundingClientRect();
+        const navRect = navRef.current!.getBoundingClientRect();
+        return rect.left + rect.width / 2 - navRect.left - 82;
+      });
+      setLabelXs(xs);
+      setIconX(xs[0]);
+    };
 
-      const navRect = navRef.current.getBoundingClientRect()
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
-      // Button centers
-      const xs = labelRefs.current.map(el => {
-        if (!el) return 0
-        const rect = el.getBoundingClientRect()
-        return rect.left + rect.width / 2 - navRect.left - 50
-      })
-      setLabelXs(xs)
-
-      // Section top positions relative to document
-      const tops = sections.map(s => {
-        const el = document.getElementById(s.id)
-        if (!el) return 0
-        return el.offsetTop
-      })
-      setSectionTops(tops)
-
-      // Start icon at first label
-      setIconX(xs[0])
-    }
-
-    measure()
-    window.addEventListener("resize", measure)
-    return () => window.removeEventListener("resize", measure)
-  }, [])
-
-  // Scroll handler
+  /* Smooth icon movement based on scroll */
   useEffect(() => {
-    let raf: number
-
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      if (!sectionTops.length || !labelXs.length) return
+      if (!labelXs.length) return;
+      const sectionsEls = document.querySelectorAll<HTMLElement>(".section");
+      if (!sectionsEls.length) return;
 
-      // Find current section
-      let index = sectionTops.findIndex((top, i) => {
-        const nextTop = sectionTops[i + 1] ?? Infinity
-        return scrollY >= top && scrollY < nextTop
-      })
-      if (index === -1) index = sectionTops.length - 1
-      setActiveIndex(index)
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
 
-      // Compute progress between current and next section
-      const start = sectionTops[index]
-      const end = sectionTops[index + 1] ?? start + window.innerHeight
-      const t = Math.min(Math.max((scrollY - start) / (end - start), 0), 1)
+      // Compute the scroll ratio for each section
+      let sectionProgress = 0;
+      let active = 0;
 
-      const startX = labelXs[index]
-      const endX = labelXs[index + 1] ?? startX
+      for (let i = 0; i < sectionsEls.length; i++) {
+        const current = sectionsEls[i];
+        const next = sectionsEls[i + 1];
 
-      setIconX(startX + (endX - startX) * t)
-    }
+        const startTop = window.scrollY + current.getBoundingClientRect().top;
+        const endTop = next
+          ? window.scrollY + next.getBoundingClientRect().top
+          : document.documentElement.scrollHeight;
 
-    const onScroll = () => {
-      // Use requestAnimationFrame for smooth updates
-      raf = requestAnimationFrame(handleScroll)
-    }
+        if (scrollY >= startTop && scrollY < endTop) {
+          active = i;
+          sectionProgress = (scrollY - startTop) / (endTop - startTop);
+          break;
+        }
 
-    window.addEventListener("scroll", onScroll)
-    handleScroll()
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [labelXs, sectionTops])
+        // If scrolled past last section
+        if (i === sectionsEls.length - 1 && scrollY >= startTop) {
+          active = i;
+          sectionProgress = 1;
+        }
+      }
 
+      setActiveIndex(active);
+
+      // Smoothly interpolate icon X between current and next label
+      const startX = labelXs[active];
+      const endX = labelXs[active + 1] ?? startX;
+      setIconX(startX + (endX - startX) * sectionProgress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // initial call
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [labelXs]);
+
+  /* Scroll to section smoothly */
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-  }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <nav
       ref={navRef}
-      className="fixed left-[2vw] top-5 w-[70vw] z-50 bg-white/80 shadow-sm border-1 border-color-[rgb(57,123,255)] rounded-full px-10 py-4"
+      className="fixed left-[2vw] top-5 w-[65vw] z-50 bg-white/80 shadow-sm border-1 border-color-[rgb(57,123,255)] rounded-full px-15 py-3"
     >
       <div className="relative w-full h-5 flex items-center">
         <div className="absolute top-1/2 left-0 w-full h-1 rounded-full" />
-
         {/* Section labels */}
         {sections.map((section, index) => (
           <button
@@ -113,10 +106,10 @@ export default function NavBar() {
             }}
             onClick={() => scrollToSection(section.id)}
             style={{ left: `${(index / (sections.length - 1)) * 100}%` }}
-            className={`absolute -translate-x-1/2 top-1/2 -translate-y-1/2 text-sm transition-colors group
+            className={`absolute -translate-x-1/2 top-1/2 -translate-y-1/2 text-lg transition-colors group
               ${index === activeIndex 
                 ? "text-[rgb(57,123,255)] font-bold" 
-                : "text-gray-500 hover:text-[rgb(57,123,255)] font-normal"
+                : "text-gray-700 hover:text-[rgb(57,123,255)] font-normal"
               }`}
           >
             {section.label}

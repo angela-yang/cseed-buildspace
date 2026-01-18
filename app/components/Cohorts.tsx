@@ -169,11 +169,11 @@ export default function Projects() {
               style={{ transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * 0.7}px)` }}
           />
           <div
-              className="absolute w-24 h-24 bg-[rgb(133,216,186)] rounded-2xl top-[80%] left-[30%]"
+              className="absolute w-24 h-24 bg-[rgb(133,216,186)] rounded-2xl top-[92%] left-[25%]"
               style={{ transform: `translate(${mousePos.x * -1}px, ${mousePos.y * 1}px)` }}
           />
           <div
-              className="absolute w-28 h-28 bg-[rgb(216,109,255)] top-[25%] left-[10%]"
+              className="absolute w-28 h-28 bg-[rgb(216,109,255)] top-[25%] left-[5%]"
               style={{
               borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
               transform: `translate(${mousePos.x * 1}px, ${mousePos.y * -0.3}px)`
@@ -188,11 +188,61 @@ export default function Projects() {
           <p className="text-2xl text-center mb-12 text-gray-200">
             View all works from past cohorts!
           </p>
+
+          <h2 className="text-4xl font-bold text-center mb-6 text-white">
+            Cohort 4
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
             {[
-              { image: '/images/passion.png', title: 'Passion', desc: 'Build your dreams' },
-              { image: '/images/community2.png', title: 'Community', desc: 'Connect with amazing people + mentors' },
-              { image: '/images/accountability.png', title: 'Acountability', desc: 'Be held accountable to finish your project' }
+              { image: '/images/bobby.png', title: 'Bobby!', desc: 'A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.' },
+              { image: '/images/jam.png', title: 'JamJournal', desc: 'Jenny and Kelly built a music journaling platform that allows for note-taking alongside music streaming!' },
+              { image: '/images/racecar.png', title: 'Automated Racecar', desc: 'Mukund worked on building autonomous racecars that play Mario Kart!' }
+            ].map((card, index) => (
+              <ScrollReveal key={index} delay={index * 100}>
+                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
+                  <img
+                    src={card.image}
+                    className="object-contain mb-5"
+                    style={{ width: "50" }}
+                  />
+                  <h3 className="text-2xl font-bold mb-4 text-[rgb(57,123,255)]">{card.title}</h3>
+                  <p className="text-gray-600">{card.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <h2 className="text-4xl font-bold text-center mt-20 mb-6 text-white">
+            Cohort 3
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
+            {[
+              { image: '/images/bobby.png', title: 'Bobby!', desc: 'A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.' },
+              { image: '/images/jam.png', title: 'JamJournal', desc: 'Jenny and Kelly built a music journaling platform that allows for note-taking alongside music streaming!' },
+              { image: '/images/racecar.png', title: 'Automated Racecar', desc: 'Mukund worked on building autonomous racecars that play Mario Kart!' }
+            ].map((card, index) => (
+              <ScrollReveal key={index} delay={index * 100}>
+                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
+                  <img
+                    src={card.image}
+                    className="object-contain mb-5"
+                    style={{ width: "50" }}
+                  />
+                  <h3 className="text-2xl font-bold mb-4 text-[rgb(57,123,255)]">{card.title}</h3>
+                  <p className="text-gray-600">{card.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <h2 className="text-4xl font-bold text-center mt-20 mb-6 text-white">
+            Cohort 2
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
+            {[
+              { image: '/images/bobby.png', title: 'Bobby!', desc: 'A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.' },
+              { image: '/images/jam.png', title: 'JamJournal', desc: 'Jenny and Kelly built a music journaling platform that allows for note-taking alongside music streaming!' },
+              { image: '/images/racecar.png', title: 'Automated Racecar', desc: 'Mukund worked on building autonomous racecars that play Mario Kart!' }
             ].map((card, index) => (
               <ScrollReveal key={index} delay={index * 100}>
                 <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">

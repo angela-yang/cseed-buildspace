@@ -44,20 +44,15 @@ export default function NavBar() {
       if (!sectionsEls.length) return;
 
       const scrollY = window.scrollY;
-      const viewportHeight = window.innerHeight;
-
-      // Compute the scroll ratio for each section
-      let sectionProgress = 0;
       let active = 0;
+      let sectionProgress = 0;
 
       for (let i = 0; i < sectionsEls.length; i++) {
         const current = sectionsEls[i];
         const next = sectionsEls[i + 1];
 
-        const startTop = window.scrollY + current.getBoundingClientRect().top;
-        const endTop = next
-          ? window.scrollY + next.getBoundingClientRect().top
-          : document.documentElement.scrollHeight;
+        const startTop = current.offsetTop;
+        const endTop = next ? next.offsetTop : document.documentElement.scrollHeight;
 
         if (scrollY >= startTop && scrollY < endTop) {
           active = i;
@@ -65,7 +60,6 @@ export default function NavBar() {
           break;
         }
 
-        // If scrolled past last section
         if (i === sectionsEls.length - 1 && scrollY >= startTop) {
           active = i;
           sectionProgress = 1;
@@ -74,14 +68,16 @@ export default function NavBar() {
 
       setActiveIndex(active);
 
-      // Smoothly interpolate icon X between current and next label
+      // Map section progress to icon X position
       const startX = labelXs[active];
       const endX = labelXs[active + 1] ?? startX;
+
+      // Icon moves proportionally to the section's scroll
       setIconX(startX + (endX - startX) * sectionProgress);
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // initial call
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [labelXs]);
 
@@ -124,7 +120,7 @@ export default function NavBar() {
             transform: `translateX(${iconX}px)`,
           }}
         >
-          <img src="images/purple.png" className="w-10" />
+          <img src="images/purple.png" className="w-9" />
         </div>
       </div>
     </nav>

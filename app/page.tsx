@@ -19,7 +19,7 @@ export default function Home() {
 
       const target = e.target as HTMLElement;
       
-      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.style.cursor === 'pointer') {
+      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.dataset.cursor === 'pointer' || target.style.cursor === 'pointer') {
         setCursorType('pointer');
       } else if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
         setCursorType('text');

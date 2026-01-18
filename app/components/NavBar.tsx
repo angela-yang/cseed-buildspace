@@ -89,7 +89,7 @@ export default function NavBar() {
   return (
     <nav
       ref={navRef}
-      className="fixed left-[2vw] top-5 w-[65vw] z-50 bg-white/80 shadow-sm border-1 border-color-[rgb(57,123,255)] rounded-full px-15 py-3"
+      className="fixed left-[2vw] top-5 w-[65vw] z-50 bg-white/80 shadow-sm border-1 border-[rgba(57,123,255,0.25)] rounded-full px-15 py-3"
     >
       <div className="relative w-full h-5 flex items-center">
         <div className="absolute top-1/2 left-0 w-full h-1 rounded-full" />

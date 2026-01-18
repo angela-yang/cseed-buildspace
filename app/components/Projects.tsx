@@ -1,6 +1,5 @@
 "use client"
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 
 const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -127,7 +126,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
   );
 };
 
-export default function About() {
+export default function Projects() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -160,7 +159,7 @@ export default function About() {
   return (
     <main>
       <section
-        id="about" 
+        id="projects"
         className="section py-24 px-10 relative"
       >
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -173,7 +172,7 @@ export default function About() {
               style={{ transform: `translate(${mousePos.x * -1}px, ${mousePos.y * 1}px)` }}
           />
           <div
-              className="absolute w-28 h-28 bg-purple-500 opacity-60 top-[68%] left-[55%]"
+              className="absolute w-28 h-28 bg-purple-500 opacity-60 top-[75%] left-[55%]"
               style={{
               borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
               transform: `translate(${mousePos.x * 1}px, ${mousePos.y * -0.3}px)`
@@ -182,17 +181,17 @@ export default function About() {
         </div>
 
         <ScrollReveal>
-          <h2 className="text-5xl font-bold text-center mb-12 text-[rgb(57,123,255)]">
-            What is Buildspace?
+          <h2 className="text-5xl font-bold text-center mb-12 mt-20 text-[rgb(57,123,255)]">
+            Featured Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
             {[
-              { image: '/images/passion.png', title: 'Passion', desc: 'Build your dreams' },
-              { image: '/images/community2.png', title: 'Community', desc: 'Connect with amazing people + mentors' },
-              { image: '/images/accountability.png', title: 'Acountability', desc: 'Be held accountable to finish your project' }
+              { image: '/images/bobby.png', title: 'Bobby!', desc: 'A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.' },
+              { image: '/images/jam.png', title: 'JamJournal', desc: 'Jenny and Kelly built a music journaling platform that allows for note-taking alongside music streaming!' },
+              { image: '/images/racecar.png', title: 'Automated Racecar', desc: 'Mukund worked on building autonomous racecars that play Mario Kart!' }
             ].map((card, index) => (
               <ScrollReveal key={index} delay={index * 100}>
-                <div className="bg-white rounded-2xl p-10 mb-30 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
+                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
                   <img
                     src={card.image}
                     className="object-contain mb-5"
@@ -205,119 +204,6 @@ export default function About() {
             ))}
           </div>
         </ScrollReveal>
-      </section>
-
-      {/* 4 Program Tracks */}
-      <motion.h3
-        className="relative flex justify-center text-6xl md:text-5xl text-[rgb(55,58,65)] font-bold"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-      >
-        4 Program Tracks
-      </motion.h3>
-
-      <div className="relative left-1/2 pt-10 pb-50 -translate-x-1/2 flex gap-4 justify-center items-end">
-        <motion.div
-          initial={{ y: 200, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1, duration: 1.5, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center"
-        >
-          <motion.div 
-            style={parallaxStyle(1.2, 0.4)}
-            whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <img
-              src={"/images/green.png"}
-              alt="Green Square"
-              className="object-contain"
-              style={{ width: "200px" }}
-            />
-          </motion.div>
-          <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">software</p>
-        </motion.div>
-
-        <motion.div
-          initial={{ y: 250, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 1.5, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center"
-        >
-          <motion.div 
-            style={parallaxStyle(0.8, 0.7)}
-            whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <img
-              src={"/images/purple.png"}
-              alt="Purple Circle"
-              className="object-contain mb-5"
-              style={{ width: "150px" }}
-            />
-          </motion.div>
-          <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">hardware</p>
-        </motion.div>
-
-        <motion.div
-          initial={{ y: 300, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 1.5, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center"
-        >
-          <motion.div 
-            style={parallaxStyle(1.5, 1.0)}
-            whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <img
-              src={"/images/pink.png"}
-              alt="Pink Flower"
-              className="object-contain"
-              style={{ width: "210px" }}
-            />
-          </motion.div>
-          <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">wildcard</p>
-        </motion.div>
-
-        <motion.div
-          initial={{ y: 250, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 1.2, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center"
-        >
-          <motion.div 
-            style={parallaxStyle(1.5, 1.0)}
-            whileHover={{ scale: 1.1, rotateY: 15 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <img
-              src={"/images/yellow.png"}
-              alt="Yellow Star"
-              className="object-contain"
-              style={{ width: "210px" }}
-            />
-          </motion.div>
-          <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">creatives</p>
-        </motion.div>
-      </div>
-
-      {/* Hero Section */}
-      <section
-        id="hero"
-        className="section min-h-screen flex flex-col justify-center items-center text-center relative bg-gradient-to-br from-indigo-600 to-purple-700 text-white pt-20"
-      >
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <DraggableToy imageSrc="/images/purple.png" initialX={200} initialY={300} size={80} />
-          <DraggableToy imageSrc="/images/green.png" initialX={1200} initialY={400} size={80} />
-          <DraggableToy imageSrc="/images/pink.png" initialX={700} initialY={600} size={80} />
-        </div>
-        <h1 className="text-8xl font-black mb-5 animate-[fadeInUp_1s_ease-out]">BUILD THE FUTURE</h1>
       </section>
    </main>
   );

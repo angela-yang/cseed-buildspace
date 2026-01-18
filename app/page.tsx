@@ -1,7 +1,10 @@
 "use client"
+import NavBar from "./components/NavBar"
 import Landing from "./components/Landing"
 import About from "./components/About"
-import Interactives from "./components/Interactives"
+import Projects from "./components/Projects"
+import Cohorts from "./components/Cohorts"
+import Contact from "./components/Contact"
 import React, { useState, useEffect } from 'react';
 
 export default function Home() {
@@ -67,7 +70,7 @@ export default function Home() {
       
       {/* Custom Cursor */}
       <div
-        className={`fixed pointer-events-none z-50 transition-opacity duration-200 ${
+        className={`fixed pointer-events-none z-100 transition-opacity duration-200 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
@@ -82,11 +85,14 @@ export default function Home() {
           className={`${cursorConfig[cursorType].size}`}
         />
       </div>
-
+      
+      <NavBar/>
       <Landing />
       <About/>
-      <Interactives/>
-      
+      <Projects />
+      <Cohorts />
+      <Contact />
+
     </main>
   )
 }

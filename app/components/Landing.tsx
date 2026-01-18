@@ -114,7 +114,7 @@ export default function Landing() {
   });
 
   return (
-    <main className="min-h-[150vh] relative">
+    <main id="home" className="section min-h-[150vh] relative">
       <div className="absolute inset-0 flex flex-col items-center justify-center -translate-y-70 text-center z-10 px-4">
         <motion.h1
           className="text-10xl md:text-9xl font-bold text-[rgb(57,123,255)]"
@@ -140,11 +140,16 @@ export default function Landing() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-          <Link href="/projects">
-            <button className="bg-[rgb(57,123,255)] hover:bg-[rgb(109,156,249)] text-white text-xl font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
-              Explore projects
-            </button>
-          </Link>
+          <button
+            onClick={() =>
+              document.getElementById("projects")?.scrollIntoView({
+                behavior: "smooth",
+              })
+            }
+            className="bg-[rgb(57,123,255)] hover:bg-[rgb(109,156,249)] text-white text-xl font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+          >
+            Explore projects
+          </button>
         </motion.div>
 
         <div className="absolute left-1/2 -translate-x-1/2 w-[70vw] h-[400px]">
@@ -215,7 +220,7 @@ export default function Landing() {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 2 }}
-          className="absolute left-1/2 top-[55vh] -translate-x-1/2"
+          className="absolute left-1/2 top-[55vh] mb-10 -translate-x-1/2"
         >
           <div style={parallaxStyle(0.9, 0.8)}>
             <img

@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   title: "Buildspace",
   description: "A community of builders and entrepreneurs",
   icons: {
-    icon: '/images/purple.png',
+    icon: '/images/buildspace.png',
   },
 };
 

@@ -199,8 +199,9 @@ export default function Projects() {
               { image: '/images/racecar.png', title: 'Automated Racecar', desc: 'Mukund worked on building autonomous racecars that play Mario Kart!' }
             ].map((card, index) => (
               <ScrollReveal key={index} delay={index * 100}>
-                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
+                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300" data-cursor="pointer">
                   <img
+                    data-cursor="pointer"
                     src={card.image}
                     className="object-contain mb-5"
                     style={{ width: "50" }}
@@ -222,8 +223,9 @@ export default function Projects() {
               { image: '/images/racecar.png', title: 'Automated Racecar', desc: 'Mukund worked on building autonomous racecars that play Mario Kart!' }
             ].map((card, index) => (
               <ScrollReveal key={index} delay={index * 100}>
-                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
+                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300" data-cursor="pointer">
                   <img
+                    data-cursor="pointer"
                     src={card.image}
                     className="object-contain mb-5"
                     style={{ width: "50" }}
@@ -245,8 +247,9 @@ export default function Projects() {
               { image: '/images/racecar.png', title: 'Automated Racecar', desc: 'Mukund worked on building autonomous racecars that play Mario Kart!' }
             ].map((card, index) => (
               <ScrollReveal key={index} delay={index * 100}>
-                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
+                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300" data-cursor="pointer">
                   <img
+                    data-cursor="pointer"
                     src={card.image}
                     className="object-contain mb-5"
                     style={{ width: "50" }}

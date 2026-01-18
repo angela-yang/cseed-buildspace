@@ -115,6 +115,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = "80px" }: Draggable
 
   return (
     <motion.div
+      data-cursor="pointer" 
       className="absolute cursor-grab active:cursor-grabbing select-none pointer-events-auto"
       style={{
         left: `${position.x}px`,
@@ -140,6 +141,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = "80px" }: Draggable
         src={imageSrc}
         alt="draggable"
         className="w-full h-full object-contain"
+        data-cursor="pointer" 
         style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))' }}
         draggable={false}
       />

@@ -1,11 +1,12 @@
 "use client"
 import NavBar from "./components/NavBar"
+import HomeNav from "./components/HomeNav"
 import Landing from "./components/Landing"
 import About from "./components/About"
 import Projects from "./components/Projects"
 import Cohorts from "./components/Cohorts"
 import Contact from "./components/Contact"
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -58,6 +59,7 @@ export default function Home() {
 
   return (
     <main className="cursor-none max-w-[100vw] overflow-hidden">
+      <HomeNav />
       <div 
         className="absolute min-h-[300vh] inset-0 opacity-95 pointer-events-none z-0"
         style={{
@@ -86,7 +88,6 @@ export default function Home() {
         />
       </div>
       
-      <NavBar/>
       <Landing />
       <About/>
       <Projects />

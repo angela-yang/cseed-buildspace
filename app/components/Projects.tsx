@@ -105,6 +105,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
 
   return (
     <div
+      data-cursor="pointer" 
       className="absolute cursor-grab active:cursor-grabbing select-none pointer-events-auto"
       style={{
         left: `${position.x}px`,
@@ -118,6 +119,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
       <img
         src={imageSrc}
         alt="draggable"
+        data-cursor="pointer" 
         className="w-full h-full object-contain"
         style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))' }}
         draggable={false}
@@ -191,9 +193,10 @@ export default function Projects() {
               { image: '/images/racecar.png', title: 'Automated Racecar', desc: 'Mukund worked on building autonomous racecars that play Mario Kart!' }
             ].map((card, index) => (
               <ScrollReveal key={index} delay={index * 100}>
-                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300">
+                <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 transition-all duration-300" data-cursor="pointer">
                   <img
                     src={card.image}
+                    data-cursor="pointer"
                     className="object-contain mb-5"
                     style={{ width: "50" }}
                   />

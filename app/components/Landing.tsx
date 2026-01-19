@@ -66,8 +66,8 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80, showHint = fals
       // Apply gentle momentum
       let animationId: number;
       const applyMomentum = () => {
-        velocityRef.current.x *= 0.95;
-        velocityRef.current.y *= 0.95;
+        velocityRef.current.x *= 0.96;
+        velocityRef.current.y *= 0.96;
 
         setPosition(prev => ({
           x: prev.x + velocityRef.current.x,

@@ -331,15 +331,15 @@ export default function About() {
 
       {/* Timeline */}
       <section className="section min-h-[50vh] flex flex-col justify-center items-center text-center relative mb-50">
-        <h2 className="text-5xl font-bold text-center mt-15 mb-8 text-[rgb(57,123,255)]">
+        <h2 className="text-5xl font-bold text-center mt-15 mb-8 text-[rgb(57,123,255)] z-10">
           Weekly Cohort Meetings
         </h2>
-        <p className="text-3xl text-center text-gray-600">
+        <p className="text-3xl text-center text-gray-600 z-10">
           Weekly opportunity to make progress (2 hrs/wk) and receive feedback from experienced mentors.
         </p>
 
         <motion.div
-          className="relative flex justify-center"
+          className="relative flex justify-center z-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           viewport={{ once: true }}

@@ -7,22 +7,41 @@ interface DraggableProps {
   initialX: number;
   initialY: number;
   size?: number;
+  showHint?: boolean;
 }
 
-const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProps) => {
+const DraggableToy = ({ imageSrc, initialX, initialY, size = 80, showHint = false }: DraggableProps) => {
   const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [isDragging, setIsDragging] = useState(false);
   const velocityRef = useRef({ x: 0, y: 0 });
   const lastPosRef = useRef({ x: 0, y: 0 });
+  const [showDragHint, setShowDragHint] = useState(false);
 
   const { floatY, floatScale, duration, delay } = useMemo(() => {
-      return {
-        floatY: -5 - Math.random() * 10, 
-        floatScale: 1 + Math.random() * 0.05,
-        duration: 3 + Math.random() * 2,
-        delay: Math.random() * 2,
-      };
-    }, []);
+    return {
+      floatY: -5 - Math.random() * 10, 
+      floatScale: 1 + Math.random() * 0.05,
+      duration: 3 + Math.random() * 2,
+      delay: Math.random() * 2,
+    };
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!showHint) return;
+      setShowDragHint(true);
+    }, 1500); 
+
+    return () => clearTimeout(timer);
+  }, [showHint]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowDragHint(false);
+    }, 30000); // 30 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!isDragging) return;
@@ -47,8 +66,8 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
       // Apply gentle momentum
       let animationId: number;
       const applyMomentum = () => {
-        velocityRef.current.x *= 0.92; // More friction
-        velocityRef.current.y *= 0.92;
+        velocityRef.current.x *= 0.95;
+        velocityRef.current.y *= 0.95;
 
         setPosition(prev => ({
           x: prev.x + velocityRef.current.x,
@@ -76,9 +95,31 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
+    setShowDragHint(false);
     lastPosRef.current = { x: e.clientX, y: e.clientY };
     velocityRef.current = { x: 0, y: 0 }; // Reset velocity
   };
+
+  function DragHint() {
+    return (
+      <>
+        {/* Drag me label */}
+        <motion.div
+          className="absolute -top-3 -right-8 z-50 bg-white text-[rgb(57,123,255)]
+                    text-sm font-semibold px-3 py-1 shadow-md rounded-full border-1 border-[rgba(57,123,255,0.60)]
+                    pointer-events-none"
+          transition={{
+            duration: 0.6,
+            ease: "easeIn",
+            type: "spring",
+            stiffness: 120,
+          }}
+        >
+          drag me!
+        </motion.div>
+      </>
+    );
+  }
 
   return (
     <motion.div
@@ -104,6 +145,7 @@ const DraggableToy = ({ imageSrc, initialX, initialY, size = 80 }: DraggableProp
       }}
       onMouseDown={handleMouseDown}
     >
+      {showDragHint && <DragHint />}
       <img
         src={imageSrc}
         alt="draggable"
@@ -185,7 +227,7 @@ export default function Landing() {
               imageSrc="/images/green.png"
               initialX={0} 
               initialY={0} 
-              size={100} 
+              size={100}
             />
           </motion.div>
 
@@ -216,6 +258,7 @@ export default function Landing() {
               initialX={0} 
               initialY={0} 
               size={90} 
+              showHint
             />
           </motion.div>
 

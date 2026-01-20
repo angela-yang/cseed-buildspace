@@ -314,12 +314,12 @@ export default function Projects() {
           }}
         />
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-30">
-          <DraggableToy imageSrc="/images/purple.png" initialX={200} initialY={150} size="80px" />
-          <DraggableToy imageSrc="/images/yellow.png" initialX={1000} initialY={100} size="80px" />
-          <DraggableToy imageSrc="/images/green.png" initialX={1200} initialY={400} size="80px" />
-          <DraggableToy imageSrc="/images/pink.png" initialX={700} initialY={500} size="80px" />
+          <DraggableToy imageSrc="/images/purple.png" initialX={150} initialY={150} size="8vw" showHint />
+          <DraggableToy imageSrc="/images/yellow.png" initialX={1000} initialY={100} size="10vw" />
+          <DraggableToy imageSrc="/images/green.png" initialX={1200} initialY={400} size="9vw" />
+          <DraggableToy imageSrc="/images/pink.png" initialX={550} initialY={450} size="10vw" />
         </div>
-        <h1 className="text-8xl font-black mb-5 animate-[fadeInUp_1s_ease-out] z-30">BUILD THE FUTURE</h1>
+        <h1 className="text-8xl font-black mb-5 animate-[fadeInUp_1s_ease-out] z-20">BUILD THE FUTURE</h1>
       </section>
    </main>
   );

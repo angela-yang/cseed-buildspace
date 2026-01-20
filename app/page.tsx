@@ -1,11 +1,10 @@
 "use client"
 import NavBar from "./components/NavBar"
-import HomeNav from "./components/HomeNav"
-import Landing from "./components/Landing"
-import About from "./components/About"
-import Projects from "./components/Projects"
-import Cohorts from "./components/Cohorts"
-import Contact from "./components/Contact"
+import Landing from "./sections/Landing"
+import About from "./sections/About"
+import Projects from "./sections/Projects"
+import Cohorts from "./sections/Cohorts"
+import Contact from "./sections/Contact"
 import { useState, useEffect } from 'react';
 
 export default function Home() {

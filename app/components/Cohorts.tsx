@@ -152,11 +152,7 @@ export default function Projects() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
-
-  const parallaxStyle = (xFactor: number, yFactor: number) => ({
-    transform: `translate(${offset.x * xFactor}px, ${offset.y * yFactor}px)`,
-  });
-
+  
   return (
     <main>
       <section

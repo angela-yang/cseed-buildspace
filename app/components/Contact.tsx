@@ -36,7 +36,7 @@ const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; dela
 
 export default function Contact() {
   return (
-    <section id="contact" className="section py-24 px-10 bg-[rgb(57,123,255)]">
+    <section id="apply" className="section py-24 px-10 bg-[rgb(57,123,255)]">
       <ScrollReveal>
         <h2 className="text-5xl font-bold text-center mb-12 text-white">Get In Touch</h2>
         <p className="text-center text-3xl text-gray-100 mb-10">

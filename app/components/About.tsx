@@ -180,10 +180,9 @@ export default function About() {
   });
 
   return (
-    <main>
+    <main id="about" className="section">
       <section
-        id="about" 
-        className="section py-24 px-10 relative"
+        className="py-24 px-10 mt-60 relative"
       >
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
@@ -330,7 +329,7 @@ export default function About() {
       </div>
 
       {/* Timeline */}
-      <section className="section min-h-[50vh] flex flex-col justify-center items-center text-center relative mb-50">
+      <section className="min-h-[50vh] flex flex-col justify-center items-center text-center relative mb-50">
         <h2 className="text-5xl font-bold text-center mt-15 mb-8 text-[rgb(57,123,255)] z-10">
           Weekly Cohort Meetings
         </h2>

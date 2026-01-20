@@ -177,10 +177,10 @@ export default function Landing() {
   });
 
   return (
-    <main id="home" className="section min-h-[150vh] relative">
-      <div className="absolute inset-0 flex flex-col items-center justify-center -translate-y-75 text-center z-10 px-4">
+    <main id="home" className="section min-h-[120vh] relative">
+      <div className="absolute inset-0 flex flex-col items-center justify-center -translate-y-50 text-center z-10 px-4">
         <motion.h1
-          className="text-10xl md:text-9xl font-bold text-[rgb(57,123,255)]"
+          className="text-8xl md:text-9xl font-bold text-[rgb(57,123,255)]"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

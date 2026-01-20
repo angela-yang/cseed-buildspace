@@ -3,25 +3,25 @@ import { useState, useEffect } from "react";
 const trackColors = {
   software: {
     gradient: "from-green-50 to-emerald-50",
-    border: "border-green-200",
+    border: "border-[rgb(19,163,122)]",
     badge: "bg-[rgb(19,163,122)] text-white",
     tag: "bg-green-100 text-green-700"
   },
   hardware: {
     gradient: "from-purple-50 to-blue-50",
-    border: "border-purple-200",
+    border: "border-[rgb(136,0,185)]",
     badge: "bg-[rgb(136,0,185)] text-white",
     tag: "bg-purple-100 text-purple-700"
   },
   wildcard: {
     gradient: "from-purple-50 to-pink-50",
-    border: "border-pink-200",
+    border: "border-[rgb(255,0,102)]",
     badge: "bg-[rgb(255,0,102)] text-white",
     tag: "bg-pink-100 text-pink-700"
   },
   creatives: {
     gradient: "from-yellow-50 to-orange-50",
-    border: "border-yellow-200",
+    border: "border-[rgb(239,183,27)]",
     badge: "bg-[rgb(239,183,27)] text-white",
     tag: "bg-yellow-100 text-yellow-700"
   }
@@ -94,7 +94,7 @@ export default function ProjectCard({
         {/* Front of card */}
         <div 
           data-cursor="pointer"
-          className="absolute w-full h-full backface-hidden bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200"
+          className={`absolute w-full h-full backface-hidden bg-white rounded-xl shadow-lg overflow-hidden border-3 ${colors.border}`}
           style={{ backfaceVisibility: 'hidden' }}
         >
           <div className="relative h-48 overflow-hidden">

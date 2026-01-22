@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import DraggableToy from "../components/DraggableToy"
+import PhotoGallery from "../sections/PhotoGallery"
 
 const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -89,6 +90,7 @@ export default function About() {
           />
         </div>
 
+        {/* Overview */}
         <ScrollReveal>
           <h2 className="text-5xl font-bold text-center mb-12 text-[rgb(57,123,255)]">
             What is Buildspace?

@@ -75,6 +75,7 @@ export default function Projects() {
     coverImage: string;
     longDescription: string;
     details: { tech: string[] };
+    gallery?: string[];
   }> = [
     {
       projectName: "Jam Journal",
@@ -84,7 +85,8 @@ export default function Projects() {
       demoLink: "https://drive.google.com/file/d/1vFHSItXw6BIRBEEMULdq2UdgEFEAfq6_/view",
       coverImage: "/images/projects/jamjournal.png",
       longDescription: "A platform to import YouTube music, take notes at timestamps while listening, and make notes for lyrics.",
-      details: { tech: ["React", "JavaScript", "HTML", "Figma"] }
+      details: { tech: ["React", "Next.js", "HTML", "Figma"] }, 
+      gallery: ["/images/projects/jamjournal.png", "/images/projects/jam2.png"]
     },
     {
       projectName: "MarioKart Racecar",
@@ -94,7 +96,8 @@ export default function Projects() {
       demoLink: "/images/projects/racecar.mp4",
       coverImage: "/images/projects/racecar.png",
       longDescription: "An automated racecar that uses different sensors to traverse the terrain and not hit obstacles and pedestrians.",
-      details: { tech: ["Wide Angled Camera", "Raspberry Pi 4", "PCA9685 PWM Servo Driver Board", "Servo Motor", "Brushed Motor"] }
+      details: { tech: ["Wide Angled Camera", "Raspberry Pi 4", "PCA9685 PWM Servo Driver Board", "Servo Motor", "Brushed Motor"] },
+      gallery: ["/images/projects/racecar.png", "/images/projects/racecar.mp4"]
     },
     {
       projectName: "2048 Agent",
@@ -104,7 +107,8 @@ export default function Projects() {
       demoLink: "/images/projects/2048-2.mp4",
       coverImage: "/images/projects/2048.mp4",
       longDescription: "Using reinforcement learning (DQN and PPO), and expectimax, the agent can predict and perform the most optimal moves in 2048.",
-      details: { tech: ["DQN", "PPO", "2048"] }
+      details: { tech: ["DQN", "PPO", "2048"] },
+      gallery: ["/images/projects/2048.png", "/images/projects/2048-2.png", "/images/projects/2048-3.png", "/images/projects/2048-4.png", "/images/projects/2048.mp4", "/images/projects/2048-2.mp4"]
     },
     {
       projectName: "Smile w/ me",
@@ -114,7 +118,8 @@ export default function Projects() {
       demoLink: "/images/projects/smile.mp4",
       coverImage: "/images/projects/smile.png",
       longDescription: "This is a hand-coded photo booth website, where you can take photos and add stickers and filters!",
-      details: { tech: ["HTML", "CSS", "React"] }
+      details: { tech: ["HTML", "CSS", "React"] },
+      gallery: ["/images/projects/smile.png", "/images/projects/smile.mp4"]
     },
     {
       projectName: "Juicebox",
@@ -124,7 +129,8 @@ export default function Projects() {
       demoLink: "/images/projects/juicebox.mp4",
       coverImage: "/images/projects/juicebox.png",
       longDescription: "This is a design speculative project to foster connection and disconnecting from screens.",
-      details: { tech: ["Figma", "Design", "Wireframing"] }
+      details: { tech: ["Figma", "Design", "Wireframing"] },
+      gallery: ["/images/projects/juicebox.png", "/images/projects/juicebox.mp4"]
     },
     {
       projectName: "CoachT",
@@ -134,7 +140,8 @@ export default function Projects() {
       demoLink: "www.coacht.xyz",
       coverImage: "/images/projects/coacht.png",
       longDescription: "Gets input from real-time camera feed, monitoring joint and angle information. Plugs in the data into DTW and gives AI feedback.",
-      details: { tech: ["DTW", "LLMs", "Computer Vision"] }
+      details: { tech: ["DTW", "LLMs", "Computer Vision"] },
+      gallery: ["/images/projects/coacht.png"]
     },
     {
       projectName: "Fridge Sense",
@@ -144,7 +151,8 @@ export default function Projects() {
       demoLink: "/images/projects/fridge.mp4",
       coverImage: "/images/projects/fridge.png",
       longDescription: "A handy tool for knowing what's in your fridge, helps with grocery shopping. Helps combat food waste at the college level!",
-      details: { tech: ["React", "Google Firebase", "Sqlite", "Flask", "APIs", "Figma" ] }
+      details: { tech: ["React", "Google Firebase", "Sqlite", "Flask", "APIs", "Figma" ] },
+      gallery: ["/images/projects/fridge.png", "/images/projects/fridge.mp4"]
     },
     {
       projectName: "Gladius",
@@ -154,7 +162,8 @@ export default function Projects() {
       demoLink: "/images/projects/gladius.mp4",
       coverImage: "/images/projects/gladius.png",
       longDescription: "Gladius transforms your fitness journey into a motivational experience. It tracks your progress through biometric data.",
-      details: { tech: ["Spline", "UX Design", "Figma" ] }
+      details: { tech: ["Spline", "UX Design", "Figma" ] },
+      gallery: ["/images/projects/gladius.png", "/images/projects/gladius.mp4"]
     },
     {
       projectName: "Se7en",
@@ -164,7 +173,8 @@ export default function Projects() {
       demoLink: "/images/projects/seven.mp4",
       coverImage: "/images/projects/seven.png",
       longDescription: "Se7en effortlessly organizes groups of people with similar interests for casual convos/coffee chat-like conversations.",
-      details: { tech: ["ROS", "Computer Vision", "GPS", "LiDAR"] }
+      details: { tech: ["ROS", "Computer Vision", "GPS", "LiDAR"] },
+      gallery: ["/images/projects/seven.png", "/images/projects/seven.mp4"]
     },
     {
       projectName: "Nivo",
@@ -174,7 +184,8 @@ export default function Projects() {
       demoLink: "/images/projects/nivo.mp4",
       coverImage: "/images/projects/nivo.png",
       longDescription: "Prescription lenses, custom fit, all-weather performance, and comfort. The base model is a simple CAD model that can be adjusted to the user's measurements.",
-      details: { tech: ["CAD", "Figma", "TPU"] }
+      details: { tech: ["CAD", "Figma", "TPU"] },
+      gallery: ["/images/projects/nivo.png", "/images/projects/nivo.mp4"]
     },
     {
       projectName: "Bobby",
@@ -184,7 +195,8 @@ export default function Projects() {
       demoLink: "/images/projects/bobby.png",
       coverImage: "/images/projects/bobby.png",
       longDescription: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
-      details: { tech: ["Python", ""] }
+      details: { tech: ["Python", ""] },
+      gallery: ["/images/projects/bobby.png"]
     },
     {
       projectName: "Crash Out",
@@ -194,7 +206,8 @@ export default function Projects() {
       demoLink: "/images/projects/crash-out.png",
       coverImage: "/images/projects/crashout.png",
       longDescription: "In order to escape the island, the player must complete tasks, make the right choices, find a special item, and make it to a cave before time runs out.",
-      details: { tech: ["Java", "GitHub", "Eclipse"] }
+      details: { tech: ["Java", "GitHub", "Eclipse"] },
+      gallery: ["/images/projects/crashout.png", "/images/projects/crash-out.png"]
     }
   ];
 

@@ -147,7 +147,7 @@ export default function Projects() {
       projectName: "Fridge Sense",
       creatorName: "Shrima & Arya",
       track: "creatives",
-      description: "An app that helps you track what's in your fridge & when it's expiring.",
+      description: "An app that helps you track what's in your fridge and when it's expiring.",
       demoLink: "/images/projects/fridge.mp4",
       coverImage: "/images/projects/fridge.png",
       longDescription: "A handy tool for knowing what's in your fridge, helps with grocery shopping. Helps combat food waste at the college level!",

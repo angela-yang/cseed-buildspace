@@ -306,7 +306,7 @@ export default function ProjectCard({
                     <div className="space-y-4">
                       {/* Main selected image */}
                       <div className="w-full h-80 rounded-lg overflow-hidden">
-                        {coverImage.endsWith('.mp4') ? (
+                        {gallery[selectedGalleryImage]?.endsWith('.mp4') ? (
                           <video 
                             src={gallery[selectedGalleryImage]} 
                             autoPlay
@@ -338,11 +338,9 @@ export default function ProjectCard({
                                 : 'border-transparent hover:border-gray-300'
                             }`}
                           >
-                            {coverImage.endsWith('.mp4') ? (
+                            {img.endsWith('.mp4') ? (
                               <video 
                                 src={img} 
-                                autoPlay
-                                loop
                                 muted
                                 playsInline
                                 className="w-full h-full object-cover"

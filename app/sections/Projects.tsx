@@ -225,47 +225,29 @@ export default function Projects() {
         id="projects"
         className="section py-24 px-10 relative bg-[rgb(57,123,255)]"
       >
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div
-              className="absolute w-36 h-36 bg-[rgb(255,231,164)] rounded-full top-[15%] left-[10%]"
-              style={{ transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * 0.7}px)` }}
-          />
-          <div
-              className="absolute w-24 h-24 bg-[rgb(253,186,211)] rounded-2xl top-[25%] right-[15%]"
-              style={{ transform: `translate(${mousePos.x * -1}px, ${mousePos.y * 1}px)` }}
-          />
-          <div
-              className="absolute w-28 h-28 bg-[rgb(216,109,255)] top-[84%] left-[60%]"
-              style={{
-              borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-              transform: `translate(${mousePos.x * 1}px, ${mousePos.y * -0.3}px)`
-              }}
-          />
-        </div>
-
         <ScrollReveal>
           <div className="min-h-screen mb-10 py-10 px-4">
             {/* Header with animation */}
-            <div className="max-w-7xl mx-auto mb-12 text-center">
-              <h2 className="text-5xl font-bold text-center mb-3 text-white">
+            <div className="max-w-7xl mx-auto mb-12 text-left ml-25">
+              <h2 className="text-5xl font-bold mb-3 text-white">
                 Featured Projects
               </h2>
-              <p className="text-2xl text-gray-100 mb-8">Discover amazing projects from our past cohorts</p>
+              <p className="text-2xl text-white mb-10">Discover amazing projects from our past cohorts</p>
               
               {/* Search bar */}
-              <div className="max-w-md mx-auto mb-8 relative">
+              <div className="max-w-md mx-auto mb-8 absolute w-full right-25 top-10">
                 <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-100/45 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Search projects..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-6 py-3 rounded-full border-2 border-white/55 focus:border-white text-white text-xl focus:outline-none transition-colors bg-white/25 shadow-sm"
+                  className="w-full pl-12 pr-6 py-3 rounded-full border-2 border-white/65 focus:border-white text-white text-xl focus:outline-none transition-colors bg-white/5 shadow-sm"
                 />
               </div>
 
               {/* Filter buttons */}
-              <div className="flex flex-wrap justify-center gap-4">
+              <div className="flex flex-wrap justify-center gap-4 mb-5">
               {["all", "software", "hardware", "wildcard", "creatives"].map((track) => {
                 const getActiveColor = () => {
                   switch(track) {
@@ -284,8 +266,8 @@ export default function Projects() {
                     onClick={() => setFilter(track)}
                     className={`px-6 py-2 rounded-full border-1 border-gray-800/75 font-semibold transition-all transform hover:scale-105 ${
                       filter === track
-                        ? "text-gray-900 shadow-lg"
-                        : "bg-[rgb(241,239,235)] text-gray-700 hover:bg-gray-100 shadow-sm"
+                        ? "text-black shadow-lg"
+                        : "bg-[rgb(241,239,235)] text-gray-900 hover:bg-gray-100 shadow-sm"
                     }`}
                     style={filter === track ? { backgroundColor: getActiveColor() } : {}}
                   >

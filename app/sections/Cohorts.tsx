@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import ProjectCard from "../components/ProjectCard"
 import { FaSearch } from "react-icons/fa";
+import PhotoGallery from "../sections/PhotoGallery"
 
 const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -272,7 +273,7 @@ export default function Projects() {
           </div>
         </div>
 
-          <h2 className="text-4xl font-bold text-center mt-10 mb-6 text-white">
+          <h2 className="text-4xl font-bold text-left ml-[7vw] mt-10 mb-6 text-white">
             Cohort 4
           </h2>
           {/* Projects grid */}
@@ -290,7 +291,9 @@ export default function Projects() {
             )}
           </div>
 
-          <h2 className="text-4xl font-bold text-center mt-20 mb-6 text-white">
+          <PhotoGallery />
+
+          <h2 className="text-4xl font-bold text-left ml-[7vw] mt-20 mb-6 text-white">
             Cohort 3
           </h2>
           {/* Projects grid */}
@@ -308,7 +311,7 @@ export default function Projects() {
             )}
           </div>
 
-          <h2 className="text-4xl font-bold text-center mt-20 mb-6 text-white">
+          <h2 className="text-4xl font-bold text-left ml-[7vw] mt-20 mb-6 text-white">
             Cohort 2
           </h2>
           {/* Projects grid */}

@@ -139,8 +139,8 @@ export default function ProjectCard({
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         } ${
           isExpanded 
-            ? 'col-span-2 w-full h-[600px] duration-500' 
-            : 'w-80 h-96 duration-700'
+            ? 'col-span-2 w-[60vw] h-[90vh] duration-500' 
+            : 'w-90 h-100 duration-700'
         }`}
         style={{
           transformOrigin: expandToLeft ? 'top right' : 'top left'
@@ -197,10 +197,10 @@ export default function ProjectCard({
               </div>
             </div>
             
-            <div className="p-6">
+            <div className="p-6 ibm-plex-sans">
               <h3 className="text-2xl font-bold text-gray-800 mb-2">{projectName}</h3>
-              <p className="text-sm text-gray-500 mb-3">by {creatorName}</p>
-              <p className="text-gray-600 text-sm line-clamp-3 mb-4">{description}</p>
+              <p className="text-sm text-gray-700 mb-2">by {creatorName}</p>
+              <p className="text-gray-700 text-sm line-clamp-3 mb-4">{description}</p>
               
               <a 
                 href={demoLink}
@@ -216,7 +216,7 @@ export default function ProjectCard({
               </a>
             </div>
             
-            <div className="absolute bottom-4 right-4 text-gray-400 text-xs">
+            <div className="absolute bottom-4 right-4 text-gray-400 ibm-plex-sans text-sm">
               Click to see more
             </div>
           </div>
@@ -224,7 +224,7 @@ export default function ProjectCard({
           {/* Back of card - Expanded view */}
           <div
             data-cursor="pointer"
-            className={`absolute w-full h-full backface-hidden bg-gradient-to-br ${colors.gradient} rounded-xl shadow-2xl overflow-hidden border-3 ${colors.border}`}
+            className={`absolute w-full h-full bg-gradient-to-br ${colors.gradient} rounded-xl shadow-2xl overflow-hidden border-3 ${colors.border}`}
             style={{ 
               backfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)'
@@ -266,7 +266,7 @@ export default function ProjectCard({
             )}
 
             <div className={`${isExpanded ? 'p-8 h-full flex flex-col' : 'p-6'}`}>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-1">
                 <h3 className={`font-bold text-gray-800 ${isExpanded ? 'text-3xl' : 'text-xl'}`}>
                   {projectName}
                 </h3>
@@ -276,22 +276,22 @@ export default function ProjectCard({
               </div>
 
               {isExpanded && (
-                <p className="text-sm text-gray-600 mb-6">by {creatorName}</p>
+                <p className="text-lg ibm-plex-sans text-gray-700 mb-5">by {creatorName}</p>
               )}
               
               <div className={`space-y-6 ${isExpanded ? 'flex-1 overflow-y-auto pr-2' : 'overflow-y-auto h-64'}`}>
                 <div>
-                  <h4 className="font-semibold text-gray-700 mb-2">Description</h4>
-                  <p className="text-sm text-gray-600">{longDescription}</p>
+                  <h4 className="font-bold text-xl text-gray-800 mb-2">Description</h4>
+                  <p className="text-md text-gray-700 ibm-plex-sans">{longDescription}</p>
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold text-gray-700 mb-2">Technologies</h4>
+                  <h4 className="font-bold text-xl text-gray-800 mb-2">Technologies</h4>
                   <div className="flex flex-wrap gap-2">
                     {details.tech.map((tech, idx) => (
                       <span 
                         key={idx}
-                        className={`px-3 py-1 ${colors.tag} rounded-full text-xs font-medium`}
+                        className={`px-3 py-1 ${colors.tag} rounded-full text-md ibm-plex-sans`}
                       >
                         {tech}
                       </span>
@@ -302,7 +302,7 @@ export default function ProjectCard({
                 {/* Gallery section - only if images exist */}
                 {isExpanded && gallery && gallery.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-gray-700 mb-3">Gallery</h4>
+                    <h4 className="font-bold text-xl text-gray-800 mb-3">Gallery</h4>
                     <div className="space-y-4">
                       {/* Main selected image */}
                       <div className="w-full h-80 rounded-lg overflow-hidden">
@@ -366,18 +366,12 @@ export default function ProjectCard({
                   onClick={(e) => e.stopPropagation()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-block w-full text-center ${colors.badge} hover:opacity-90 font-medium py-3 px-4 rounded-lg transition-opacity`}
+                  className={`inline-block w-full text-center ${colors.badge} hover:opacity-90 font-bold text-xl py-3 px-4 rounded-lg transition-opacity`}
                 >
                   View Demo
                 </a>
               </div>
             </div>
-            
-            {!isExpanded && (
-              <div className="absolute bottom-4 right-4 text-gray-400 text-xs">
-                Click to see more
-              </div>
-            )}
           </div>
         </div>
       </div>

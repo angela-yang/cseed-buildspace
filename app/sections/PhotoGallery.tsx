@@ -49,6 +49,9 @@ export default function PhotoGallery() {
     "images/cohort-4/img9.jpg",
     "images/cohort-4/img10.JPG",
     "images/cohort-4/img11.JPG",
+  ];
+
+  const photos2 = [
     "images/cohort-3/img1.jpg",
     "images/cohort-3/img2.jpg",
     "images/cohort-3/img3.jpg",
@@ -101,16 +104,13 @@ export default function PhotoGallery() {
   return (
     <section className="py-24 px-10 relative">
       <ScrollReveal>
-        <h2 className="text-5xl font-bold text-center mt-50 mb-4 text-[rgb(57,123,255)]">
-          Our Community
-        </h2>
-        <p className="text-3xl text-center text-gray-600 mb-16">
-          Photos from our buildspace journey
+        <p className="text-3xl text-center text-gray-100 mb-10">
+          Photos from cohort 4!
         </p>
       </ScrollReveal>
 
       {/* Masonry/Cascade Grid */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto relative">
         <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
           {photos.map((photo, index) => (
             <ScrollReveal key={index} delay={index * 50}>
@@ -135,7 +135,7 @@ export default function PhotoGallery() {
       {/* Lightbox Modal */}
       {selectedImage !== null && (
         <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          className="absolute bg-[rgb(57,123,255)]/85 inset-0 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
           <button
@@ -148,7 +148,8 @@ export default function PhotoGallery() {
           {/* Previous button */}
           {selectedImage > 0 && (
             <button
-              className="absolute left-4 text-white text-4xl hover:text-gray-300 transition-colors"
+              className="absolute left-4 px-8 py-4 text-white text-4xl rounded-full bg-white/40 hover:bg-white/60 hover:text-gray-600 transition-colors"
+              data-cursor="pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedImage(selectedImage - 1);
@@ -161,7 +162,8 @@ export default function PhotoGallery() {
           {/* Next button */}
           {selectedImage < photos.length - 1 && (
             <button
-              className="absolute right-4 text-white text-4xl hover:text-gray-300 transition-colors"
+              className="absolute right-4 px-8 py-4 text-white text-4xl rounded-full bg-white/40 hover:bg-white/60 hover:text-gray-600 transition-colors"
+              data-cursor="pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedImage(selectedImage + 1);
@@ -178,7 +180,7 @@ export default function PhotoGallery() {
             onClick={(e) => e.stopPropagation()}
           />
           
-          <div className="absolute bottom-4 text-white text-lg">
+          <div className="absolute bottom-4 text-white text-2xl">
             {selectedImage + 1} / {photos.length}
           </div>
         </div>

@@ -1,4 +1,5 @@
 /*@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -29,4 +30,8 @@ body {
   background-color: rgb(241, 239, 235);
   color: var(--foreground);
   font-family: 'Migra', sans-serif;
+}
+
+.ibm-plex-sans {
+  font-family: 'IBM Plex Sans', sans-serif;
 }

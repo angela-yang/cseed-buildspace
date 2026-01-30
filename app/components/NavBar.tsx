@@ -204,7 +204,7 @@ export default function NavBar() {
         </div>
       </nav>
 
-      {/* Mobile Active Section Indicator (Optional - Bottom Bar) */}
+      {/* Mobile Active Section Indicator - currently not working
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/95 backdrop-blur-md rounded-full px-6 py-3 shadow-lg border border-[rgba(57,123,255,0.25)]">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-[rgb(57,123,255)] rounded-full animate-pulse" />
@@ -212,7 +212,7 @@ export default function NavBar() {
             {sections[activeIndex]?.label}
           </span>
         </div>
-      </div>
+      </div>*/}
     </>
   );
 }

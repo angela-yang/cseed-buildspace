@@ -273,10 +273,10 @@ export default function Projects() {
           <div className="min-h-screen py-10">
             <div className="max-w-7xl mx-auto space-y-8 md:space-y-12">
               
-              {/* Header with Title and Search */}
+              {/* Header */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-end">
                 
-                {/* Left: Title and Description */}
+                {/* Title and Description */}
                 <div>
                   <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-white">
                     Featured Projects
@@ -286,7 +286,7 @@ export default function Projects() {
                   </p>
                 </div>
 
-                {/* Right: Search Bar */}
+                {/* Search Bar */}
                 <div className="relative">
                   <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-white/50 pointer-events-none z-10" />
                   <input

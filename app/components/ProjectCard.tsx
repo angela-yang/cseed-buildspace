@@ -63,9 +63,21 @@ export default function ProjectCard({
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedGalleryImage, setSelectedGalleryImage] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   
   const colors = trackColors[track as keyof typeof trackColors];
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {

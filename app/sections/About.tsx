@@ -184,7 +184,7 @@ export default function About() {
 
       {/* 4 Program Tracks */}
       <motion.h3
-        className="relative flex justify-center mt-15 text-6xl md:text-5xl text-[rgb(55,58,65)] font-bold"
+        className="hidden relative md:flex justify-center mt-15 text-6xl md:text-5xl text-[rgb(55,58,65)] font-bold"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
@@ -234,7 +234,15 @@ export default function About() {
       </div>
 
       {/* Mobile Layout */}
-      <div className="md:hidden px-4 py-8 pb-20 space-y-6">
+      <div className="md:hidden px-4 py-8 pb-25 space-y-6">
+        <motion.h3
+          className="relative flex justify-center mt-15 text-6xl md:text-5xl text-[rgb(55,58,65)] font-bold"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          4 Program Tracks
+        </motion.h3>
         {tracks.map((track, idx) => (
           <motion.div
             key={track.name}

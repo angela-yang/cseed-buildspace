@@ -96,7 +96,7 @@ export default function Projects() {
       demoLink: "/images/projects/racecar.mp4",
       coverImage: "/images/projects/racecar.png",
       longDescription: "An automated racecar that uses different sensors to traverse the terrain and not hit obstacles and pedestrians.",
-      details: { tech: ["Wide Angled Camera", "Raspberry Pi 4", "PCA9685 PWM Servo Driver Board", "Servo Motor", "Brushed Motor"] },
+      details: { tech: ["Raspberry Pi 4", "Servo Motor", "Brushed Motor", "Wide Angled Camera", "PCA9685 PWM Servo Driver Board"] },
       gallery: ["/images/projects/racecar.png", "/images/projects/racecar.mp4"]
     },
     {
@@ -188,9 +188,20 @@ export default function Projects() {
       gallery: ["/images/projects/nivo.png", "/images/projects/nivo.mp4"]
     },
     {
+      projectName: "Content Creation",
+      creatorName: "Tiffany Yan",
+      track: "creatives",
+      description: "Building my content creation through Instagram, LinkedIn, and Notion.",
+      demoLink: "https://www.instagram.com/tiffanyyan.mov/",
+      coverImage: "/images/projects/content-1.png",
+      longDescription: "Creativity is very important to me, including design, music, modeling, photography, maker space, and calligraphy.",
+      details: { tech: ["Instagram", "LinkedIn", "Notion"] },
+      gallery: ["/images/projects/content.png", "/images/projects/content-1.png", "/images/projects/content-2.png", "/images/projects/content-3.png", "/images/projects/content-4.png", "/images/projects/content-5.png"]
+    },
+    {
       projectName: "Bobby",
       creatorName: "Carter Swartout & Andrew Edwards",
-      track: "hardware" as const,
+      track: "hardware",
       description: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
       demoLink: "/images/projects/bobby.png",
       coverImage: "/images/projects/bobby.png",
@@ -223,27 +234,36 @@ export default function Projects() {
     <main>
       <section
         id="projects"
-        className="section py-24 px-10 relative bg-[rgb(57,123,255)]"
+        className="section py-16 md:py-24 px-4 sm:px-6 lg:px-10 relative bg-[rgb(57,123,255)]"
       >
         <ScrollReveal>
-          <div className="min-h-screen mb-10 py-10 px-4">
-            {/* Header with animation */}
-            <div className="max-w-7xl mx-auto mb-12 text-left ml-25">
-              <h2 className="text-5xl font-bold mb-3 text-white">
-                Featured Projects
-              </h2>
-              <p className="text-2xl text-white mb-10">Discover amazing projects from our past cohorts</p>
+          <div className="min-h-screen py-10">
+            <div className="max-w-7xl mx-auto space-y-8 md:space-y-12">
               
-              {/* Search bar */}
-              <div className="max-w-md mx-auto mb-8 absolute w-full right-25 top-10">
-                <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-100/45 pointer-events-none" />
-                <input
-                  type="text"
-                  placeholder="Search projects..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-6 py-3 rounded-full border-2 border-white/65 focus:border-white text-white text-xl focus:outline-none transition-colors bg-white/5 shadow-sm"
-                />
+              {/* Header with Title and Search */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-end">
+                
+                {/* Left: Title and Description */}
+                <div>
+                  <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-white">
+                    Featured Projects
+                  </h2>
+                  <p className="text-lg sm:text-xl lg:text-2xl text-white/90">
+                    Discover amazing projects from our past cohorts
+                  </p>
+                </div>
+
+                {/* Right: Search Bar */}
+                <div className="relative">
+                  <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-white/50 pointer-events-none z-10" />
+                  <input
+                    type="text"
+                    placeholder="Search projects..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 pr-6 py-3.5 rounded-full border-2 border-white/40 hover:border-white/60 focus:border-white text-white text-base sm:text-lg placeholder-white/60 focus:outline-none transition-all duration-300 bg-white/10 backdrop-blur-sm shadow-lg hover:shadow-xl"
+                  />
+                </div>
               </div>
 
               {/* Filter buttons */}

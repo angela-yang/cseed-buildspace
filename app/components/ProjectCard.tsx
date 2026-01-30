@@ -2,28 +2,24 @@ import { useState, useEffect } from "react";
 
 const trackColors = {
   software: {
-    gradient: "from-green-50 to-emerald-50",
-    border: "border-[rgb(19,163,122)]",
-    badge: "bg-[rgb(19,163,122)] text-white",
-    tag: "bg-green-100 text-green-700"
+    primary: "rgb(19,163,122)",
+    light: "rgb(19,163,122,0.1)",
+    accent: "rgb(16,185,129)",
   },
   hardware: {
-    gradient: "from-purple-50 to-blue-50",
-    border: "border-[rgb(136,0,185)]",
-    badge: "bg-[rgb(136,0,185)] text-white",
-    tag: "bg-purple-100 text-purple-700"
+    primary: "rgb(136,0,185)",
+    light: "rgb(136,0,185,0.1)",
+    accent: "rgb(168,85,247)",
   },
   wildcard: {
-    gradient: "from-purple-50 to-pink-50",
-    border: "border-[rgb(255,0,102)]",
-    badge: "bg-[rgb(255,0,102)] text-white",
-    tag: "bg-pink-100 text-pink-700"
+    primary: "rgb(255,0,102)",
+    light: "rgb(255,0,102,0.1)",
+    accent: "rgb(244,63,94)",
   },
   creatives: {
-    gradient: "from-yellow-50 to-orange-50",
-    border: "border-[rgb(239,183,27)]",
-    badge: "bg-[rgb(239,183,27)] text-white",
-    tag: "bg-yellow-100 text-yellow-700"
+    primary: "rgb(239,183,27)",
+    light: "rgb(239,183,27,0.1)",
+    accent: "rgb(251,191,36)",
   }
 };
 
@@ -64,12 +60,12 @@ export default function ProjectCard({
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [hoverRotation, setHoverRotation] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedGalleryImage, setSelectedGalleryImage] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
-  const colors = trackColors[track as keyof typeof trackColors] || trackColors.software;
+  const colors = trackColors[track as keyof typeof trackColors];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -78,38 +74,22 @@ export default function ProjectCard({
     return () => clearTimeout(timer);
   }, [index]);
 
-  const handleMouseEnter = () => {
-    if (!isExpanded) {
-      setIsHovered(true);
-      const randomX = (Math.random() - 0.5) * 3;
-      const randomY = (Math.random() - 0.5) * 3;
-      setHoverRotation({ x: randomX, y: randomY });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setHoverRotation({ x: 0, y: 0 });
-  };
-
   const handleCardClick = () => {
     if (isExpanded) {
-      // If already expanded, collapse it
       setIsExpanded(false);
-      setTimeout(() => setIsFlipped(false), 400);
+      setTimeout(() => setIsFlipped(false), 300);
     } else if (!isFlipped) {
-      // If not flipped, flip and expand
       setIsFlipped(true);
       setTimeout(() => {
         setIsExpanded(true);
-      }, 400);
+      }, 300);
     }
   };
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsExpanded(false);
-    setTimeout(() => setIsFlipped(false), 400);
+    setTimeout(() => setIsFlipped(false), 300);
   };
 
   const handleNavigateNext = (e: React.MouseEvent) => {
@@ -128,52 +108,52 @@ export default function ProjectCard({
     }
   };
 
-  // Determine expansion direction based on grid column
-  // Columns 1-2 expand to the right, Column 3 expands to the left
   const expandToLeft = gridColumn === 3;
 
   return (
     <>
       <div 
-        className={`perspective-1000 transition-all ease-in-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        className={`perspective-1000 transition-all ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         } ${
           isExpanded 
-            ? 'col-span-2 w-[60vw] h-[90vh] duration-500' 
-            : 'w-90 h-100 duration-700'
+            ? 'col-span-2 w-[60vw] h-[90vh] duration-500 z-50' 
+            : 'w-100 h-125 duration-700'
         }`}
         style={{
           transformOrigin: expandToLeft ? 'top right' : 'top left'
         }}
-        data-cursor="pointer"
       >
         <div 
-          className={`relative w-full h-full transition-all ease-in-out ${
+          className={`relative w-full h-full transition-all ease-out ${
             isExpanded ? 'duration-500' : 'duration-700'
-          } transform-style-3d cursor-pointer`}
+          } transform-style-3d cursor-pointer group`}
           onClick={handleCardClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
           style={{ 
             transformStyle: 'preserve-3d',
             transform: isExpanded 
               ? 'rotateY(180deg)'
               : `
                 rotateY(${isFlipped ? 180 : 0}deg)
-                rotateX(${isHovered && !isFlipped ? hoverRotation.x : 0}deg)
-                rotateZ(${isHovered && !isFlipped ? hoverRotation.y : 0}deg)
-                scale(${isHovered && !isFlipped ? 1.05 : 1})
+                translateY(${isHovered && !isFlipped ? -8 : 0}px)
               `,
-            transition: 'transform 0.7s'
+            transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
         >
           {/* Front of card */}
           <div 
-            data-cursor="pointer"
-            className={`absolute w-full h-full backface-hidden bg-white rounded-xl shadow-lg overflow-hidden border-3 ${colors.border}`}
-            style={{ backfaceVisibility: 'hidden' }}
+            className="absolute w-full h-full backface-hidden bg-white rounded-2xl overflow-hidden"
+            style={{ 
+              backfaceVisibility: 'hidden',
+              boxShadow: isHovered && !isFlipped 
+                ? '0 25px 50px -12px rgba(0, 0, 0, 0.25)' 
+                : '0 10px 30px -15px rgba(0, 0, 0, 0.3)'
+            }}
           >
-            <div className="relative h-48 overflow-hidden">
+            {/* Image Container with Overlay */}
+            <div className="relative h-56 overflow-hidden bg-gray-100">
               {coverImage.endsWith('.mp4') ? (
                 <video 
                   src={coverImage} 
@@ -181,131 +161,220 @@ export default function ProjectCard({
                   loop
                   muted
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               ) : (
                 <img 
                   src={coverImage} 
                   alt={projectName}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  onLoad={() => setImageLoaded(true)}
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               
-              <div className={`absolute top-3 right-3 ${colors.badge} px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide`}>
+              {/* Gradient Overlay */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: `linear-gradient(to bottom, transparent 0%, ${colors.primary}15 100%)`
+                }}
+              />
+
+              {/* Track Badge */}
+              <div 
+                className="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-md font-semibold uppercase tracking-wider backdrop-blur-md"
+                style={{
+                  backgroundColor: `${colors.primary}`,
+                  color: 'white',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                }}
+              >
                 {track}
               </div>
             </div>
             
-            <div className="p-6 ibm-plex-sans">
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">{projectName}</h3>
-              <p className="text-sm text-gray-700 mb-2">by {creatorName}</p>
-              <p className="text-gray-700 text-sm line-clamp-3 mb-4">{description}</p>
+            {/* Content Section */}
+            <div className="p-6 space-y-3">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-1 line-clamp-1">
+                  {projectName}
+                </h3>
+                <p className="text-md font-medium ibm-plex-sans text-gray-500">
+                  by {creatorName}
+                </p>
+              </div>
               
-              <a 
-                href={demoLink}
-                onClick={(e) => e.stopPropagation()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
-              >
-                View Demo
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
+              <p className="text-gray-600 text-md ibm-plex-sans leading-relaxed line-clamp-3">
+                {description}
+              </p>
+              
+              {/* Tech Stack Preview */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {details.tech.slice(0, 3).map((tech, idx) => (
+                  <span 
+                    key={idx}
+                    className="px-2.5 py-1 rounded-md ibm-plex-sans text-xs font-medium transition-colors"
+                    style={{
+                      backgroundColor: colors.light,
+                      color: colors.primary
+                    }}
+                  >
+                    {tech}
+                  </span>
+                ))}
+                {details.tech.length > 3 && (
+                  <span 
+                    className="px-2.5 py-1 rounded-md text-xs ibm-plex-sans font-medium"
+                    style={{
+                      backgroundColor: colors.light,
+                      color: colors.primary
+                    }}
+                  >
+                    +{details.tech.length - 3}
+                  </span>
+                )}
+              </div>
             </div>
-            
-            <div className="absolute bottom-4 right-4 text-gray-400 ibm-plex-sans text-sm">
-              Click to see more
+
+            {/* Footer with CTA */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 pt-4 border-t border-gray-100">
+              <div className="flex items-center justify-between">
+                <button 
+                  className="text-sm font-semibold flex ibm-plex-sans items-center gap-1.5 transition-all"
+                  style={{ color: colors.primary }}
+                >
+                  View Details
+                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+                
+                <a 
+                  href={demoLink}
+                  onClick={(e) => e.stopPropagation()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-lg text-md font-semibold text-white transition-all cursor-pointer hover:shadow-lg"
+                  style={{ 
+                    backgroundColor: colors.primary,
+                  }}
+                >
+                  Live Demo
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Back of card - Expanded view */}
+          {/* Back of card - Expanded view with professional layout */}
           <div
-            data-cursor="pointer"
-            className={`absolute w-full h-full bg-gradient-to-br ${colors.gradient} rounded-xl shadow-2xl overflow-hidden border-3 ${colors.border}`}
+            className="absolute w-full h-full bg-white rounded-2xl overflow-hidden"
             style={{ 
               backfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)'
+              transform: 'rotateY(180deg)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)'
             }}
           >
-            {/* Close button */}
-            {isExpanded && (
-              <button
-                onClick={handleClose}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 hover:bg-white flex items-center justify-center transition-colors z-20 shadow-lg"
-              >
-                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            )}
-
-            {/* Navigation arrows */}
-            {isExpanded && hasPrev && (
-              <button
-                onClick={handleNavigatePrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white flex items-center justify-center transition-colors z-20 shadow-lg"
-              >
-                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-            )}
-
-            {isExpanded && hasNext && (
-              <button
-                onClick={handleNavigateNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white flex items-center justify-center transition-colors z-20 shadow-lg"
-              >
-                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            )}
-
-            <div className={`${isExpanded ? 'p-8 h-full flex flex-col' : 'p-6'}`}>
-              <div className="flex items-center justify-between mb-1">
-                <h3 className={`font-bold text-gray-800 ${isExpanded ? 'text-3xl' : 'text-xl'}`}>
-                  {projectName}
-                </h3>
-                <span className={`${colors.badge} px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide`}>
-                  {track}
-                </span>
+            {/* Header Bar */}
+            <div 
+              className="relative h-20 flex items-center justify-between px-8 border-b"
+              style={{ 
+                backgroundColor: colors.light,
+                borderColor: `${colors.primary}20`
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <div 
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
+                  style={{ backgroundColor: colors.primary }}
+                >
+                  {projectName.charAt(0)}
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">{projectName}</h3>
+                  <p className="text-lg text-gray-700">by {creatorName}</p>
+                </div>
               </div>
 
-              {isExpanded && (
-                <p className="text-lg ibm-plex-sans text-gray-700 mb-5">by {creatorName}</p>
-              )}
-              
-              <div className={`space-y-6 ${isExpanded ? 'flex-1 overflow-y-auto pr-2' : 'overflow-y-auto h-64'}`}>
-                <div>
-                  <h4 className="font-bold text-xl text-gray-800 mb-2">Description</h4>
-                  <p className="text-md text-gray-700 ibm-plex-sans">{longDescription}</p>
-                </div>
+              <div className="flex items-center gap-2">
+                {/* Navigation */}
+                {isExpanded && hasPrev && (
+                  <button
+                    onClick={handleNavigatePrev}
+                    className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                )}
+
+                {isExpanded && hasNext && (
+                  <button
+                    onClick={handleNavigateNext}
+                    className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                )}
+
+                {/* Close */}
+                <button
+                  onClick={handleClose}
+                  className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200"
+                >
+                  <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Content Area */}
+            <div className="h-[calc(100%-4rem)] overflow-y-auto">
+              <div className="p-8 space-y-8">
+                {/* Description Section */}
+                <section>
+                  <h4 className="text-lg font-bold uppercase tracking-wider text-gray-700 mb-3">
+                    Overview
+                  </h4>
+                  <p className="text-gray-700 ibm-plex-sans leading-relaxed">
+                    {longDescription}
+                  </p>
+                </section>
                 
-                <div>
-                  <h4 className="font-bold text-xl text-gray-800 mb-2">Technologies</h4>
-                  <div className="flex flex-wrap gap-2">
+                {/* Technologies */}
+                <section>
+                  <h4 className="text-lg font-bold uppercase tracking-wider text-gray-700 mb-3">
+                    Tech Stack
+                  </h4>
+                  <div className="flex flex-wrap gap-2.5">
                     {details.tech.map((tech, idx) => (
                       <span 
                         key={idx}
-                        className={`px-3 py-1 ${colors.tag} rounded-full text-md ibm-plex-sans`}
+                        className="px-4 py-2 rounded-lg ibm-plex-sans text-sm font-semibold transition-all hover:shadow-md"
+                        style={{
+                          backgroundColor: colors.light,
+                          color: colors.primary,
+                          border: `1.5px solid ${colors.primary}30`
+                        }}
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                </div>
+                </section>
 
-                {/* Gallery section - only if images exist */}
+                {/* Gallery */}
                 {isExpanded && gallery && gallery.length > 0 && (
-                  <div>
-                    <h4 className="font-bold text-xl text-gray-800 mb-3">Gallery</h4>
+                  <section>
+                    <h4 className="text-lg font-bold uppercase tracking-wider text-gray-700 mb-4">
+                      Gallery
+                    </h4>
                     <div className="space-y-4">
-                      {/* Main selected image */}
-                      <div className="w-full h-80 rounded-lg overflow-hidden">
+                      {/* Main Image */}
+                      <div className="w-full h-80 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
                         {gallery[selectedGalleryImage]?.endsWith('.mp4') ? (
                           <video 
                             src={gallery[selectedGalleryImage]} 
@@ -323,8 +392,9 @@ export default function ProjectCard({
                           />
                         )}
                       </div>
-                      {/* Thumbnail strip */}
-                      <div className="flex gap-3 overflow-x-auto pb-2">
+                      
+                      {/* Thumbnails */}
+                      <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
                         {gallery.map((img, idx) => (
                           <button
                             key={idx}
@@ -332,11 +402,13 @@ export default function ProjectCard({
                               e.stopPropagation();
                               setSelectedGalleryImage(idx);
                             }}
-                            className={`flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden border-3 transition-all ${
-                              selectedGalleryImage === idx 
-                                ? colors.border
-                                : 'border-transparent hover:border-gray-300'
-                            }`}
+                            className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden transition-all hover:scale-105"
+                            style={{
+                              border: selectedGalleryImage === idx 
+                                ? `3px solid ${colors.primary}` 
+                                : '3px solid transparent',
+                              opacity: selectedGalleryImage === idx ? 1 : 0.6
+                            }}
                           >
                             {img.endsWith('.mp4') ? (
                               <video 
@@ -356,18 +428,24 @@ export default function ProjectCard({
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </section>
                 )}
                 
-                <a 
-                  href={demoLink}
-                  onClick={(e) => e.stopPropagation()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-block w-full text-center ${colors.badge} hover:opacity-90 font-bold text-xl py-3 px-4 rounded-lg transition-opacity`}
-                >
-                  View Demo
-                </a>
+                {/* CTA Button */}
+                <section className="pt-4">
+                  <a 
+                    href={demoLink}
+                    onClick={(e) => e.stopPropagation()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center font-bold text-lg py-4 px-6 rounded-xl transition-all hover:shadow-xl text-white"
+                    style={{
+                      backgroundColor: colors.primary,
+                    }}
+                  >
+                    Launch Live Demo →
+                  </a>
+                </section>
               </div>
             </div>
           </div>

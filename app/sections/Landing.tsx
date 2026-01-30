@@ -22,7 +22,7 @@ export default function Landing() {
   });
 
   return (
-    <main id="home" className="section min-h-[120vh] relative">
+    <main id="home" className="section min-h-[110vh] relative">
       <div className="absolute inset-0 flex flex-col items-center justify-center -translate-y-40 text-center z-10 px-4">
         <motion.h1
           className="text-8xl md:text-9xl font-bold text-[rgb(57,123,255)]"
@@ -129,7 +129,7 @@ export default function Landing() {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 2 }}
-          className="absolute left-1/2 top-[55vh] mb-10 -translate-x-1/2"
+          className="absolute left-1/2 top-[55vh] -translate-x-1/2"
         >
           <div style={parallaxStyle(0.9, 0.8)}>
             <img

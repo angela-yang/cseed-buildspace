@@ -291,8 +291,6 @@ export default function Projects() {
             )}
           </div>
 
-          <PhotoGallery />
-
           <h2 className="text-4xl font-bold text-left ml-[7vw] mt-20 mb-6 text-white">
             Cohort 3
           </h2>

@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import DraggableToy from "../components/DraggableToy"
 import HoverText from "../components/HoverText"
 import Polaroid from "../components/Polaroid"
@@ -42,6 +42,10 @@ const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; dela
 export default function About() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [showDesc, setShowDesc] = useState(false);
+  const [showDesc1, setShowDesc1] = useState(false);
+  const [showDesc2, setShowDesc2] = useState(false);
+  const [showDesc3, setShowDesc3] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
 
   useEffect(() => {
@@ -81,7 +85,7 @@ export default function About() {
     { 
       image: '/images/community.jpg', 
       title: '2. Meet the community', 
-      desc: 'Connect with a space of other passionate people, and learn from experiences mentors.',
+      desc: 'Connect with a space of other amazing people, and learn from experienced mentors.',
       color: 'from-blue-400 to-purple-500',
       bgColor: 'bg-gradient-to-br from-blue-50 to-purple-50'
     },
@@ -154,12 +158,14 @@ export default function About() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1, duration: 1.5, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center"
+          className="flex flex-col items-center relative"
         >
-          <motion.div 
+          <motion.div
             style={parallaxStyle(1.2, 0.4)}
             whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={() => setShowDesc(!showDesc)}
+            className="cursor-pointer"
           >
             <img
               src={"/images/green.png"}
@@ -169,6 +175,20 @@ export default function About() {
             />
           </motion.div>
           <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">software</p>
+          <AnimatePresence>
+            {showDesc && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: -40 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
+              >
+                <p className="text-gray-700 text-sm md:text-base">
+                  Learn to build full-stack applications and scalable software solutions.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         <motion.div
@@ -182,6 +202,8 @@ export default function About() {
             style={parallaxStyle(0.8, 0.7)}
             whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={() => setShowDesc1(!showDesc1)}
+            className="cursor-pointer"
           >
             <img
               src={"/images/purple.png"}
@@ -191,6 +213,20 @@ export default function About() {
             />
           </motion.div>
           <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">hardware</p>
+          <AnimatePresence>
+            {showDesc1 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: -40 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
+              >
+                <p className="text-gray-700 text-sm md:text-base">
+                  Dive into electronics, circuits, and embedded systems development.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         <motion.div
@@ -204,6 +240,8 @@ export default function About() {
             style={parallaxStyle(1.5, 1.0)}
             whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={() => setShowDesc2(!showDesc2)}
+            className="cursor-pointer"
           >
             <img
               src={"/images/pink.png"}
@@ -213,6 +251,20 @@ export default function About() {
             />
           </motion.div>
           <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">wildcard</p>
+          <AnimatePresence>
+            {showDesc2 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: -40 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
+              >
+                <p className="text-gray-700 text-sm md:text-base">
+                  Explore unconventional tracks and creative projects beyond standard boundaries.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         <motion.div
@@ -226,6 +278,8 @@ export default function About() {
             style={parallaxStyle(1.5, 1.0)}
             whileHover={{ scale: 1.1, rotateY: 15 }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={() => setShowDesc3(!showDesc3)}
+            className="cursor-pointer"
           >
             <img
               src={"/images/yellow.png"}
@@ -235,6 +289,20 @@ export default function About() {
             />
           </motion.div>
           <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">creatives</p>
+          <AnimatePresence>
+            {showDesc3 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: -40 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
+              >
+                <p className="text-gray-700 text-sm md:text-base">
+                  Focus on design, visual storytelling, and creative problem-solving.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
 

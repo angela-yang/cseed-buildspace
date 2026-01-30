@@ -46,7 +46,45 @@ export default function About() {
   const [showDesc1, setShowDesc1] = useState(false);
   const [showDesc2, setShowDesc2] = useState(false);
   const [showDesc3, setShowDesc3] = useState(false);
-  const [activeFeature, setActiveFeature] = useState(0);
+
+  const tracks = [
+    {
+      image: "/images/green.png",
+      name: "software",
+      desc: "Learn to build full-stack applications and scalable software solutions.",
+      showDesc: showDesc,
+      setShowDesc: setShowDesc,
+      width: "200px",
+      parallax: { x: 1.2, y: 0.4 }
+    },
+    {
+      image: "/images/purple.png",
+      name: "hardware",
+      desc: "Dive into electronics, circuits, and embedded systems development.",
+      showDesc: showDesc1,
+      setShowDesc: setShowDesc1,
+      width: "150px",
+      parallax: { x: 0.8, y: 0.7 }
+    },
+    {
+      image: "/images/pink.png",
+      name: "wildcard",
+      desc: "Explore unconventional tracks and creative projects beyond standard boundaries.",
+      showDesc: showDesc2,
+      setShowDesc: setShowDesc2,
+      width: "210px",
+      parallax: { x: 1.5, y: 1.0 }
+    },
+    {
+      image: "/images/yellow.png",
+      name: "creatives",
+      desc: "Focus on design, visual storytelling, and creative problem-solving.",
+      showDesc: showDesc3,
+      setShowDesc: setShowDesc3,
+      width: "210px",
+      parallax: { x: 1.5, y: 1.0 }
+    }
+  ];
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -111,32 +149,34 @@ export default function About() {
 
           <HoverText />
 
-          <div className="relative max-w-7xl mx-auto px-6">
-            <div className="absolute top-[-150px] left-1/2 -translate-x-1/2 w-[100vw] max-w-5xl h-[2px]">
-                <svg
-                  viewBox="0 0 600 200"
-                  className="string"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M 50 80 Q 300 140 550 80"
-                    fill="none"
-                    stroke="#b89879ff"
-                    strokeWidth="3"
-                  />
-                </svg>
-              </div>
-            <div className="relative flex justify-center gap-20 -mt-10">
-              {features.map((feature, index) => {
-                return (
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+            {/* Desktop: String decoration */}
+            <div className="hidden md:block absolute top-[-150px] left-1/2 -translate-x-1/2 w-[100vw] max-w-5xl h-[2px]">
+              <svg
+                viewBox="0 0 600 200"
+                className="string"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M 50 80 Q 300 140 550 80"
+                  fill="none"
+                  stroke="#b89879ff"
+                  strokeWidth="3"
+                />
+              </svg>
+            </div>
+
+            {/* Responsive Polaroids Layout */}
+            <div className="relative flex flex-col md:flex-row justify-center gap-8 md:gap-20 -mt-0 md:-mt-10">
+              {features.map((feature, index) => (
+                <div key={index} className="w-full md:w-auto flex justify-center">
                   <Polaroid
-                    key={index}
                     feature={feature}
                     rotation={index === 0 ? 6 : index === 1 ? -1 : -5}
                     offsetY={index === 0 ? 15 : index === 1 ? 50 : 15}
                   />
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </ScrollReveal>
@@ -152,158 +192,73 @@ export default function About() {
         4 Program Tracks
       </motion.h3>
 
-      <div className="relative left-1/2 pt-10 pb-50 -translate-x-1/2 flex gap-4 justify-center items-end">
-        <motion.div
-          initial={{ y: 200, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1, duration: 1.5, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center relative"
-        >
+      <div className="hidden md:flex relative left-1/2 pt-10 pb-50 -translate-x-1/2 gap-4 justify-center items-end">
+        {tracks.map((track, idx) => (
           <motion.div
-            style={parallaxStyle(1.2, 0.4)}
-            whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            onClick={() => setShowDesc(!showDesc)}
-            className="cursor-pointer"
+            key={track.name}
+            initial={{ y: 200 + idx * 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1 + 0.1, duration: 1.5, type: "spring", stiffness: 50 }}
+            className="flex flex-col items-center relative"
           >
-            <img
-              src={"/images/green.png"}
-              alt="Green Square"
-              className="object-contain"
-              style={{ width: "200px" }}
-            />
+            <motion.div
+              style={parallaxStyle(track.parallax.x, track.parallax.y)}
+              whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              onClick={() => track.setShowDesc(!track.showDesc)}
+              className="cursor-pointer"
+            >
+              <img
+                src={track.image}
+                alt={`${track.name} track`}
+                className="object-contain"
+                style={{ width: track.width }}
+              />
+            </motion.div>
+            <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">{track.name}</p>
+            <AnimatePresence>
+              {track.showDesc && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: -40 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
+                >
+                  <p className="text-gray-700 text-sm md:text-base">{track.desc}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
-          <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">software</p>
-          <AnimatePresence>
-            {showDesc && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: -40 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
-              >
-                <p className="text-gray-700 text-sm md:text-base">
-                  Learn to build full-stack applications and scalable software solutions.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+        ))}
+      </div>
 
-        <motion.div
-          initial={{ y: 250, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 1.5, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center"
-        >
-          <motion.div 
-            style={parallaxStyle(0.8, 0.7)}
-            whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            onClick={() => setShowDesc1(!showDesc1)}
-            className="cursor-pointer"
+      {/* Mobile Layout */}
+      <div className="md:hidden px-4 py-8 pb-20 space-y-6">
+        {tracks.map((track, idx) => (
+          <motion.div
+            key={track.name}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1, duration: 0.6 }}
+            className="bg-white rounded-2xl p-6 shadow-lg"
           >
-            <img
-              src={"/images/purple.png"}
-              alt="Purple Circle"
-              className="object-contain mb-5"
-              style={{ width: "150px" }}
-            />
+            <div className="flex items-center gap-4 mb-4">
+              <img
+                src={track.image}
+                alt={`${track.name} track`}
+                className="object-contain w-16 h-16"
+              />
+              <h4 className="text-xl font-bold text-[rgb(55,58,65)] capitalize">
+                {track.name}
+              </h4>
+            </div>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              {track.desc}
+            </p>
           </motion.div>
-          <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">hardware</p>
-          <AnimatePresence>
-            {showDesc1 && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: -40 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
-              >
-                <p className="text-gray-700 text-sm md:text-base">
-                  Dive into electronics, circuits, and embedded systems development.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        <motion.div
-          initial={{ y: 300, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 1.5, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center"
-        >
-          <motion.div 
-            style={parallaxStyle(1.5, 1.0)}
-            whileHover={{ scale: 1.1, rotateY: 15, rotateX: 5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            onClick={() => setShowDesc2(!showDesc2)}
-            className="cursor-pointer"
-          >
-            <img
-              src={"/images/pink.png"}
-              alt="Pink Flower"
-              className="object-contain"
-              style={{ width: "210px" }}
-            />
-          </motion.div>
-          <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">wildcard</p>
-          <AnimatePresence>
-            {showDesc2 && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: -40 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
-              >
-                <p className="text-gray-700 text-sm md:text-base">
-                  Explore unconventional tracks and creative projects beyond standard boundaries.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        <motion.div
-          initial={{ y: 250, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 1.2, type: "spring", stiffness: 50 }}
-          className="flex flex-col items-center"
-        >
-          <motion.div 
-            style={parallaxStyle(1.5, 1.0)}
-            whileHover={{ scale: 1.1, rotateY: 15 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            onClick={() => setShowDesc3(!showDesc3)}
-            className="cursor-pointer"
-          >
-            <img
-              src={"/images/yellow.png"}
-              alt="Yellow Star"
-              className="object-contain"
-              style={{ width: "210px" }}
-            />
-          </motion.div>
-          <p className="mt-4 text-2xl font-semibold text-[rgb(55,58,65)]">creatives</p>
-          <AnimatePresence>
-            {showDesc3 && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: -40 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
-              >
-                <p className="text-gray-700 text-sm md:text-base">
-                  Focus on design, visual storytelling, and creative problem-solving.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+        ))}
       </div>
 
       {/* Timeline 

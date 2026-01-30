@@ -80,7 +80,7 @@ export default function Projects() {
     {
       projectName: "Jam Journal",
       creatorName: "Jenny Peng & Kelly Wang",
-      track: "software" as const,
+      track: "creatives" as const,
       description: "A song annotation platform",
       demoLink: "https://drive.google.com/file/d/1vFHSItXw6BIRBEEMULdq2UdgEFEAfq6_/view",
       coverImage: "/images/projects/jamjournal.png",
@@ -109,6 +109,17 @@ export default function Projects() {
       longDescription: "Using reinforcement learning (DQN and PPO), and expectimax, the agent can predict and perform the most optimal moves in 2048.",
       details: { tech: ["DQN", "PPO", "2048"] },
       gallery: ["/images/projects/2048.png", "/images/projects/2048-2.png", "/images/projects/2048-3.png", "/images/projects/2048-4.png", "/images/projects/2048.mp4", "/images/projects/2048-2.mp4"]
+    },
+    {
+      projectName: "Verbalize",
+      creatorName: "Medha Gupta",
+      track: "software",
+      description: "An AI-powered multiplayer game that makes behavioral interview prep fun and approachable.",
+      demoLink: "https://verbalizeprep.com/landing",
+      coverImage: "/images/projects/verbalize.png",
+      longDescription: "An AI-powered multiplayer game that makes behavioral interview prep fun and approachable.",
+      details: { tech: ["Lucid"] },
+      gallery: ["/images/projects/verbalize.png", "/images/projects/verbalize1.png", "/images/projects/verbalize2.png", "/images/projects/verbalize2.png"]
     },
     {
       projectName: "Smile w/ me",
@@ -146,8 +157,8 @@ export default function Projects() {
     {
       projectName: "Fridge Sense",
       creatorName: "Shrima & Arya",
-      track: "creatives",
-      description: "An app that helps you track what's in your fridge and when it's expiring.",
+      track: "software",
+      description: "Smart food tracking app for your fridge, creating an easy way to track food expiry dates and reduce waste.",
       demoLink: "/images/projects/fridge.mp4",
       coverImage: "/images/projects/fridge.png",
       longDescription: "A handy tool for knowing what's in your fridge, helps with grocery shopping. Helps combat food waste at the college level!",
@@ -156,12 +167,12 @@ export default function Projects() {
     },
     {
       projectName: "Gladius",
-      creatorName: "Anonymous",
-      track: "software",
-      description: "A plant-themed app that motivates fitness through digital garden growth.",
+      creatorName: "Alex Hsu",
+      track: "creatives",
+      description: "Can't grow your plants without growing your muscles.",
       demoLink: "/images/projects/gladius.mp4",
       coverImage: "/images/projects/gladius.png",
-      longDescription: "Gladius transforms your fitness journey into a motivational experience. It tracks your progress through biometric data.",
+      longDescription: "A plant-themed app that motivates fitness through digital garden growth. Gladius transforms your fitness journey into a motivational experience. It tracks your progress through biometric data.",
       details: { tech: ["Spline", "UX Design", "Figma" ] },
       gallery: ["/images/projects/gladius.png", "/images/projects/gladius.mp4"]
     },
@@ -212,13 +223,35 @@ export default function Projects() {
     {
       projectName: "Crash Out",
       creatorName: "Amina, Chloe, and Ella",
-      track: "wildcard",
+      track: "software",
       description: "A choice-based mini game that takes place on an island the player crashes onto.",
       demoLink: "/images/projects/crash-out.png",
       coverImage: "/images/projects/crashout.png",
       longDescription: "In order to escape the island, the player must complete tasks, make the right choices, find a special item, and make it to a cave before time runs out.",
       details: { tech: ["Java", "GitHub", "Eclipse"] },
       gallery: ["/images/projects/crashout.png", "/images/projects/crash-out.png"]
+    },
+    {
+      projectName: "Parallel Simulation",
+      creatorName: "Benedict Wong",
+      track: "hardware",
+      description: "AWS cloud architecture that enables parallel simulation applications to transform and analyze data.",
+      demoLink: "/images/projects/aws.mp4",
+      coverImage: "/images/projects/aws.png",
+      longDescription: "AWS cloud architecture that enables parallel simulation applications to transform and analyze data.",
+      details: { tech: ["Lucid"] },
+      gallery: ["/images/projects/aws.png", "/images/projects/aws.mp4"]
+    },
+    {
+      projectName: "AI Boxer",
+      creatorName: "Akshat Mundra",
+      track: "wildcard",
+      description: "An AI boxer that you can fight against in real time.",
+      demoLink: "/images/projects/boxer.mp4",
+      coverImage: "/images/projects/boxer1.png",
+      longDescription: "An AI boxer that you can fight against in real time.",
+      details: { tech: ["Unity"] },
+      gallery: ["/images/projects/boxer1.png", "/images/projects/boxer.png", "/images/projects/boxer.mp4"]
     }
   ];
 

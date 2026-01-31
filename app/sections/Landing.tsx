@@ -140,7 +140,7 @@ export default function Landing() {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 2 }}
-          className="absolute left-1/2 top-[55vh] -translate-x-1/2"
+          className="absolute left-1/2 top-[55vh] -translate-x-1/2 z-2"
         >
           <div style={parallaxStyle(0.9, 0.8)}>
             <img

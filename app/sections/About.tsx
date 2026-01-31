@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import DraggableToy from "../components/DraggableToy"
+import Background from "../components/Background"
 import HoverText from "../components/HoverText"
 import Polaroid from "../components/Polaroid"
 import PhotoGallery from "../sections/PhotoGallery"
@@ -46,6 +46,7 @@ export default function About() {
   const [showDesc1, setShowDesc1] = useState(false);
   const [showDesc2, setShowDesc2] = useState(false);
   const [showDesc3, setShowDesc3] = useState(false);
+  const aboutSectionRef = useRef<HTMLElement>(null);
 
   const tracks = [
     {
@@ -139,8 +140,9 @@ export default function About() {
   return (
     <main id="about" className="section">
       <section
-        className="py-24 px-10 mt-60 relative"
+        ref={aboutSectionRef} className="py-24 px-10 mt-60 relative"
       >
+        <Background sectionRef={aboutSectionRef} />
         {/* Overview */}
         <ScrollReveal>
           <h2 className="text-5xl font-bold text-center my-14 text-[rgb(57,123,255)]">
@@ -270,7 +272,6 @@ export default function About() {
           </motion.div>
         ))}
       </div>
-
       {/* Timeline 
       <section className="min-h-[50vh] flex flex-col justify-center items-center text-center relative mb-50">
         <h2 className="text-5xl font-bold text-center mt-15 mb-8 text-[rgb(57,123,255)] z-10">

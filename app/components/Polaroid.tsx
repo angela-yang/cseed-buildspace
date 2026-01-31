@@ -65,7 +65,7 @@ export default function Polaroid({
       </div>
 
       {/* POLAROID */}
-      <div className={`${bgColor}/80 w-full sm:w-85 h-auto sm:h-105 rounded-md shadow-2xl border border-gray-200`}>
+      <div className={`${bgColor} w-full sm:w-85 h-auto sm:h-105 rounded-md shadow-2xl border border-gray-200`}>
         {/* Image */}
         <img
           src={feature.image}

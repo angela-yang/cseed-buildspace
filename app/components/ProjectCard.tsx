@@ -24,15 +24,15 @@ const trackColors = {
 };
 
 export default function ProjectCard({ 
-  projectName = "AI Image Generator",
-  creatorName = "Jane Doe",
-  description = "A powerful tool that uses machine learning to generate stunning images from text prompts.",
+  projectName = "",
+  creatorName = "",
+  description = "",
   demoLink = "https://demo.example.com",
-  coverImage = "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
+  coverImage = "",
   track = "software" as keyof typeof trackColors,
-  longDescription = "This project leverages state-of-the-art diffusion models to transform textual descriptions into high-quality images. Built with Python and TensorFlow, it features a user-friendly interface and supports multiple art styles. The model was trained on a diverse dataset and can generate images in various resolutions.",
+  longDescription = "",
   details = {
-    tech: ["Python", "TensorFlow", "React", "FastAPI"],
+    tech: [""],
   },
   gallery = [],
   index = 0,
@@ -65,8 +65,8 @@ export default function ProjectCard({
   const [selectedGalleryImage, setSelectedGalleryImage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  
   const colors = trackColors[track as keyof typeof trackColors];
+  const hasValidDemo = demoLink && demoLink.trim() !== "" && !demoLink.includes("example.com");
 
   useEffect(() => {
     const checkMobile = () => {
@@ -121,6 +121,7 @@ export default function ProjectCard({
   };
 
   const expandToLeft = gridColumn === 3;
+  const expandToRight = gridColumn === 1;
 
   return (
     <>
@@ -133,7 +134,11 @@ export default function ProjectCard({
             : 'w-100 h-125 duration-700'
         }`}
         style={{
-          transformOrigin: expandToLeft ? 'top right' : 'top left'
+          transformOrigin: expandToLeft
+            ? 'top right'          // expands left
+            : expandToRight
+            ? 'top left'           // expands right
+            : 'top center'         // middle column, expands from center
         }}
       >
         <div 
@@ -250,7 +255,7 @@ export default function ProjectCard({
 
             {/* Footer with CTA */}
             <div className="absolute bottom-0 left-0 right-0 p-6 pt-4 border-t border-gray-100">
-              <div className="flex items-center justify-between">
+              <div className={`flex items-center ${hasValidDemo ? 'justify-between' : 'justify-start'}`}>
                 <button 
                   className="text-sm font-semibold flex ibm-plex-sans items-center gap-1.5 transition-all"
                   style={{ color: colors.primary }}
@@ -261,18 +266,20 @@ export default function ProjectCard({
                   </svg>
                 </button>
                 
-                <a 
-                  href={demoLink}
-                  onClick={(e) => e.stopPropagation()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-lg text-md font-semibold text-white transition-all cursor-pointer hover:shadow-lg"
-                  style={{ 
-                    backgroundColor: colors.primary,
-                  }}
-                >
-                  Live Demo
-                </a>
+                {hasValidDemo && (
+                  <a 
+                    href={demoLink}
+                    onClick={(e) => e.stopPropagation()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg text-md font-semibold text-white transition-all cursor-pointer hover:shadow-lg"
+                    style={{ 
+                      backgroundColor: colors.primary,
+                    }}
+                  >
+                    Live Demo
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -444,20 +451,22 @@ export default function ProjectCard({
                 )}
                 
                 {/* CTA Button */}
-                <section className="pt-4">
-                  <a 
-                    href={demoLink}
-                    onClick={(e) => e.stopPropagation()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center font-bold text-lg py-4 px-6 rounded-xl transition-all hover:shadow-xl text-white"
-                    style={{
-                      backgroundColor: colors.primary,
-                    }}
-                  >
-                    Launch Live Demo →
-                  </a>
-                </section>
+                {hasValidDemo && (
+                  <section className="pt-2 sm:pt-4">
+                    <a 
+                      href={demoLink}
+                      onClick={(e) => e.stopPropagation()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center font-bold text-base sm:text-lg py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition-all hover:shadow-xl text-white"
+                      style={{
+                        backgroundColor: colors.primary,
+                      }}
+                    >
+                      Launch Live Demo →
+                    </a>
+                  </section>
+                )}
               </div>
             </div>
           </div>

@@ -28,7 +28,7 @@ export const cohort4Projects: Project[] = [
     longDescription: "A transparent safety layer for AI therapy.",
     details: { tech: ["React", "Vite", "TailwindCSS", "JavaScript", "Python", "Shell"] }, 
     gallery: ["/images/projects/mindspace.png", "/images/projects/mindspace1.png", "/images/projects/mindspace2.png"],
-    featured: true
+    featured: false
   },
   {
     projectName: "Checkpoint",
@@ -93,7 +93,7 @@ export const cohort4Projects: Project[] = [
     longDescription: "A smart timesheet for self-employed side hustlers.",
     details: { tech: ["Lovable", "Cursor"] }, 
     gallery: ["/images/projects/sensei.png", "/images/projects/sensei2.png", "/images/projects/sensei3.png"],
-    featured: true
+    featured: false
   },
   {
     projectName: "Itinderary",
@@ -106,7 +106,7 @@ export const cohort4Projects: Project[] = [
     longDescription: "Swipe through Seattle activities and auto-builds a personalized itinerary, tinder-style.",
     details: { tech: ["React", "Vite", "OpenAI API"] }, 
     gallery: ["/images/projects/itinderary.png", "/images/projects/itinderary2.png"],
-    featured: true
+    featured: false
   },
   {
     projectName: "Train of Thought",
@@ -171,7 +171,7 @@ export const cohort4Projects: Project[] = [
     longDescription: "Accessibility details for campus events for students with disabilities.",
     details: { tech: ["Expo", "Android Studio"] }, 
     gallery: ["/images/projects/access2.png", "/images/projects/access1.png", "/images/projects/access.png"],
-    featured: true
+    featured: false
   },
   {
     projectName: "Plink: Piano Map",
@@ -236,7 +236,7 @@ export const cohort4Projects: Project[] = [
     longDescription: "A contraption that automatically shoots a ball for a dog to fetch.",
     details: { tech: ["PVC Pipe", "Cardboard", "Tire", "Compression Spring"] }, 
     gallery: ["/images/projects/fetch2.png", "/images/projects/fetch.png", "/images/projects/fetch.mp4"],
-    featured: false
+    featured: true
   },
   {
     projectName: "RagaID",
@@ -288,7 +288,7 @@ export const cohort4Projects: Project[] = [
     longDescription: "Tiny LiDAR sensors that maps how customers move in small stores and generates heat maps with layout suggestions.",
     details: { tech: ["Google Colab", "Python"] }, 
     gallery: ["/images/projects/sil.png", "/images/projects/sil1.png", "/images/projects/sil3.png", "/images/projects/sil2.png"],
-    featured: true
+    featured: false
   },
   {
     projectName: "Smart Funds",
@@ -422,7 +422,7 @@ export const cohort3Projects: Project[] = [
     longDescription: "Using reinforcement learning (DQN and PPO), and expectimax, the agent can predict and perform the most optimal moves in 2048.",
     details: { tech: ["DQN", "PPO", "2048"] },
     gallery: ["/images/projects/2048.png", "/images/projects/2048-2.png", "/images/projects/2048-3.png", "/images/projects/2048-4.png", "/images/projects/2048.mp4", "/images/projects/2048-2.mp4"],
-    featured: false
+    featured: true
   },
   {
     projectName: "Verbalize",
@@ -474,7 +474,7 @@ export const cohort3Projects: Project[] = [
     longDescription: "A handy tool for knowing what's in your fridge, helps with grocery shopping. Helps combat food waste at the college level!",
     details: { tech: ["React", "Google Firebase", "Sqlite", "Flask", "APIs", "Figma" ] },
     gallery: ["/images/projects/fridge.png", "/images/projects/fridge.mp4"],
-    featured: true
+    featured: false
   },
   {
     projectName: "Gladius",
@@ -485,9 +485,9 @@ export const cohort3Projects: Project[] = [
     demoLink: "/images/projects/gladius.mp4",
     coverImage: "/images/projects/gladius.png",
     longDescription: "A plant-themed app that motivates fitness through digital garden growth. Gladius transforms your fitness journey into a motivational experience. It tracks your progress through biometric data.",
-    details: { tech: ["Spline", "UX Design", "Figma" ] },
+    details: { tech: ["Spline", "Figma" ] },
     gallery: ["/images/projects/gladius.png", "/images/projects/gladius.mp4"],
-    featured: true
+    featured: false
   },
   {
     projectName: "Se7en",
@@ -526,20 +526,7 @@ export const cohort3Projects: Project[] = [
     longDescription: "Creativity is very important to me, including design, music, modeling, photography, maker space, and calligraphy.",
     details: { tech: ["Instagram", "LinkedIn", "Notion"] },
     gallery: ["/images/projects/content.png", "/images/projects/content-1.png", "/images/projects/content-2.png", "/images/projects/content-3.png", "/images/projects/content-4.png", "/images/projects/content-5.png"],
-    featured: false
-  },
-  {
-    projectName: "Bobby",
-    creatorName: "Carter Swartout & Andrew Edwards",
-    track: "hardware",
-    cohort: 3,
-    description: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
-    demoLink: "/images/projects/bobby.png",
-    coverImage: "/images/projects/bobby.png",
-    longDescription: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
-    details: { tech: ["Python", "Raspberry Pi"] },
-    gallery: ["/images/projects/bobby.png"],
-    featured: false
+    featured: true
   },
   {
     projectName: "Crash Out",
@@ -597,50 +584,193 @@ export const cohort3Projects: Project[] = [
 // ==================== COHORT 2 ====================
 export const cohort2Projects: Project[] = [
   {
-    projectName: "Jam Journal",
-    creatorName: "Jenny Peng & Kelly Wang",
-    track: "creatives" as const,
-    cohort: 3,
-    description: "A song annotation platform",
-    demoLink: "https://drive.google.com/file/d/1vFHSItXw6BIRBEEMULdq2UdgEFEAfq6_/view",
-    coverImage: "/images/projects/jamjournal.png",
-    longDescription: "A platform to import YouTube music, take notes at timestamps while listening, and make notes for lyrics.",
-    details: { tech: ["React", "Next.js", "HTML", "Figma"] }, 
-    gallery: ["/images/projects/jamjournal.png", "/images/projects/jam2.png"],
+    projectName: "Chef Lens",
+    creatorName: "Ayesha Khan & Mawi Mawi",
+    track: "software" as const,
+    cohort: 2,
+    description: "Streamlining recipe instructions for everyone.",
+    demoLink: "/images/projects/chef.mp4",
+    coverImage: "/images/projects/chef.png",
+    longDescription: "An app that streamlines recipes, with no ads or unecessary backstories.",
+    details: { tech: ["Streamlit", "Python", "OpenAI API", "Git"] }, 
+    gallery: ["/images/projects/chef.png", "/images/projects/chef1.png", "/images/projects/chef2.png", "/images/projects/chef.mp4", "/images/projects/chef1.mp4"],
+    featured: false
+  },
+  {
+    projectName: "Bioinformatics Dashboard",
+    creatorName: "Bhavya Krishnan",
+    track: "software" as const,
+    cohort: 2,
+    description: ".",
+    demoLink: "/images/projects/bio.mp4",
+    coverImage: "/images/projects/bio0.png",
+    longDescription: ".",
+    details: { tech: ["R", "ggplot d3", "Hugging Face", "Streamlit"] }, 
+    gallery: ["/images/projects/bio.png", "/images/projects/bio1.png"],
+    featured: false
+  },
+  {
+    projectName: "CueZine",
+    creatorName: "David Kim",
+    track: "software" as const,
+    cohort: 2,
+    description: "Your streamlined food finding friend :)",
+    demoLink: "/images/projects/cuezine.mp4",
+    coverImage: "/images/projects/cuezine.png",
+    longDescription: "A tinder-style way to find places to eat.",
+    details: { tech: ["Expo", "AsyncStorage", "React Native", "TypeScript", "Google Places API"] }, 
+    gallery: ["/images/projects/cuezine.png", "/images/projects/cuezine1.png", "/images/projects/cuezine2.png", "/images/projects/cuezine3.png", "/images/projects/cuezine.mp4"],
+    featured: false
+  },
+  {
+    projectName: "CrowdLight",
+    creatorName: "Colton Carroll",
+    track: "software" as const,
+    cohort: 2,
+    description: "Make a holiday lightshow more interactive.",
+    demoLink: "/images/projects/light.mp4",
+    coverImage: "/images/projects/light.png",
+    longDescription: "Make a holiday lightshow more interactive.",
+    details: { tech: ["ATTiny85", "ESP32", "HC-12 Transreceiver", "RJ-45 Ethernet Port", "WS2812b LEDs", "Arduino"] }, 
+    gallery: ["/images/projects/light.png", "/images/projects/light1.png", "/images/projects/light2.png", "/images/projects/light.mp4"],
+    featured: false
+  },
+  {
+    projectName: "Husky ButterWalk",
+    creatorName: "Crystal Shen, Katharine Zhang, Jenna Moon-Earle",
+    track: "software" as const,
+    cohort: 2,
+    description: "An Uber app for Husky NightWalk.",
+    demoLink: "",
+    coverImage: "/images/projects/walk.png",
+    longDescription: "An Uber app for Husky NightWalk, where students can track their ride, view estimated wait time, and find meeting point with driver.",
+    details: { tech: ["React Native", "Figma", "Expo"] }, 
+    gallery: ["/images/projects/walk1.png", "/images/projects/walk.png"],
+    featured: false
+  },
+  {
+    projectName: "Vocab Generator for Anki",
+    creatorName: "Apolo Garica",
+    track: "software" as const,
+    cohort: 2,
+    description: "A powerful, customizable flashcard application.",
+    demoLink: "/images/projects/anki.mp4",
+    coverImage: "/images/projects/anki.png",
+    longDescription: "A powerful, customizable flashcard application that uses spaced repetition to help users retain information over time.",
+    details: { tech: ["LibreTranslate", "PyQt API", "Python", "JavaScript"] }, 
+    gallery: ["/images/projects/anki.png", "/images/projects/anki1.png", "/images/projects/anki2.png", "/images/projects/anki3.png"],
+    featured: false
+  },
+  {
+    projectName: "Focus Bank",
+    creatorName: "Luyang Wu & Varun Atraya",
+    track: "software" as const,
+    cohort: 2,
+    description: "An app to help you lock in.",
+    demoLink: "/images/projects/focus.mp4",
+    coverImage: "/images/projects/focus.png",
+    longDescription: "An app that helps you lock in, forcing you to budget your screen time.",
+    details: { tech: ["Expo Go", "React Native", "Swift", "Firebase"] }, 
+    gallery: ["/images/projects/focus.png", "/images/projects/focus0.png", "/images/projects/focus1.png", "/images/projects/focus2.png", "/images/projects/focus.mp4"],
     featured: true
+  },
+  {
+    projectName: "AI Social Media Analyst",
+    creatorName: "Charlene Lioe",
+    track: "software" as const,
+    cohort: 2,
+    description: "An AI tool designed to help businesses analyze their ad campaigns.",
+    demoLink: "/images/projects/analyst.mp4",
+    coverImage: "/images/projects/analyst0.png",
+    longDescription: "An app that helps you lock in, forcing you to budget your screen time.",
+    details: { tech: ["Facebook API", "Python"] }, 
+    gallery: ["/images/projects/analyst0.png", "/images/projects/analyst.png", "/images/projects/analyst1.png", "/images/projects/analyst.mp4"],
+    featured: false
+  },
+  {
+    projectName: "Beauty of Physics",
+    creatorName: "Amy Lu",
+    track: "software" as const,
+    cohort: 2,
+    description: "A physics simulation to help simplify physics.",
+    demoLink: "https://drive.google.com/drive/folders/1bkRMeLSiXluXrQAgNKFDOwaPdLIwqthi",
+    coverImage: "/images/projects/physics.mp4",
+    longDescription: "A physics simulation to help simplify physics - helps you visualize particle movement.",
+    details: { tech: ["Three.js"] }, 
+    gallery: ["/images/projects/physics2.png", "/images/projects/physics1.png", "/images/projects/physics.mp4"],
+    featured: false
+  },
+  {
+    projectName: "File Digest",
+    creatorName: "Nico Susanto",
+    track: "software" as const,
+    cohort: 2,
+    description: "Understand your directories.",
+    demoLink: "/images/projects/file.mp4",
+    coverImage: "/images/projects/file1.png",
+    longDescription: "An app that helps you summarize and understand your directory files.",
+    details: { tech: ["TKinter", "Python", "Gemini AI API"] }, 
+    gallery: ["/images/projects/file1.png", "/images/projects/file0.png", "/images/projects/file2.png", "/images/projects/file3.png"],
+    featured: false
+  },
+  {
+    projectName: "AI + Healthcare",
+    creatorName: "Smriti Kalahalla, Jia Ruparel, Alba Navarro, and Stephanie Lau",
+    track: "software" as const,
+    cohort: 2,
+    description: "An website that identifies an injury based off image recognition.",
+    demoLink: "/images/projects/health.mp4",
+    coverImage: "/images/projects/health.png",
+    longDescription: "The website will quickly identify an injury from an image, and offer instructions on how to treat it.",
+    details: { tech: ["TensorFlow", "Keras sequential model", "CNNs", "Python"] }, 
+    gallery: ["/images/projects/health.png", "/images/projects/health1.png", "/images/projects/health2.png","/images/projects/health3.png", "/images/projects/health4.png","/images/projects/health5.png"],
+    featured: false
+  },
+  {
+    projectName: "Pinpots",
+    creatorName: "Claire Li",
+    track: "software" as const,
+    cohort: 2,
+    description: "Upload pictures of cool plants you see, and mark it on your map.",
+    demoLink: "https://pinpots.onrender.com/",
+    coverImage: "/images/projects/pots0.png",
+    longDescription: "Upload pictures of cool plants you see, and mark it on your map. Share these plants with your friends/the public, or choose to keep it private.",
+    details: { tech: ["Google Cloud", "PyTorch", "React"] }, 
+    gallery: ["/images/projects/pots0.png", "/images/projects/pots.png", "/images/projects/pots2.png", "/images/projects/pots3.png", "/images/projects/pots.mp4"],
+    featured: false
   },
 ];
 
 // ==================== COHORT 1 ====================
 export const cohort1Projects: Project[] = [
   {
-    projectName: "Jam Journal",
-    creatorName: "Jenny Peng & Kelly Wang",
-    track: "creatives" as const,
-    cohort: 3,
+    projectName: "Journal",
+    creatorName: "",
+    track: "software" as const,
+    cohort: 1,
     description: "A song annotation platform",
     demoLink: "https://drive.google.com/file/d/1vFHSItXw6BIRBEEMULdq2UdgEFEAfq6_/view",
     coverImage: "/images/projects/jamjournal.png",
     longDescription: "A platform to import YouTube music, take notes at timestamps while listening, and make notes for lyrics.",
     details: { tech: ["React", "Next.js", "HTML", "Figma"] }, 
     gallery: ["/images/projects/jamjournal.png", "/images/projects/jam2.png"],
-    featured: true
+    featured: false
   },
 ];
 
 // ==================== COHORT 0 ====================
 export const cohort0Projects: Project[] = [
   {
-    projectName: "Jam Journal",
-    creatorName: "Jenny Peng & Kelly Wang",
-    track: "creatives" as const,
-    cohort: 3,
-    description: "A song annotation platform",
-    demoLink: "https://drive.google.com/file/d/1vFHSItXw6BIRBEEMULdq2UdgEFEAfq6_/view",
-    coverImage: "/images/projects/jamjournal.png",
-    longDescription: "A platform to import YouTube music, take notes at timestamps while listening, and make notes for lyrics.",
-    details: { tech: ["React", "Next.js", "HTML", "Figma"] }, 
-    gallery: ["/images/projects/jamjournal.png", "/images/projects/jam2.png"],
+    projectName: "Bobby",
+    creatorName: "Carter Swartout & Andrew Edwards",
+    track: "hardware",
+    cohort: 0,
+    description: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
+    demoLink: "/images/projects/bobby.png",
+    coverImage: "/images/projects/bobby.png",
+    longDescription: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
+    details: { tech: ["Python", "Raspberry Pi"] },
+    gallery: ["/images/projects/bobby.png"],
     featured: true
   },
 ];

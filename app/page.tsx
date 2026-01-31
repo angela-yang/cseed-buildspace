@@ -5,6 +5,7 @@ import About from "./sections/About"
 import Projects from "./sections/Projects"
 import Cohorts from "./sections/Cohorts"
 import Contact from "./sections/Contact"
+import Background from "./components/Background";
 import { useState, useEffect } from 'react';
 
 export default function Home() {
@@ -86,7 +87,7 @@ export default function Home() {
           className={`${cursorConfig[cursorType].size}`}
         />
       </div>
-      
+
       <Landing />
       <About/>
       <Projects />

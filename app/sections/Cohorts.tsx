@@ -4,68 +4,12 @@ import ProjectCard from "../components/ProjectCard"
 import { FaSearch } from "react-icons/fa";
 import { projects, type Project, type Cohort } from "../components/ProjectsData";
 
-const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [delay]);
-
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-      }`}
-    >
-      {children}
-    </div>
-  );
-};
-
 export default function Cohorts() {
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      setMousePos({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      const x = ((e.clientX - innerWidth / 2) / innerWidth) * -30;
-      const y = ((e.clientY - innerHeight / 2) / innerHeight) * -30;
-      setOffset({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   const [filter, setFilter] = useState("all");
   const [cohortFilter, setCohortFilter] = useState<"all" | Cohort>("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const PROJECTS_PER_COHORT = 12;
+  const [expandedCohorts, setExpandedCohorts] = useState<Record<number, boolean>>({});
 
   // Filter projects based on track, cohort, and search
   const filteredProjects = projects.filter((project) => {
@@ -82,6 +26,10 @@ export default function Cohorts() {
 
     return matchesTrack && matchesCohort && matchesSearch;
   });
+
+  useEffect(() => {
+    setExpandedCohorts({});
+  }, [filter, cohortFilter, searchTerm]);
 
   // Group projects by cohort
   const projectsByCohort = filteredProjects.reduce<Record<number, Project[]>>(
@@ -194,11 +142,49 @@ export default function Cohorts() {
                   Cohort {cohort}
                 </h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-                  {cohortProjects.map((project, i) => (
-                    <ProjectCard key={i} {...project} index={i} />
+                <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+                  {cohortProjects
+                  .slice(
+                    0,
+                    expandedCohorts[cohort] ? cohortProjects.length : PROJECTS_PER_COHORT
+                  )
+                  .map((project, i) => (
+                    <ProjectCard
+                      key={`${project.projectName}-${i}`}
+                      {...project}
+                      index={i}
+                    />
                   ))}
                 </div>
+                {cohortProjects.length > PROJECTS_PER_COHORT && (
+                  <div className="flex justify-center mt-10 space-x-4">
+                    {!expandedCohorts[cohort] ? (
+                      <button
+                        onClick={() =>
+                          setExpandedCohorts((prev) => ({
+                            ...prev,
+                            [cohort]: true,
+                          }))
+                        }
+                        className="px-8 py-3 rounded-full bg-white text-black font-semibold shadow-lg hover:scale-105 transition-transform"
+                      >
+                        View more
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() =>
+                          setExpandedCohorts((prev) => ({
+                            ...prev,
+                            [cohort]: false,
+                          }))
+                        }
+                        className="px-8 py-3 rounded-full bg-white text-black font-semibold shadow-lg hover:scale-105 transition-transform"
+                      >
+                        View less
+                      </button>
+                    )}
+                  </div>
+                  )}
               </div>
             );
           })}

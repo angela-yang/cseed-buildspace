@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import ProjectCard from "../components/ProjectCard"
 import DraggableToy from "../components/DraggableToy"
 import { FaSearch } from "react-icons/fa";
+import { getFeaturedProjects } from "../components/ProjectsData";
 
 const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -40,7 +41,7 @@ const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; dela
     if (ref.current) observer.observe(ref.current);
 
     return () => observer.disconnect();
-  }, [delay]);
+  }, [delay, isMobile]);
 
   return (
     <div
@@ -91,185 +92,9 @@ export default function Projects() {
   const [filter, setFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const projects: Array<{
-    projectName: string;
-    creatorName: string;
-    track: "software" | "hardware" | "wildcard" | "creatives";
-    description: string;
-    demoLink: string;
-    coverImage: string;
-    longDescription: string;
-    details: { tech: string[] };
-    gallery?: string[];
-  }> = [
-    {
-      projectName: "Jam Journal",
-      creatorName: "Jenny Peng & Kelly Wang",
-      track: "creatives" as const,
-      description: "A song annotation platform",
-      demoLink: "https://drive.google.com/file/d/1vFHSItXw6BIRBEEMULdq2UdgEFEAfq6_/view",
-      coverImage: "/images/projects/jamjournal.png",
-      longDescription: "A platform to import YouTube music, take notes at timestamps while listening, and make notes for lyrics.",
-      details: { tech: ["React", "Next.js", "HTML", "Figma"] }, 
-      gallery: ["/images/projects/jamjournal.png", "/images/projects/jam2.png"]
-    },
-    {
-      projectName: "MarioKart Racecar",
-      creatorName: "Mukund Senthil Kumar",
-      track: "hardware",
-      description: "An automated racecar that uses different sensors to traverse the terrain.",
-      demoLink: "/images/projects/racecar.mp4",
-      coverImage: "/images/projects/racecar.png",
-      longDescription: "An automated racecar that uses different sensors to traverse the terrain and not hit obstacles and pedestrians.",
-      details: { tech: ["Raspberry Pi 4", "Servo Motor", "Brushed Motor", "Wide Angled Camera", "PCA9685 PWM Servo Driver Board"] },
-      gallery: ["/images/projects/racecar.png", "/images/projects/racecar.mp4"]
-    },
-    {
-      projectName: "2048 Agent",
-      creatorName: "Brian Yao",
-      track: "software",
-      description: "An Ai agent that plays the game 2048.",
-      demoLink: "/images/projects/2048-2.mp4",
-      coverImage: "/images/projects/2048.mp4",
-      longDescription: "Using reinforcement learning (DQN and PPO), and expectimax, the agent can predict and perform the most optimal moves in 2048.",
-      details: { tech: ["DQN", "PPO", "2048"] },
-      gallery: ["/images/projects/2048.png", "/images/projects/2048-2.png", "/images/projects/2048-3.png", "/images/projects/2048-4.png", "/images/projects/2048.mp4", "/images/projects/2048-2.mp4"]
-    },
-    {
-      projectName: "Verbalize",
-      creatorName: "Medha Gupta",
-      track: "software",
-      description: "An AI-powered multiplayer game that makes behavioral interview prep fun and approachable.",
-      demoLink: "https://verbalizeprep.com/landing",
-      coverImage: "/images/projects/verbalize.png",
-      longDescription: "An AI-powered multiplayer game that makes behavioral interview prep fun and approachable.",
-      details: { tech: ["Lucid"] },
-      gallery: ["/images/projects/verbalize.png", "/images/projects/verbalize1.png", "/images/projects/verbalize2.png", "/images/projects/verbalize2.png"]
-    },
-    {
-      projectName: "Smile w/ me",
-      creatorName: "Eva Gonzales-Bravo",
-      track: "software",
-      description: "A photo booth website where you can take pics and have fun!",
-      demoLink: "/images/projects/smile.mp4",
-      coverImage: "/images/projects/smile.png",
-      longDescription: "This is a hand-coded photo booth website, where you can take photos and add stickers and filters!",
-      details: { tech: ["HTML", "CSS", "React"] },
-      gallery: ["/images/projects/smile.png", "/images/projects/smile.mp4"]
-    },
-    {
-      projectName: "Juicebox",
-      creatorName: "Sia Razdan",
-      track: "creatives",
-      description: "Rewards families for disconnecting from screens - enabling connection, learning, and fun.",
-      demoLink: "/images/projects/juicebox.mp4",
-      coverImage: "/images/projects/juicebox.png",
-      longDescription: "This is a design speculative project to foster connection and disconnecting from screens.",
-      details: { tech: ["Figma", "Design", "Wireframing"] },
-      gallery: ["/images/projects/juicebox.png", "/images/projects/juicebox.mp4"]
-    },
-    {
-      projectName: "Fridge Sense",
-      creatorName: "Shrima & Arya",
-      track: "software",
-      description: "Smart food tracking app for your fridge, creating an easy way to track food expiry dates and reduce waste.",
-      demoLink: "/images/projects/fridge.mp4",
-      coverImage: "/images/projects/fridge.png",
-      longDescription: "A handy tool for knowing what's in your fridge, helps with grocery shopping. Helps combat food waste at the college level!",
-      details: { tech: ["React", "Google Firebase", "Sqlite", "Flask", "APIs", "Figma" ] },
-      gallery: ["/images/projects/fridge.png", "/images/projects/fridge.mp4"]
-    },
-    {
-      projectName: "Gladius",
-      creatorName: "Alex Hsu",
-      track: "creatives",
-      description: "Can't grow your plants without growing your muscles.",
-      demoLink: "/images/projects/gladius.mp4",
-      coverImage: "/images/projects/gladius.png",
-      longDescription: "A plant-themed app that motivates fitness through digital garden growth. Gladius transforms your fitness journey into a motivational experience. It tracks your progress through biometric data.",
-      details: { tech: ["Spline", "UX Design", "Figma" ] },
-      gallery: ["/images/projects/gladius.png", "/images/projects/gladius.mp4"]
-    },
-    {
-      projectName: "Se7en",
-      creatorName: "Noah Hoang, Kshitij Rao, and Chetan Sidhu",
-      track: "software",
-      description: "An app that fosters UW connectivity and community.",
-      demoLink: "/images/projects/seven.mp4",
-      coverImage: "/images/projects/seven.png",
-      longDescription: "Se7en effortlessly organizes groups of people with similar interests for casual convos/coffee chat-like conversations.",
-      details: { tech: ["ROS", "Computer Vision", "GPS", "LiDAR"] },
-      gallery: ["/images/projects/seven.png", "/images/projects/seven.mp4"]
-    },
-    {
-      projectName: "Nivo",
-      creatorName: "Samantha Scalia",
-      track: "hardware",
-      description: "Goggles designed for comfort and adaptability, delivering a clear and unobstructed view.",
-      demoLink: "/images/projects/nivo.mp4",
-      coverImage: "/images/projects/nivo.png",
-      longDescription: "Prescription lenses, custom fit, all-weather performance, and comfort. The base model is a simple CAD model that can be adjusted to the user's measurements.",
-      details: { tech: ["CAD", "Figma", "TPU"] },
-      gallery: ["/images/projects/nivo.png", "/images/projects/nivo.mp4"]
-    },
-    {
-      projectName: "Content Creation",
-      creatorName: "Tiffany Yan",
-      track: "creatives",
-      description: "Building my content creation through Instagram, LinkedIn, and Notion.",
-      demoLink: "https://www.instagram.com/tiffanyyan.mov/",
-      coverImage: "/images/projects/content-1.png",
-      longDescription: "Creativity is very important to me, including design, music, modeling, photography, maker space, and calligraphy.",
-      details: { tech: ["Instagram", "LinkedIn", "Notion"] },
-      gallery: ["/images/projects/content.png", "/images/projects/content-1.png", "/images/projects/content-2.png", "/images/projects/content-3.png", "/images/projects/content-4.png", "/images/projects/content-5.png"]
-    },
-    {
-      projectName: "Bobby",
-      creatorName: "Carter Swartout & Andrew Edwards",
-      track: "hardware",
-      description: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
-      demoLink: "/images/projects/bobby.png",
-      coverImage: "/images/projects/bobby.png",
-      longDescription: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
-      details: { tech: ["Python", ""] },
-      gallery: ["/images/projects/bobby.png"]
-    },
-    {
-      projectName: "Crash Out",
-      creatorName: "Amina, Chloe, and Ella",
-      track: "software",
-      description: "A choice-based mini game that takes place on an island the player crashes onto.",
-      demoLink: "/images/projects/crash-out.png",
-      coverImage: "/images/projects/crashout.png",
-      longDescription: "In order to escape the island, the player must complete tasks, make the right choices, find a special item, and make it to a cave before time runs out.",
-      details: { tech: ["Java", "GitHub", "Eclipse"] },
-      gallery: ["/images/projects/crashout.png", "/images/projects/crash-out.png"]
-    },
-    {
-      projectName: "Parallel Simulation",
-      creatorName: "Benedict Wong",
-      track: "hardware",
-      description: "AWS cloud architecture that enables parallel simulation applications to transform and analyze data.",
-      demoLink: "/images/projects/aws.mp4",
-      coverImage: "/images/projects/aws.png",
-      longDescription: "AWS cloud architecture that enables parallel simulation applications to transform and analyze data.",
-      details: { tech: ["Lucid"] },
-      gallery: ["/images/projects/aws.png", "/images/projects/aws.mp4"]
-    },
-    {
-      projectName: "AI Boxer",
-      creatorName: "Akshat Mundra",
-      track: "wildcard",
-      description: "An AI boxer that you can fight against in real time.",
-      demoLink: "/images/projects/boxer.mp4",
-      coverImage: "/images/projects/boxer1.png",
-      longDescription: "An AI boxer that you can fight against in real time.",
-      details: { tech: ["Unity"] },
-      gallery: ["/images/projects/boxer1.png", "/images/projects/boxer.png", "/images/projects/boxer.mp4"]
-    }
-  ];
-
-  const filteredProjects = projects.filter(project => {
+  const featuredProjects = getFeaturedProjects();
+ 
+  const filteredProjects = featuredProjects.filter(project => {
     const matchesFilter = filter === "all" || project.track === filter;
     const matchesSearch = project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          project.creatorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -355,7 +180,7 @@ export default function Projects() {
 
               {filteredProjects.length === 0 && (
                 <div className="text-center py-20">
-                  <p className="text-2xl text-gray-200">No projects found</p>
+                  <p className="text-2xl text-gray-200">No featured projects found</p>
                 </div>
               )}
             </div>

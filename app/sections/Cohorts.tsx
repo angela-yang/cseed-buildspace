@@ -37,7 +37,7 @@ const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; dela
   );
 };
 
-export default function Projects() {
+export default function Cohorts() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -64,22 +64,30 @@ export default function Projects() {
   }, []);
 
   const [filter, setFilter] = useState("all");
+  const [cohortFilter, setCohortFilter] = useState<"all" | 0 | 1 | 2 | 3 | 4>("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const projects: Array<{
+  type Track = "software" | "hardware" | "wildcard" | "creatives";
+  type Cohort = 0 | 1 | 2 | 3 | 4;
+
+  type Project = {
     projectName: string;
     creatorName: string;
-    track: "software" | "hardware" | "wildcard" | "creatives";
+    track: Track;
+    cohort: Cohort;
     description: string;
     demoLink: string;
     coverImage: string;
     longDescription: string;
     details: { tech: string[] };
-  }> = [
+  };
+
+  const projects: Project[] = [
     {
       projectName: "Jam Journal",
       creatorName: "Jenny Peng & Kelly Wang",
       track: "software" as const,
+      cohort: 3,
       description: "A song annotation platform",
       demoLink: "https://drive.google.com/file/d/1vFHSItXw6BIRBEEMULdq2UdgEFEAfq6_/view",
       coverImage: "/images/projects/jamjournal.png",
@@ -90,6 +98,7 @@ export default function Projects() {
       projectName: "MarioKart Racecar",
       creatorName: "Mukund Senthil Kumar",
       track: "hardware",
+      cohort: 3,
       description: "An automated racecar that uses different sensors to traverse the terrain.",
       demoLink: "/images/projects/racecar.mp4",
       coverImage: "/images/projects/racecar.png",
@@ -100,6 +109,7 @@ export default function Projects() {
       projectName: "2048 Agent",
       creatorName: "Brian Yao",
       track: "software",
+      cohort: 3,
       description: "An Ai agent that plays the game 2048.",
       demoLink: "/images/projects/2048-2.mp4",
       coverImage: "/images/projects/2048.mp4",
@@ -107,9 +117,21 @@ export default function Projects() {
       details: { tech: ["DQN", "PPO", "2048"] }
     },
     {
+      projectName: "Verbalize",
+      creatorName: "Medha Gupta",
+      track: "software",
+      cohort: 3,
+      description: "An AI-powered multiplayer game that makes behavioral interview prep fun and approachable.",
+      demoLink: "https://verbalizeprep.com/landing",
+      coverImage: "/images/projects/verbalize.png",
+      longDescription: "An AI-powered multiplayer game that makes behavioral interview prep fun and approachable.",
+      details: { tech: ["Lucid"] },
+    },
+    {
       projectName: "Smile w/ me",
       creatorName: "Eva Gonzales-Bravo",
       track: "software",
+      cohort: 3,
       description: "A photo booth website where you can take pics and have fun!",
       demoLink: "/images/projects/smile.mp4",
       coverImage: "/images/projects/smile.png",
@@ -120,6 +142,7 @@ export default function Projects() {
       projectName: "Juicebox",
       creatorName: "Sia Razdan",
       track: "creatives",
+      cohort: 3,
       description: "Rewards families for disconnecting from screens - enabling connection, learning, and fun.",
       demoLink: "/images/projects/juicebox.mp4",
       coverImage: "/images/projects/juicebox.png",
@@ -130,6 +153,7 @@ export default function Projects() {
       projectName: "CoachT",
       creatorName: "Ojas Kandhare",
       track: "software",
+      cohort: 3,
       description: "Uses cameras to advance sports performance - An AI coach for martial arts.",
       demoLink: "www.coacht.xyz",
       coverImage: "/images/projects/coacht.png",
@@ -140,6 +164,7 @@ export default function Projects() {
       projectName: "Fridge Sense",
       creatorName: "Shrima & Arya",
       track: "creatives",
+      cohort: 3,
       description: "An app that helps you track what's in your fridge & when it's expiring.",
       demoLink: "/images/projects/fridge.mp4",
       coverImage: "/images/projects/fridge.png",
@@ -148,8 +173,9 @@ export default function Projects() {
     },
     {
       projectName: "Gladius",
-      creatorName: "Anonymous",
-      track: "software",
+      creatorName: "Alex Hsu",
+      track: "creatives",
+      cohort: 3,
       description: "A plant-themed app that motivates fitness through digital garden growth.",
       demoLink: "/images/projects/gladius.mp4",
       coverImage: "/images/projects/gladius.png",
@@ -160,6 +186,7 @@ export default function Projects() {
       projectName: "Se7en",
       creatorName: "Noah Hoang, Kshitij Rao, and Chetan Sidhu",
       track: "software",
+      cohort: 3,
       description: "An app that fosters UW connectivity and community.",
       demoLink: "/images/projects/seven.mp4",
       coverImage: "/images/projects/seven.png",
@@ -170,6 +197,7 @@ export default function Projects() {
       projectName: "Nivo",
       creatorName: "Samantha Scalia",
       track: "hardware",
+      cohort: 3,
       description: "Goggles designed for comfort and adaptability, delivering a clear and unobstructed view.",
       demoLink: "/images/projects/nivo.mp4",
       coverImage: "/images/projects/nivo.png",
@@ -179,152 +207,157 @@ export default function Projects() {
     {
       projectName: "Crash Out",
       creatorName: "Amina, Chloe, and Ella",
-      track: "wildcard",
+      track: "software",
+      cohort: 3,
       description: "A choice-based mini game that takes place on an island the player crashes onto.",
       demoLink: "/images/projects/crash-out.png",
       coverImage: "/images/projects/crashout.png",
       longDescription: "In order to escape the island, the player must complete tasks, make the right choices, find a special item, and make it to a cave before time runs out.",
       details: { tech: ["Java", "GitHub", "Eclipse"] }
+    },
+    {
+      projectName: "AI Boxer",
+      creatorName: "Akshat Mundra",
+      track: "wildcard",
+      cohort: 3,
+      description: "An AI boxer that you can fight against in real time.",
+      demoLink: "/images/projects/boxer.mp4",
+      coverImage: "/images/projects/boxer1.png",
+      longDescription: "An AI boxer that you can fight against in real time.",
+      details: { tech: ["Unity"] },
     }
   ];
 
-  const filteredProjects = projects.filter(project => {
-    const matchesFilter = filter === "all" || project.track === filter;
-    const matchesSearch = project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.creatorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFilter && matchesSearch;
+  const filteredProjects = projects.filter((project) => {
+    const matchesTrack =
+      filter === "all" || project.track === filter;
+
+    const matchesCohort =
+      cohortFilter === "all" || project.cohort === cohortFilter;
+
+    const matchesSearch =
+      project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.creatorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesTrack && matchesCohort && matchesSearch;
   });
+
+
+  const projectsByCohort = filteredProjects.reduce<Record<number, Project[]>>(
+    (acc, project) => {
+      acc[project.cohort] ||= [];
+      acc[project.cohort].push(project);
+      return acc;
+    },
+    {}
+  );
 
   return (
     <main>
-      <section
-        id="cohorts"
-        className="section py-24 px-10 relative bg-[rgb(57,123,255)]"
-      >
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div
-              className="absolute w-36 h-36 bg-[rgb(255,231,164)] rounded-full top-[40%] left-[85%]"
-              style={{ transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * 0.7}px)` }}
-          />
-          <div
-              className="absolute w-24 h-24 bg-[rgb(133,216,186)] rounded-2xl top-[92%] left-[25%]"
-              style={{ transform: `translate(${mousePos.x * -1}px, ${mousePos.y * 1}px)` }}
-          />
-          <div
-              className="absolute w-28 h-28 bg-[rgb(216,109,255)] top-[25%] left-[5%]"
-              style={{
-              borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-              transform: `translate(${mousePos.x * 1}px, ${mousePos.y * -0.3}px)`
-              }}
-          />
-        </div>
-
+      <section id="cohorts" className="py-24 px-6 bg-[rgb(57,123,255)]">
         <ScrollReveal>
-          <div className="py-10 px-4 max-w-7xl mx-auto text-center">
-            <h2 className="text-5xl font-bold text-center mb-6 text-white">
-              Cohort Showcase
-            </h2>
-            <p className="text-2xl text-center mb-12 text-gray-200">
-              View all works from past cohorts!
-            </p>
-            
-            {/* Search bar */}
-            <div className="max-w-md mx-auto mb-8 relative">
-              <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-100/45 pointer-events-none" />
-              <input
-                type="text"
-                placeholder="Search projects..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-6 py-3 rounded-full border-2 border-white/55 focus:border-white text-white text-xl focus:outline-none transition-colors bg-white/25 shadow-sm"
-              />
-            </div>
-
-            {/* Filter buttons */}
-            <div className="flex flex-wrap justify-center gap-4">
-            {["all", "software", "hardware", "wildcard", "creatives"].map((track) => {
-              const getActiveColor = () => {
-                switch(track) {
-                  case "all": return "rgb(124,165,249)";
-                  case "software": return "rgb(133,216,186)";
-                  case "hardware": return "rgb(216,109,255)";
-                  case "wildcard": return "rgb(253,186,211)";
-                  case "creatives": return "rgb(255,231,164)";
-                  default: return "rgb(124,165,249)";
-                }
-              };
-
-              return (
-                <button
-                  key={track}
-                  onClick={() => setFilter(track)}
-                  className={`px-6 py-2 rounded-full border-1 border-gray-800/75 font-semibold transition-all transform hover:scale-105 ${
-                    filter === track
-                      ? "text-gray-900 shadow-lg"
-                      : "bg-[rgb(241,239,235)] text-gray-700 hover:bg-gray-100 shadow-sm"
-                  }`}
-                  style={filter === track ? { backgroundColor: getActiveColor() } : {}}
-                >
-                  {track.charAt(0).toUpperCase() + track.slice(1)}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-          <h2 className="text-4xl font-bold text-left ml-[7vw] mt-10 mb-6 text-white">
-            Cohort 4
-          </h2>
-          {/* Projects grid */}
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} index={index} />
-              ))}
-            </div>
-
-            {filteredProjects.length === 0 && (
-              <div className="text-center py-20">
-                <p className="text-2xl text-gray-200">No projects found</p>
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-12">
+            {/* Header */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-end">
+              
+              {/* Title and Description */}
+              <div>
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-white">
+                  Cohort Showcase
+                </h2>
+                <p className="text-lg sm:text-xl lg:text-2xl text-white/90">
+                  See all works from past cohorts.
+                </p>
               </div>
-            )}
-          </div>
 
-          <h2 className="text-4xl font-bold text-left ml-[7vw] mt-20 mb-6 text-white">
-            Cohort 3
-          </h2>
-          {/* Projects grid */}
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} index={index} />
-              ))}
+              {/* Search Bar */}
+              <div className="relative">
+                <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-white/50 pointer-events-none z-10" />
+                <input
+                  type="text"
+                  placeholder="Search projects..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-12 pr-6 py-3.5 rounded-full border-2 border-white/40 hover:border-white/60 focus:border-white text-white text-base sm:text-lg placeholder-white/60 focus:outline-none transition-all duration-300 bg-white/10 backdrop-blur-sm shadow-lg hover:shadow-xl"
+                />
+              </div>
             </div>
 
-            {filteredProjects.length === 0 && (
-              <div className="text-center py-20">
-                <p className="text-2xl text-gray-200">No projects found</p>
-              </div>
-            )}
-          </div>
+            {/* Cohort Sections */}
+            <div className="flex flex-wrap justify-center gap-4 mb-10">
+              {["all", 0, 1, 2, 3, 4].map((cohort) => {
+                const isActive = cohortFilter === cohort;
 
-          <h2 className="text-4xl font-bold text-left ml-[7vw] mt-20 mb-6 text-white">
-            Cohort 2
-          </h2>
-          {/* Projects grid */}
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} index={index} />
-              ))}
+                return (
+                  <button
+                    key={cohort}
+                    onClick={() => setCohortFilter(cohort)}
+                    className={`px-6 py-2 rounded-full border border-gray-800/75 font-semibold transition-all transform hover:scale-105 ${
+                      isActive
+                        ? "bg-[rgb(124,165,249)] text-black shadow-lg"
+                        : "bg-[rgb(241,239,235)] text-gray-900 hover:bg-gray-100 shadow-sm"
+                    }`}
+                  >
+                    {cohort === "all" ? "All Cohorts" : `Cohort ${cohort}`}
+                  </button>
+                );
+              })}
             </div>
 
-            {filteredProjects.length === 0 && (
-              <div className="text-center py-20">
-                <p className="text-2xl text-gray-200">No projects found</p>
+            {/* Track Filters */}
+            <div className="flex flex-wrap justify-center gap-4 mb-5">
+              {["all", "software", "hardware", "wildcard", "creatives"].map((track) => {
+                const getActiveColor = () => {
+                  switch(track) {
+                    case "all": return "rgb(124,165,249)";
+                    case "software": return "rgb(133,216,186)";
+                    case "hardware": return "rgb(216,109,255)";
+                    case "wildcard": return "rgb(253,186,211)";
+                    case "creatives": return "rgb(255,231,164)";
+                    default: return "rgb(124,165,249)";
+                  }
+                };
+
+                return (
+                  <button
+                    key={track}
+                    onClick={() => setFilter(track)}
+                    className={`px-6 py-2 rounded-full border-1 border-gray-800/75 font-semibold transition-all transform hover:scale-105 ${
+                      filter === track
+                        ? "text-black shadow-lg"
+                        : "bg-[rgb(241,239,235)] text-gray-900 hover:bg-gray-100 shadow-sm"
+                    }`}
+                    style={filter === track ? { backgroundColor: getActiveColor() } : {}}
+                  >
+                    {track.charAt(0).toUpperCase() + track.slice(1)}
+                  </button>
+                );
+              })}
+            </div>
+
+            {(cohortFilter === "all"
+              ? [4, 3, 2, 1, 0]
+              : [cohortFilter]
+            ).map((cohort) => (
+              <div key={cohort} className="mb-20 text-left">
+                <h3 className="text-4xl font-bold text-white mb-8">
+                  Cohort {cohort}
+                </h3>
+
+                {projectsByCohort[cohort]?.length ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                    {projectsByCohort[cohort].map((project, i) => (
+                      <ProjectCard key={i} {...project} index={i} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-200 text-xl text-center py-12">
+                    No projects found
+                  </p>
+                )}
               </div>
-            )}
+            ))}
           </div>
         </ScrollReveal>
       </section>

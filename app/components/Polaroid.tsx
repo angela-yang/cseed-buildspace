@@ -5,6 +5,8 @@ export default function Polaroid({
   feature,
   rotation,
   offsetY,
+  color,
+  bgColor,
 }: {
   feature: {
     image: string;
@@ -13,6 +15,8 @@ export default function Polaroid({
   };
   rotation: number;
   offsetY: number;
+  color: string;
+  bgColor: string;
 }) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -61,7 +65,7 @@ export default function Polaroid({
       </div>
 
       {/* POLAROID */}
-      <div className="bg-white w-full sm:w-85 h-auto sm:h-105 rounded-md shadow-2xl border border-gray-200">
+      <div className={`${bgColor}/80 w-full sm:w-85 h-auto sm:h-105 rounded-md shadow-2xl border border-gray-200`}>
         {/* Image */}
         <img
           src={feature.image}
@@ -71,7 +75,7 @@ export default function Polaroid({
 
         {/* Text Content */}
         <div className="p-4 sm:p-6 md:p-7 text-center">
-          <h3 className="text-lg sm:text-xl md:text-2xl text-gray-800 font-bold mb-1 sm:mb-2">
+          <h3 className={`text-lg sm:text-xl md:text-2xl ${color} font-bold mb-1 sm:mb-2`}>
             {feature.title}
           </h3>
           <p className="text-sm sm:text-base md:text-lg ibm-plex-sans text-gray-500 leading-relaxed">

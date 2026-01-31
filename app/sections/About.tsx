@@ -117,21 +117,21 @@ export default function About() {
       image: '/images/passion.jpg', 
       title: '1. Build your passion', 
       desc: 'Commit to a project youre passionate about, and report your weekly progress.',
-      color: 'from-orange-400 to-pink-500',
+      color: 'text-[rgb(255,0,102)]',
       bgColor: 'bg-gradient-to-br from-orange-50 to-pink-50'
     },
     { 
       image: '/images/community.jpg', 
       title: '2. Meet the community', 
       desc: 'Connect with a space of other amazing people, and learn from experienced mentors.',
-      color: 'from-blue-400 to-purple-500',
+      color: 'text-[rgb(136,0,185)]',
       bgColor: 'bg-gradient-to-br from-blue-50 to-purple-50'
     },
     { 
       image: '/images/showcase.jpg', 
       title: '3. Showcase your project!', 
       desc: 'At the end of the 6 weeks, showcase your project and display the fruition of your work.',
-      color: 'from-green-400 to-teal-500',
+      color: 'text-[rgb(19,163,122)]',
       bgColor: 'bg-gradient-to-br from-green-50 to-teal-50'
     }
   ];
@@ -167,13 +167,15 @@ export default function About() {
             </div>
 
             {/* Responsive Polaroids Layout */}
-            <div className="relative flex flex-col md:flex-row justify-center gap-8 md:gap-20 -mt-0 md:-mt-10">
+            <div className="relative flex flex-col md:flex-row justify-center gap-6 md:gap-20 -mt-0 md:-mt-10">
               {features.map((feature, index) => (
                 <div key={index} className="w-full md:w-auto flex justify-center">
                   <Polaroid
                     feature={feature}
                     rotation={index === 0 ? 6 : index === 1 ? -1 : -5}
                     offsetY={index === 0 ? 15 : index === 1 ? 50 : 15}
+                    bgColor={feature.bgColor}
+                    color={feature.color}
                   />
                 </div>
               ))}

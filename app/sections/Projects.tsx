@@ -7,20 +7,37 @@ import { FaSearch } from "react-icons/fa";
 const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
+    if (isMobile) {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setTimeout(() => setIsVisible(true), delay);
         }
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0.15, 
+        rootMargin: "0px 0px -50px 0px",
+      }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    if (ref.current) observer.observe(ref.current);
 
     return () => observer.disconnect();
   }, [delay]);
@@ -28,14 +45,22 @@ const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; dela
   return (
     <div
       ref={ref}
-      className={`transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-      }`}
+      className={`
+        transition-all
+        duration-700
+        ease-out
+        will-change-transform
+        ${
+          isVisible
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-6 md:translate-y-12"
+        }
+      `}
     >
       {children}
     </div>
   );
-};
+}
 
 export default function Projects() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -142,17 +167,6 @@ export default function Projects() {
       longDescription: "This is a design speculative project to foster connection and disconnecting from screens.",
       details: { tech: ["Figma", "Design", "Wireframing"] },
       gallery: ["/images/projects/juicebox.png", "/images/projects/juicebox.mp4"]
-    },
-    {
-      projectName: "CoachT",
-      creatorName: "Ojas Kandhare",
-      track: "software",
-      description: "Uses cameras to advance sports performance - An AI coach for martial arts.",
-      demoLink: "www.coacht.xyz",
-      coverImage: "/images/projects/coacht.png",
-      longDescription: "Gets input from real-time camera feed, monitoring joint and angle information. Plugs in the data into DTW and gives AI feedback.",
-      details: { tech: ["DTW", "LLMs", "Computer Vision"] },
-      gallery: ["/images/projects/coacht.png"]
     },
     {
       projectName: "Fridge Sense",
@@ -300,7 +314,7 @@ export default function Projects() {
               </div>
 
               {/* Filter buttons */}
-              <div className="flex flex-wrap justify-center gap-4 mb-5">
+              <div className="flex flex-wrap justify-center gap-4 mb-10">
               {["all", "software", "hardware", "wildcard", "creatives"].map((track) => {
                 const getActiveColor = () => {
                   switch(track) {

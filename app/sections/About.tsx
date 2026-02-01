@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Background from "../components/Background"
 import HoverText from "../components/HoverText"
 import Polaroid from "../components/Polaroid"
-import PhotoGallery from "../sections/PhotoGallery"
+import Photos from "../components/Photos";
 
 const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -142,7 +142,7 @@ export default function About() {
       <section
         ref={aboutSectionRef} className="py-24 px-10 mt-60 relative"
       >
-        <Background sectionRef={aboutSectionRef} />
+        {/*<Background sectionRef={aboutSectionRef} />*/}
         {/* Overview */}
         <ScrollReveal>
           <h2 className="text-5xl font-bold text-center my-14 text-[rgb(57,123,255)]">
@@ -272,6 +272,30 @@ export default function About() {
           </motion.div>
         ))}
       </div>
+      <section className="min-h-[300vh] flex flex-col justify-left items-left text-left relative ml-50 mb-50">
+        <h2 className="text-5xl font-bold text-left mt-15 mb-8 text-[rgb(57,123,255)] z-10">
+          endless possibilities
+        </h2>
+        <p className="text-3xl text-left text-gray-600 z-10">
+          maybe you want to create your own app.
+          <br></br>
+          maybe you want to turn a hobby into something more.
+          <br></br>
+          maybe you want to launch a business.
+          <br></br>
+          maybe you want to build your tech startup.
+          <br></br>
+          maybe you want to launch your youtube channel.
+          <br></br>
+          maybe you want to experiment with large language models.
+          <br></br>
+          maybe you want to write your own book.
+          <br></br>
+          <br></br>
+          buildspace is the place for you 💫
+        </p>
+        <Photos />
+      </section>
       {/* Timeline 
       <section className="min-h-[50vh] flex flex-col justify-center items-center text-center relative mb-50">
         <h2 className="text-5xl font-bold text-center mt-15 mb-8 text-[rgb(57,123,255)] z-10">

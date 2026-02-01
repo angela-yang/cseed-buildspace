@@ -32,6 +32,9 @@ const polaroidPositions: PolaroidData[] = [
 
 export default function Background({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
   const [scrollY, setScrollY] = useState(0);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+  if (isMobile) return null;
 
   useEffect(() => {
     const handleScroll = () => {

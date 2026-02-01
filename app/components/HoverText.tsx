@@ -78,7 +78,7 @@ export default function ValuesSection() {
         another.
       </p>
 
-      {/* IMAGES ABOVE HOVERED WORD */}
+      {/* IMAGES ABOVE HOVERED WORD 
       {hovered && wordPos && (
       <div
         className="pointer-events-none fixed flex justify-center z-50"
@@ -108,7 +108,7 @@ export default function ValuesSection() {
           );
         })}
       </div>
-    )}
+    )}*/}
 
     </section>
   );

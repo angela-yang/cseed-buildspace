@@ -272,9 +272,9 @@ export default function About() {
           </motion.div>
         ))}
       </div>
-      <section className="relative flex flex-col text-left px-6 md:px-16 py-32 overflow-hidden">
+      <section className="relative flex flex-col text-left left-[5vw] md:px-16 pb-32 overflow-hidden">
         <div className="relative z-10 max-w-3xl">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-[rgb(57,123,255)]">
+          <h2 className="text-4xl md:text-5xl font-bold mb-10 text-[rgb(57,123,255)]">
             endless possibilities
           </h2>
 
@@ -291,8 +291,6 @@ export default function About() {
             </span>
           </p>
         </div>
-
-        <Photos />
       </section>
 
       {/* Timeline 

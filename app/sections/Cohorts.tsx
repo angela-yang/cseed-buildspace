@@ -49,9 +49,9 @@ export default function Cohorts() {
   return (
     <main>
       <section id="cohorts" className="section py-24 px-6 bg-[rgb(57,123,255)]">
-        <div className="max-w-8xl mx-auto px-20 space-y-8 md:space-y-12">
+        <div className="max-w-8xl mx-auto space-y-8 md:space-y-12">
           {/* Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-end">
+          <div className="grid grid-cols-1 px-[5vw] lg:grid-cols-2 gap-6 lg:gap-12 items-end">
             
             {/* Title and Description */}
             <div>
@@ -137,7 +137,7 @@ export default function Cohorts() {
             }
 
             return (
-              <div key={cohort} className="mb-20 text-left">
+              <div key={cohort} className="mb-20 px-[5vw] text-left">
                 <h3 className="text-4xl font-bold text-white mb-8">
                   Cohort {cohort}
                 </h3>

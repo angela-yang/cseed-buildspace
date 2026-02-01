@@ -272,7 +272,7 @@ export default function About() {
           </motion.div>
         ))}
       </div>
-      <section className="min-h-[300vh] flex flex-col justify-left items-left text-left relative ml-50 mb-50">
+      <section className="min-h-[200vh] flex flex-col justify-left items-left text-left relative ml-50 mb-50">
         <h2 className="text-5xl font-bold text-left mt-15 mb-8 text-[rgb(57,123,255)] z-10">
           endless possibilities
         </h2>

@@ -13,40 +13,42 @@ export type PhotoConfig = {
 };
 
 const photos: PhotoConfig[] = [
-  { src: "/images/cohort-3/img10.jpg", left: "40%",  baseTop: 50,  size: "400px", shape: "circle",   speed: 0.12, rotate: -1 },
-  { src: "/images/cohort-3/img9.jpg",  left: "70%", baseTop: 750, size: "400px", shape: "rounded",  speed: 0.15, rotate: 2 },
-  { src: "/images/cohort-3/img12.jpg", left: "10%", baseTop: 480, size: "500px", shape: "square",   speed: 0.1,  rotate: -3 },
-  { src: "/images/cohort-4/img5.jpg",  left: "65%", baseTop: 350, size: "450px", shape: "circle",   speed: 0.14, rotate: 2 },
-  { src: "/images/cohort-4/img8.jpg",  left: "25%", baseTop: 920, size: "450px", shape: "rounded",  speed: 0.13, rotate: -2 },
+  { src: "/images/cohort-3/img10.jpg", left: "50%",  baseTop: 50,  size: "400px", shape: "circle",   speed: 0.12, rotate: 0 },
+  { src: "/images/cohort-3/img17.jpg",  left: "70%", baseTop: 750, size: "400px", shape: "rounded",  speed: 0.15, rotate: 0 },
+  { src: "/images/cohort-3/img20.jpg", left: "10%", baseTop: 550, size: "500px", shape: "square",   speed: 0.1,  rotate: 0 },
+  { src: "/images/cohort-4/img5.jpg",  left: "65%", baseTop: 350, size: "450px", shape: "circle",   speed: 0.14, rotate: 0 },
+  { src: "/images/cohort-4/img8.jpg",  left: "40%", baseTop: 1000, size: "450px", shape: "rounded",  speed: 0.13, rotate: 0 },
+  { src: "/images/cohort-3/img1.jpg", left: "35%",  baseTop: 670,  size: "400px", shape: "circle",   speed: 0.12, rotate: 0 },
+  { src: "/images/cohort-3/img6.jpg",  left: "0%", baseTop: 930, size: "400px", shape: "rounded",  speed: 0.15, rotate: 0 },
+  { src: "/images/cohort-3/img19.jpg", left: "50%", baseTop: 1380, size: "500px", shape: "square",   speed: 0.1,  rotate: 0 },
+  { src: "/images/cohort-4/img7.jpg",  left: "5%", baseTop: 1250, size: "450px", shape: "circle",   speed: 0.14, rotate: 0 },
+  { src: "/images/cohort-4/img9.jpg",  left: "10%", baseTop: 1620, size: "450px", shape: "rounded",  speed: 0.13, rotate: 0 },
 ];
 
 export default function Photos() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   if (isMobile) return null;
-  
+
   return (
     <>
       {photos.map((p, index) => {
-        const parallaxY = p.baseTop + scrollY * p.speed;
-        const extraRotate = Math.sin((scrollY + index * 50) / 300) * 2;
-
         return (
           <div
             key={index}
             className="absolute pointer-events-none z-0"
             style={{
               left: p.left,
-              top: `${parallaxY}px`,
+              top: `${p.baseTop}px`,
               width: p.size,
-              transform: `rotate(${p.rotate + extraRotate}deg)`,
+              transform: `rotate(${p.rotate}deg)`,
             }}
           >
             <div
-              className={`overflow-hidden shadow-xl bg-white ${
+              className={`overflow-hidden bg-white ${
                 p.shape === "circle"
                   ? "rounded-full"
                   : p.shape === "rounded"
-                  ? "rounded-2xl"
+                  ? ""
                   : ""
               }`}
             >

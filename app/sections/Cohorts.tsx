@@ -78,7 +78,7 @@ export default function Cohorts() {
 
           {/* Cohort Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-10">
-            {(["all", 0, 1, 2, 3, 4] as const).map((cohort) => {
+            {(["all", 0, 2, 3, 4] as const).map((cohort) => {
               const isActive = cohortFilter === cohort;
 
               return (

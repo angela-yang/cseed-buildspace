@@ -1,5 +1,5 @@
 export type Track = "software" | "hardware" | "wildcard" | "creatives";
-export type Cohort = 0 | 1 | 2 | 3 | 4;
+export type Cohort = 0 | 2 | 3 | 4;
 
 export type Project = {
   projectName: string;
@@ -275,7 +275,7 @@ export const cohort4Projects: Project[] = [
     longDescription: "Arrange your room using feng shui principles by generating an optimized layout based on your furniture and space.",
     details: { tech: ["PulP python"] }, 
     gallery: ["/images/projects/feng2.png", "/images/projects/feng3.png", "/images/projects/feng.png", "/images/projects/feng1.png"],
-    featured: true
+    featured: false
   },
   {
     projectName: "Silhouette",
@@ -601,12 +601,12 @@ export const cohort2Projects: Project[] = [
     creatorName: "Bhavya Krishnan",
     track: "software" as const,
     cohort: 2,
-    description: ".",
+    description: "Helps biologists that were trained classically transition into computational biology/bioinformatics.",
     demoLink: "/images/projects/bio.mp4",
     coverImage: "/images/projects/bio0.png",
-    longDescription: ".",
-    details: { tech: ["R", "ggplot d3", "Hugging Face", "Streamlit"] }, 
-    gallery: ["/images/projects/bio.png", "/images/projects/bio1.png"],
+    longDescription: "An app to help biologists that were trained classically transition into computational biology/bioinformatics.",
+    details: { tech: ["RMarkdown", "R", "ggplot d3", "Hugging Face", "Streamlit"] }, 
+    gallery: ["/images/projects/bio.png", "/images/projects/bio1.png", "/images/projects/bio2.png", "/images/projects/bio.mp4"],
     featured: false
   },
   {
@@ -739,23 +739,136 @@ export const cohort2Projects: Project[] = [
     gallery: ["/images/projects/pots0.png", "/images/projects/pots.png", "/images/projects/pots2.png", "/images/projects/pots3.png", "/images/projects/pots.mp4"],
     featured: false
   },
-];
-
-// ==================== COHORT 1 ====================
-export const cohort1Projects: Project[] = [
   {
-    projectName: "Journal",
-    creatorName: "",
+    projectName: "Vision",
+    creatorName: "Nitya Kakulamarri & Maggie Lam",
     track: "software" as const,
-    cohort: 1,
-    description: "A song annotation platform",
-    demoLink: "https://drive.google.com/file/d/1vFHSItXw6BIRBEEMULdq2UdgEFEAfq6_/view",
-    coverImage: "/images/projects/jamjournal.png",
-    longDescription: "A platform to import YouTube music, take notes at timestamps while listening, and make notes for lyrics.",
-    details: { tech: ["React", "Next.js", "HTML", "Figma"] }, 
-    gallery: ["/images/projects/jamjournal.png", "/images/projects/jam2.png"],
+    cohort: 2,
+    description: "An application that generates an audio description of a visual to assist visually impaired individuals.",
+    demoLink: "/images/projects/vision.mp4",
+    coverImage: "/images/projects/vision.png",
+    longDescription: "An application that uses artificial intelligence to automatically generates an audio description of a visual to assist visually impaired individuals.",
+    details: { tech: ["Swift", "Python", "TensorFlow", "PyTorch", "HuggingFace"] }, 
+    gallery: ["/images/projects/vision.png", "/images/projects/vision0.png", "/images/projects/vision1.png", "/images/projects/vision.mp4"],
     featured: false
   },
+  {
+    projectName: "Wormodoro",
+    creatorName: "Kaitlyn Ellington, Farrel Sudrajat, Sunny Tian, and Ricardo Torres Arevalo",
+    track: "software" as const,
+    cohort: 2,
+    description: "A study timer designed to reduce distractions, enhance concentration, and optimize productivity.",
+    demoLink: "https://www.youtube.com/watch?v=wp7I6YJosyA&t=11s",
+    coverImage: "/images/projects/worm0.png",
+    longDescription: "A study timer designed to reduce distractions, enhance concentration, and optimize productivity.",
+    details: { tech: ["React", "Figma"] }, 
+    gallery: ["/images/projects/worm.png", "/images/projects/worm0.png", "/images/projects/worm1.png", "/images/projects/worm2.png"],
+    featured: false
+  },
+  {
+    projectName: "InstaGrocery",
+    creatorName: "Anushka Malpani",
+    track: "software" as const,
+    cohort: 2,
+    description: "An app that makes grocery shopping easy, efficient, and cheap.",
+    demoLink: "",
+    coverImage: "/images/projects/grocery.png",
+    longDescription: "An app that makes grocery shopping easy, efficient, and cheap. InstaGrocery lets you make a grocery list and find stores near you that have those products currently available while also giving you the best deals!",
+    details: { tech: ["Streamlit", "Kroger API", "IPinfo.io API"] }, 
+    gallery: ["/images/projects/grocery0.png", "/images/projects/grocery.png", "/images/projects/grocery1.png"],
+    featured: false
+  },
+  {
+    projectName: "Fantasy Football Winners",
+    creatorName: "Benjamin Epstein",
+    track: "software" as const,
+    cohort: 2,
+    description: "Makes weekly projections for each player's stats and uses these to project their season.",
+    demoLink: "/images/projects/football.mp4",
+    coverImage: "/images/projects/football3.png",
+    longDescription: "A fantasy football winner prediction that makes weekly projections for each player's stats and uses these to project their season. There is also a trade machine where you can input to sides of a trade and using the projects and winner is announced.",
+    details: { tech: ["Python", "LSTM Model"] }, 
+    gallery: ["/images/projects/football.png", "/images/projects/football1.png", "/images/projects/football0.png", "/images/projects/football2.png", "/images/projects/football.mp4"],
+    featured: false
+  },
+  {
+    projectName: "Function",
+    creatorName: "Agastya Mongia",
+    track: "software" as const,
+    cohort: 2,
+    description: "A holistic event management application for RSOs at UW.",
+    demoLink: "",
+    coverImage: "/images/projects/function.png",
+    longDescription: "A holistic event management application for RSOs at UW.",
+    details: { tech: ["React", "Expo", "Supabase", "Flutter", "Postgres"] }, 
+    gallery: ["/images/projects/function.png", "/images/projects/function1.png", "/images/projects/function2.png", "/images/projects/function3.png", "/images/projects/function4.png"],
+    featured: false
+  },
+  {
+    projectName: "UEngage",
+    creatorName: "Vivaan Kothari, Aryaman Tandon, Aarnav Gogri, and Vihaan Mangat",
+    track: "software" as const,
+    cohort: 2,
+    description: "Your gateway to UW club events!",
+    demoLink: "",
+    coverImage: "/images/projects/engage.png",
+    longDescription: "An app that allows you to find, create, and join clubs + events.",
+    details: { tech: ["React", "Firebase", "TypeScript", "HTML", "CSS", "Figma"] }, 
+    gallery: ["/images/projects/engage.png", "/images/projects/engage1.png", "/images/projects/engage2.png", "/images/projects/engage3.png"],
+    featured: false
+  },
+  {
+    projectName: "MenuMaster",
+    creatorName: "Vrinda Rathi",
+    track: "software" as const,
+    cohort: 2,
+    description: "An app that stores your favorite meals and recipes, helping generate a weekly menu and grocery list.",
+    demoLink: "/images/projects/menu.mp4",
+    coverImage: "/images/projects/menu.png",
+    longDescription: "An app that stores your favorite meals and recipes, helping generate a weekly menu and grocery list.",
+    details: { tech: ["React", "Node.js", "Express.js", "MongoDB"] }, 
+    gallery: ["/images/projects/menu2.png", "/images/projects/menu3.png", "/images/projects/menu1.png", "/images/projects/menu.mp4"],
+    featured: false
+  },
+  {
+    projectName: "Careerate",
+    creatorName: "Garv Seth",
+    track: "software" as const,
+    cohort: 2,
+    description: "Accelerate your career.",
+    demoLink: "",
+    coverImage: "/images/projects/career0.png",
+    longDescription: "An app that helps you accelerate your career, through smart job matching, AI resume and cover letter generation, autofilling job applications, and career analyses.",
+    details: { tech: ["Swift", "Python"] }, 
+    gallery: ["/images/projects/career1.png", "/images/projects/career0.png", "/images/projects/career.png", "/images/projects/career2.png"],
+    featured: false
+  },
+  {
+    projectName: "carpetCare Pro",
+    creatorName: "Miriam Castillo Romero",
+    track: "software" as const,
+    cohort: 2,
+    description: "An app that helps small businesses - providing all tools in one place.",
+    demoLink: "",
+    coverImage: "/images/projects/carpet0.png",
+    longDescription: "An app that helps small businesses - providing all the necessary tools in one place.",
+    details: { tech: ["Figma"] }, 
+    gallery: ["/images/projects/carpet0.png", "/images/projects/carpet.png", "/images/projects/carpet1.png", "/images/projects/carpet2.png", "/images/projects/carpet3.png", "/images/projects/carpet4.png"],
+    featured: false
+  },
+  {
+    projectName: "InsulInfo",
+    creatorName: "Raghav Thyagarajan, Dylan Song, Joonho Choi, and Nathan Lin",
+    track: "hardware" as const,
+    cohort: 2,
+    description: "Tracks glucose levels and gives insights based on its trends.",
+    demoLink: "",
+    coverImage: "/images/projects/insulin.png",
+    longDescription: "Tracks glucose levels and gives insights based on its trends. Helps diabetics control their glucose levels, and consists of both hardware and software.",
+    details: { tech: ["Python", "LibreLinkUp", "MySQL", "Figma"] }, 
+    gallery: ["/images/projects/insulin.png", "/images/projects/insulin2.png", "/images/projects/insulin3.png", "/images/projects/insulin1.png", "/images/projects/insulin4.png", ],
+    featured: false
+  }
 ];
 
 // ==================== COHORT 0 ====================
@@ -766,12 +879,311 @@ export const cohort0Projects: Project[] = [
     track: "hardware",
     cohort: 0,
     description: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
-    demoLink: "/images/projects/bobby.png",
+    demoLink: "/images/projects/bobby.mp4",
     coverImage: "/images/projects/bobby.png",
     longDescription: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
-    details: { tech: ["Python", "Raspberry Pi"] },
-    gallery: ["/images/projects/bobby.png"],
+    details: { tech: ["Python", "OpenAI API", "Raspberry Pi 4B", "Lepist Model LE2103"] },
+    gallery: ["/images/projects/bobby.png", "/images/projects/bobby1.png", "/images/projects/bobby2.png", "/images/projects/bobby.mp4"],
     featured: true
+  },
+  {
+    projectName: "Comic App",
+    creatorName: "Katherine Palevich",
+    track: "software",
+    cohort: 0,
+    description: "An app that displays and xkcd comic based on the users input.",
+    demoLink: "/images/projects/xkcd.mp4",
+    coverImage: "/images/projects/xkcd.mp4",
+    longDescription: "An app that displays and xkcd comic based on the users input.",
+    details: { tech: ["Swift", "XCode"] },
+    gallery: ["/images/projects/xkcd2.png", "/images/projects/xkcd.png", "/images/projects/xkcd.mp4"],
+    featured: false
+  },
+  {
+    projectName: "MusicMatch",
+    creatorName: "Srishti Singh, Isha Jagadish, and Sneha Murali",
+    track: "software",
+    cohort: 0,
+    description: "Connect with other people with similar music taste to yourself!",
+    demoLink: "https://ec2-3-17-24-47.us-east-2.compute.amazonaws.com/",
+    coverImage: "/images/projects/music0.png",
+    longDescription: "An app that helps you connect with other people that have similar music taste to yourself.",
+    details: { tech: ["AWS Cloud", "HTML", "CSS", "JavaScript"] },
+    gallery: ["/images/projects/music0.png", "/images/projects/music.png", "/images/projects/music2.png"],
+    featured: false
+  },
+  {
+    projectName: "chenthetutor",
+    creatorName: "Chendur Jayavelu",
+    track: "creatives",
+    cohort: 0,
+    description: "A project to grow my ACT Math TikTok.",
+    demoLink: "https://www.tiktok.com/@chenthetutor",
+    coverImage: "/images/projects/tutor0.png",
+    longDescription: "A project to grow my ACT Math TikTok by posting one 30-90 second video a day.",
+    details: { tech: ["iPad", "TikTok"] },
+    gallery: ["/images/projects/tutor0.png", "/images/projects/tutor.png", "/images/projects/tutor1.png", "/images/projects/tutor.mp4"],
+    featured: false
+  },
+  {
+    projectName: "MedCheck",
+    creatorName: "Danielle Maddox",
+    track: "software",
+    cohort: 0,
+    description: "A drug interaction checker for physicians.",
+    demoLink: "/images/projects/medcheck.mp4",
+    coverImage: "/images/projects/medcheck.png",
+    longDescription: "A drug interaction checker to notify physicians if the medications they prescribe have severe interactions with the patients existing medications.",
+    details: { tech: ["InteliJ", "Canva"] },
+    gallery: ["/images/projects/medcheck.png", "/images/projects/medcheck1.png", "/images/projects/medcheck4.png", "/images/projects/medcheck2.png", "/images/projects/medcheck3.png", "/images/projects/medcheck.mp4"],
+    featured: false
+  },
+  {
+    projectName: "Habit Builder",
+    creatorName: "Emily Kang",
+    track: "software",
+    cohort: 0,
+    description: "A structured place for habits, allowing you to connect, log, and visualize your results.",
+    demoLink: "",
+    coverImage: "/images/projects/habits0.png",
+    longDescription: "A structured place for habits, allowing you to connect, log, and visualize your results. Based on Atomic Habits, Habit Builder allows you to learn new habits easier is.",
+    details: { tech: ["Expo", "React Native", "Vite", "TypeScript", "Figma"] },
+    gallery: ["/images/projects/habits.png", "/images/projects/habits1.png"],
+    featured: false
+  },
+  {
+    projectName: "ClearVote",
+    creatorName: "Anaya Pandit, Robert Luiten, Joey Laurent, and David Schultz",
+    track: "software",
+    cohort: 0,
+    description: "A web app that simplifies the voting process to increase voter turnout.",
+    demoLink: "https://clearvote.info/",
+    coverImage: "/images/projects/vote.png",
+    longDescription: "ClearVote shows all candidate information in one spot with full transparency, and brings focus back to the community.",
+    details: { tech: ["Python", "React", "Next.js", "Radix", "GeoPandas", "Figma"] },
+    gallery: ["/images/projects/vote.png", "/images/projects/vote1.png", "/images/projects/vote2.png", "/images/projects/vote3.png", "/images/projects/vote4.png", "/images/projects/vote5.png", "/images/projects/vote6.png"],
+    featured: true
+  },
+  {
+    projectName: "Us And AI: The Progress of AI and How We Will Stay as Humans",
+    creatorName: "Jintae Cho",
+    track: "creatives",
+    cohort: 0,
+    description: "A nonfiction book about AI and humanity.",
+    demoLink: "",
+    coverImage: "/images/projects/book.png",
+    longDescription: "Worked on my book by writing 20,000 words in the matter of 6 weeks. Tried to perfect my writing skill by mostly working on the consistency.",
+    details: { tech: ["Microsoft Word"] },
+    gallery: ["/images/projects/book.png", "/images/projects/book2.png"],
+    featured: false
+  },
+  {
+    projectName: "EasyLeasy",
+    creatorName: "Ankith Tunuguntla & Praveer Jain",
+    track: "software",
+    cohort: 0,
+    description: "A UW centric apartment finder which tries to solve the roommate match problem.",
+    demoLink: "",
+    coverImage: "/images/projects/lease.png",
+    longDescription: "A UW centric apartment finder which tries to solve the roommate match problem. You make a profile and match with other people based on interests and specifications of apartments.",
+    details: { tech: ["React", "HTML", "CSS", "JavaScript", "Figma"] },
+    gallery: ["/images/projects/lease.png", "/images/projects/lease1.png"],
+    featured: false
+  },
+  {
+    projectName: "Ripple: UW Marketplace",
+    creatorName: "Will Hunt",
+    track: "software",
+    cohort: 0,
+    description: "A student based second-hand marketplace.",
+    demoLink: "/images/projects/market.mp4",
+    coverImage: "/images/projects/market.mp4",
+    longDescription: "A platform for UW students to sell their things to each other.",
+    details: { tech: ["React", "Firebase", "Chakra"] },
+    gallery: ["/images/projects/market0.png", "/images/projects/market.png", "/images/projects/market.mp4"],
+    featured: false
+  },
+  {
+    projectName: "EduCon",
+    creatorName: "Srimedha Thummala",
+    track: "software",
+    cohort: 0,
+    description: "A common platform for students to connect.",
+    demoLink: "",
+    coverImage: "/images/projects/edu1.png",
+    longDescription: "A central platform where students can connect with other students of similar backgrounds and interests. Through these relationships, students can build their education and knowledge beyond their curriculum.",
+    details: { tech: ["Figma", "React"] },
+    gallery: ["/images/projects/edu1.png", "/images/projects/edu.png"],
+    featured: false
+  },
+  {
+    projectName: "Wellness + Content Creation",
+    creatorName: "Anika Tara Rao",
+    track: "creatives",
+    cohort: 0,
+    description: "Sharing my journey in college.",
+    demoLink: "https://www.youtube.com/@tarastemples",
+    coverImage: "/images/projects/well0.png",
+    longDescription: "Created content of my college wellness journey. Released multiple post in the instagram and tiktok. I even got a chance to record my first youtube video and continue releasing episodes for my podcast: “The Mango Tree Podcst”.",
+    details: { tech: ["Instagram", "TikTok", "Youtube", "Spotify"] },
+    gallery: ["/images/projects/well.png", "/images/projects/well1.png", "/images/projects/well2.png", "/images/projects/well3.png", "/images/projects/well4.png"],
+    featured: false
+  },
+  {
+    projectName: "Research: Personality by Shopping Habits",
+    creatorName: "Reuben Ailin Santoso",
+    track: "software",
+    cohort: 0,
+    description: "Research aimed to match the consumer habits and the personalities.",
+    demoLink: "",
+    coverImage: "/images/projects/receipt1.png",
+    longDescription: "Worked on receipt aimed computer vision to research the relationship between consumer habits and personality.",
+    details: { tech: ["OpenCV", "PyTorch", "Pytesseract"] },
+    gallery: ["/images/projects/receipt.png", "/images/projects/receipt1.png", "/images/projects/receipt2.png"],
+    featured: false
+  },
+  {
+    projectName: "Scheduler + Mindharbour",
+    creatorName: "Vani Agarwal",
+    track: "software",
+    cohort: 0,
+    description: "A notion replacer with a better scheduling experience and an idea logger.",
+    demoLink: "",
+    coverImage: "/images/projects/schedule.png",
+    longDescription: "An app to organize your schedule, tasks, and ideas. Keeps track of task priority, mood, habits, and thoughts.",
+    details: { tech: ["Figma", "React"] },
+    gallery: ["/images/projects/schedule.png"],
+    featured: false
+  },
+  {
+    projectName: "CINEM.AI",
+    creatorName: "Chaitanya Sekhar",
+    track: "software",
+    cohort: 0,
+    description: "A movie recommendation app.",
+    demoLink: "",
+    coverImage: "/images/projects/cinema0.png",
+    longDescription: "A personalized movie search with filter for genres, actors, languages, etc. Explore, share, and customize your cinematic journey through personalized suggestions and movie discovery.",
+    details: { tech: ["Webflow"] },
+    gallery: ["/images/projects/cinema.png", "/images/projects/cinema1.png", "/images/projects/cinema2.png", "/images/projects/cinema0.png", "/images/projects/cinema3.png", "/images/projects/cinema4.png"],
+    featured: false
+  },
+  {
+    projectName: "Spark Royalty",
+    creatorName: "Isaac Dyor, Sam, and Clark Jones",
+    track: "software",
+    cohort: 0,
+    description: "The world's first royalty based freelancing marketplace.",
+    demoLink: "https://sparkroyalty2.vercel.app/",
+    coverImage: "/images/projects/spark.png",
+    longDescription: "The world's first royalty based freelancing marketplace for founders and investors.",
+    details: { tech: ["React", "TailwindCSS", "Shadcn", "Prisma", "tRPC", "Supabase"] },
+    gallery: ["/images/projects/spark.png"],
+    featured: false
+  },
+  {
+    projectName: "Personal Website",
+    creatorName: "Tina Lai",
+    track: "software",
+    cohort: 0,
+    description: "Build my personal website with light/dark themes.",
+    demoLink: "https://teena1313.github.io/teena1313.githubio/index.html",
+    coverImage: "/images/projects/personal1.png",
+    longDescription: "Build my personal website with light/dark themes.",
+    details: { tech: ["Godot", "HTML", "CSS", "Javascript"] },
+    gallery: ["/images/projects/personal1.png", "/images/projects/personal.png"],
+    featured: false
+  },
+  {
+    projectName: "Galleria",
+    creatorName: "Omar Ahmed",
+    track: "software",
+    cohort: 0,
+    description: "Digitizing real-world art.",
+    demoLink: "",
+    coverImage: "/images/projects/galleria0.png",
+    longDescription: "Galleria empowers all artists to digitize their paintings (Artokens), collect royalties, and control all future sales.",
+    details: { tech: ["Next.js", "Express.js", "Wikiart Dataset", "LEDITS++", "AWS ABM", "Meta Mask", "Opensea", "Hugging Face"] },
+    gallery: ["/images/projects/galleria.png", "/images/projects/galleria1.png", "/images/projects/galleria2.png"],
+    featured: false
+  },
+  {
+    projectName: "ClinicChatBot",
+    creatorName: "Kevin Xiao",
+    track: "software",
+    cohort: 0,
+    description: "A web chatbot for medical clinics and hospitals to provide the most relevant and accurate information to patients quickly.",
+    demoLink: "",
+    coverImage: "/images/projects/chatbot1.png",
+    longDescription: "A web chatbot using LLMs for medical clinics and hospitals to provide the most relevant and accurate information to patients quickly, expediting the process of finding medical information online.",
+    details: { tech: ["HTML", "CSS", "JavaScript", "Python", "OpenAI API", "Flask", "Pandas"] },
+    gallery: ["/images/projects/chatbot.png", "/images/projects/chatbot1.png", "/images/projects/chatbot2.png", "/images/projects/chatbot3.png"],
+    featured: false
+  },
+  {
+    projectName: "Logarithm",
+    creatorName: "Beta Chen & Kai Green",
+    track: "software",
+    cohort: 0,
+    description: "An app that helps people learn what behavior additions/removals work best for them.",
+    demoLink: "",
+    coverImage: "/images/projects/log.png",
+    longDescription: "Logarithm is an app that helps people learn what behavior additions/removals work best for them by tracking the results of different behaviors by allowing users do the A/B tests on themselves.",
+    details: { tech: ["Figma", "XCode"] },
+    gallery: ["/images/projects/log.png", "/images/projects/log1.png", "/images/projects/log2.png", "/images/projects/log3.png", "/images/projects/log4.png", "/images/projects/log5.png", "/images/projects/log6.png", "/images/projects/log7.png"],
+    featured: false
+  },
+  {
+    projectName: "ResourceRoute App",
+    creatorName: "Thea Klein-Balajee",
+    track: "software",
+    cohort: 0,
+    description: "An app that helps unhoused people find needed resources in the UW area like medicine, food, and shelter.",
+    demoLink: "",
+    coverImage: "/images/projects/resource.png",
+    longDescription: "An app that helps unhoused people find needed resources in the UW area like medicine, food, and shelter.",
+    details: { tech: ["Figma"] },
+    gallery: ["/images/projects/resource.png"],
+    featured: false
+  },
+  {
+    projectName: "Husky Match",
+    creatorName: "Enrico Pratama, Melvin Chia, and Winston Wihono",
+    track: "creatives",
+    cohort: 0,
+    description: "A product roadmap for a UW centered dating app.",
+    demoLink: "",
+    coverImage: "/images/projects/match.png",
+    longDescription: "A product roadmap for a UW centered dating app, making it more personalized and with enhanced matching.",
+    details: { tech: ["Kotlin", "Python", "Figma"] },
+    gallery: ["/images/projects/match.png", "/images/projects/match1.png", "/images/projects/match2.png", "/images/projects/match3.png", "/images/projects/match4.png", "/images/projects/match5.png", "/images/projects/match6.png", "/images/projects/match7.png"],
+    featured: false
+  },
+  {
+    projectName: "D.O.T.",
+    creatorName: "Saara Uthmaan",
+    track: "software",
+    cohort: 0,
+    description: "A TODO web app to put as a project for my portfolio.",
+    demoLink: "",
+    coverImage: "/images/projects/dot1.png",
+    longDescription: "Developing my personal portfolio, and including a TODO web app to put as a project.",
+    details: { tech: ["JavaScript", "APIs", "Figma"] },
+    gallery: ["/images/projects/dot.png"],
+    featured: false
+  },
+  {
+    projectName: "Better Grades",
+    creatorName: "Jeffrey Lan",
+    track: "software",
+    cohort: 0,
+    description: "A standardized way of viewing course information and materials.",
+    demoLink: "https://www.youtube.com/watch?v=GK-7_3BMwDs",
+    coverImage: "/images/projects/grades7.png",
+    longDescription: "A browser extension that transforms your new tabs into a powerful and aesthetic study dashboard infused with your course information and materials from Canvas.",
+    details: { tech: ["Shadcn", "Framer Motion", "TailwindCSS", "React", "TypeScript", "Vite"] },
+    gallery: ["/images/projects/grades0.png", "/images/projects/grades2.png", "/images/projects/grades3.png", "/images/projects/grades.png", "/images/projects/grades1.png", "/images/projects/grades5.png", "/images/projects/grades7.png"],
+    featured: false
   },
 ];
 
@@ -782,7 +1194,6 @@ export const projects: Project[] = [
   ...cohort4Projects,
   ...cohort3Projects,
   ...cohort2Projects,
-  ...cohort1Projects,
   ...cohort0Projects,
 ];
 
@@ -797,7 +1208,6 @@ export const getProjectsByCohort = (cohort: Cohort): Project[] => {
     case 4: return cohort4Projects;
     case 3: return cohort3Projects;
     case 2: return cohort2Projects;
-    case 1: return cohort1Projects;
     case 0: return cohort0Projects;
     default: return [];
   }

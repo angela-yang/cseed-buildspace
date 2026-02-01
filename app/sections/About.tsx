@@ -272,30 +272,29 @@ export default function About() {
           </motion.div>
         ))}
       </div>
-      <section className="min-h-[200vh] flex flex-col justify-left items-left text-left relative ml-50 mb-50">
-        <h2 className="text-5xl font-bold text-left mt-15 mb-8 text-[rgb(57,123,255)] z-10">
-          endless possibilities
-        </h2>
-        <p className="text-3xl text-left text-gray-600 z-10">
-          maybe you want to create your own app.
-          <br></br>
-          maybe you want to turn a hobby into something more.
-          <br></br>
-          maybe you want to launch a business.
-          <br></br>
-          maybe you want to build your tech startup.
-          <br></br>
-          maybe you want to launch your youtube channel.
-          <br></br>
-          maybe you want to experiment with large language models.
-          <br></br>
-          maybe you want to write your own book.
-          <br></br>
-          <br></br>
-          buildspace is the place for you 💫
-        </p>
+      <section className="relative flex flex-col text-left px-6 md:px-16 py-32 overflow-hidden">
+        <div className="relative z-10 max-w-3xl">
+          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-[rgb(57,123,255)]">
+            endless possibilities
+          </h2>
+
+          <p className="text-xl md:text-3xl text-gray-600 leading-relaxed space-y-2">
+            <span>maybe you want to create your own app.</span><br />
+            <span>maybe you want to turn a hobby into something more.</span><br />
+            <span>maybe you want to launch a business.</span><br />
+            <span>maybe you want to build your tech startup.</span><br />
+            <span>maybe you want to launch your youtube channel.</span><br />
+            <span>maybe you want to experiment with large language models.</span><br />
+            <span>maybe you want to write your own book.</span><br /><br />
+            <span className="font-semibold text-gray-800">
+              buildspace is the place for you 💫
+            </span>
+          </p>
+        </div>
+
         <Photos />
       </section>
+
       {/* Timeline 
       <section className="min-h-[50vh] flex flex-col justify-center items-center text-center relative mb-50">
         <h2 className="text-5xl font-bold text-center mt-15 mb-8 text-[rgb(57,123,255)] z-10">

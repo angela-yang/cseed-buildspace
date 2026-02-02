@@ -40,7 +40,10 @@ export default function ProjectCard({
   onNavigatePrev,
   hasNext = false,
   hasPrev = false,
-  gridColumn = 1
+  gridColumn = 1,
+  isExpanded = false,
+  onExpand,
+  onCollapse,
 }: {
   projectName?: string;
   creatorName?: string;
@@ -57,9 +60,11 @@ export default function ProjectCard({
   hasNext?: boolean;
   hasPrev?: boolean;
   gridColumn?: number;
+  isExpanded?: boolean;
+  onExpand?: () => void;
+  onCollapse?: () => void;
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedGalleryImage, setSelectedGalleryImage] = useState(0);
@@ -86,21 +91,24 @@ export default function ProjectCard({
     return () => clearTimeout(timer);
   }, [index]);
 
+  useEffect(() => {
+    if (!isExpanded) {
+      setIsFlipped(false);
+    }
+  }, [isExpanded]);
+
   const handleCardClick = () => {
     if (isExpanded) {
-      setIsExpanded(false);
-      setTimeout(() => setIsFlipped(false), 300);
+      onCollapse?.();
     } else if (!isFlipped) {
       setIsFlipped(true);
-      setTimeout(() => {
-        setIsExpanded(true);
-      }, 300);
+      setTimeout(() => onExpand?.(), 300);
     }
   };
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsExpanded(false);
+    isExpanded = false;
     setTimeout(() => setIsFlipped(false), 300);
   };
 

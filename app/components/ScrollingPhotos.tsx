@@ -105,7 +105,7 @@ export default function ScrollingPhotoGallery({
       </div>
 
       {/* Scrolling Photo Columns */}
-      <div className="hidden md:flex justify-center items-center gap-8 md:gap-16 lg:gap-24 px-6 md:px-12 lg:px-20">
+      <div className="flex justify-center items-center gap-8 md:gap-16 lg:gap-24 px-6 md:px-12 lg:px-20">
         {/* Left Column - Scrolls Down */}
         <div 
           className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/4 will-change-transform"

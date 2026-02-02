@@ -273,12 +273,12 @@ export default function About() {
         ))}
       </div>
       <section className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-[5vw]">
-        <div className="relative z-10 max-w-3xl">
-          <h2 className="text-4xl md:text-5xl font-bold mb-10 text-[rgb(57,123,255)]">
+        <div className="relative z-10">
+          <h2 className="text-4xl md:text-[3vw] font-bold mb-10 text-[rgb(57,123,255)]">
             Endless Possibilities
           </h2>
 
-          <p className="text-xl md:text-3xl text-gray-600 leading-relaxed space-y-2">
+          <p className="text-xl md:text-[2vw] text-gray-600 leading-relaxed space-y-2">
             <span>Maybe you want to create your own app.</span><br />
             <span>Maybe you want to turn a hobby into something more.</span><br />
             <span>Maybe you want to launch a business.</span><br />
@@ -287,17 +287,19 @@ export default function About() {
             <span>Maybe you want to experiment with large language models.</span><br />
             <span>Maybe you want to write your own book.</span><br /><br />
           </p>
-          <span className="font-bold text-2xl md:text-4xl text-gray-600">
+          <span className="font-bold text-2xl md:text-[2vw] text-gray-600">
             Buildspace is the place for you 💫
           </span>
         </div>
-        <div className="flex justify-center md:justify-end">
-          <img
-            src="/images/buildspace.webp"
-            alt="Buildspace"
-            className="w-full"
-          />
-        </div>
+        <ScrollReveal>
+          <div className="flex justify-center md:justify-end">
+            <img
+              src="/images/buildspace.webp"
+              alt="Buildspace"
+              className="w-full"
+            />
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* Timeline 

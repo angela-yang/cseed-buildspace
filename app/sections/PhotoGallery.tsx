@@ -150,7 +150,7 @@ function CohortGallery({ title, photos }: { title: string; photos: string[] }) {
 export default function PhotoGallery() {
   return (
     <section id="gallery" className="section py-24 px-[5vw] mx-auto">
-      <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">
+      <h2 className="text-5xl font-bold text-center mb-2 mt-10 text-gray-900">
         Buildspace Moments 📸
       </h2>
 

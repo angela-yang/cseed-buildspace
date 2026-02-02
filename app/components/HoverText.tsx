@@ -23,8 +23,8 @@ export default function ValuesSection() {
   };
 
   const highlightColors: Record<HoverWordKey, string> = {
-    passion: "#D86DFF",
-    community: "#FDBAD3",
+    passion: "#FDBAD3",
+    community: "#D86DFF",
     accountability: "#85D8BA",
   };
 
@@ -43,11 +43,11 @@ export default function ValuesSection() {
 
   return (
     <section className="relative flex flex-col items-center justify-center pb-30 px-6">
-      <p className="max-w-5xl text-center text-4xl md:text-[2.2vw] leading-tight text-gray-700 font-medium relative">
+      <p className="max-w-5xl text-center text-4xl md:text-[2.2vw] leading-relaxed text-gray-700 font-medium relative">
         Buildspace is for you to come and build what you want. Its a place where creators find inspiration, friends, & loud fails…
       </p>
       <br />
-      <p className="max-w-5xl text-center text-4xl md:text-[2.2vw] leading-tight text-gray-700 font-medium relative">
+      <p className="max-w-5xl text-center text-4xl md:text-[2.2vw] leading-relaxed text-gray-700 font-medium relative">
         We are fueled by{" "}
         <HoverWord
           word="passion"
@@ -138,7 +138,7 @@ const HoverWord = ({ word, hovered, setHovered, highlightColor, ref }: HoverWord
     >
       {/* HIGHLIGHT */}
       <span
-        className="absolute left-0 bottom-0 h-[0.9em] transition-transform duration-500 ease-out origin-left"
+        className="absolute left-0 bottom-2 h-[0.9em] transition-transform duration-500 ease-out origin-left"
         style={{
           width: "100%",
           backgroundColor: highlightColor,
@@ -151,7 +151,7 @@ const HoverWord = ({ word, hovered, setHovered, highlightColor, ref }: HoverWord
       <span className="relative z-10">{word}</span>
 
       {/* UNDERLINE */}
-      <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-black" />
+      <span className="absolute left-0 bottom-2 h-[2px] w-full bg-black" />
     </span>
   );
 };

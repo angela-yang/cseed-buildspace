@@ -43,11 +43,11 @@ export default function ScrollingPhotoGallery({
       { src: "/images/cohort-2/img23.webp", alt: "Photo 5" },
       { src: "/images/cohort-2/img7.webp", alt: "Photo 6" },
       { src: "/images/cohort-2/img21.webp", alt: "Photo 7" },
-      { src: "/images/cohort-2/img19.webp", alt: "Photo 8" },
+      { src: "/images/cohort-2/img22.webp", alt: "Photo 8" },
     ],
     right: [
-      { src: "/images/cohort-3/img1.webp", alt: "Photo 9" },
-      { src: "/images/cohort-3/img25.webp", alt: "Photo 10" },
+      { src: "/images/cohort-3/img25.webp", alt: "Photo 9" },
+      { src: "/images/cohort-3/img1.webp", alt: "Photo 10" },
       { src: "/images/cohort-3/img45.webp", alt: "Photo 11" },
       { src: "/images/cohort-4/img3.webp", alt: "Photo 12" },
     ]
@@ -177,6 +177,22 @@ export default function ScrollingPhotoGallery({
             </div>
           ))}
         </div>
+      </div>
+      <div className="flex flex-col gap-8 px-6 md:hidden">
+        {[leftColumnPhotos[0], middleColumnPhotos[0], rightColumnPhotos[0]].map(
+          (photo, index) => (
+            <div
+              key={`mobile-${index}`}
+              className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
+            >
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )
+        )}
       </div>
     </section>
   );

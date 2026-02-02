@@ -208,6 +208,7 @@ export default function ProjectCard({
               </div>
             </div>
 
+            {/* Cohort Badge 
             <div 
               className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-lg font-bold tracking-wider backdrop-blur-md"
               style={{
@@ -217,7 +218,7 @@ export default function ProjectCard({
               }}
             >
               {cohort}
-            </div>
+            </div>*/}
             
             {/* Content Section */}
             <div className="p-6 space-y-3">

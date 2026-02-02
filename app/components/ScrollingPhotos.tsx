@@ -105,7 +105,7 @@ export default function ScrollingPhotoGallery({
       </div>
 
       {/* Scrolling Photo Columns */}
-      <div className="flex justify-center items-center gap-8 md:gap-16 lg:gap-24 px-6 md:px-12 lg:px-20">
+      <div className="hidden md:flex justify-center items-center gap-8 md:gap-16 lg:gap-24 px-6 md:px-12 lg:px-20">
         {/* Left Column - Scrolls Down */}
         <div 
           className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/4 will-change-transform"
@@ -116,7 +116,7 @@ export default function ScrollingPhotoGallery({
           {leftColumnPhotos.map((photo, index) => (
             <div 
               key={`left-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl hover:shadow-3xl transition-all duration-500 group"
+              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl md:hover:shadow-3xl transition-all duration-500 group"
               style={{
                 transform: `rotate(${index % 2 === 0 ? 2 : -2}deg)`,
               }}
@@ -140,7 +140,7 @@ export default function ScrollingPhotoGallery({
           {middleColumnPhotos.map((photo, index) => (
             <div 
               key={`middle-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl hover:shadow-3xl transition-all duration-500 group"
+              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl md:hover:shadow-3xl transition-all duration-500 group"
               style={{
                 transform: `rotate(${index % 2 === 0 ? -2 : 2}deg)`,
               }}
@@ -164,7 +164,7 @@ export default function ScrollingPhotoGallery({
           {rightColumnPhotos.map((photo, index) => (
             <div 
               key={`right-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl hover:shadow-3xl transition-all duration-500 group"
+              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl md:hover:shadow-3xl transition-all duration-500 group"
               style={{
                 transform: `rotate(${index % 2 === 0 ? 2 : -2}deg)`,
               }}

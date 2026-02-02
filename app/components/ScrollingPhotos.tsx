@@ -184,7 +184,7 @@ export default function ScrollingPhotoGallery({
           (photo, index) => (
             <div
               key={`mobile-${index}`}
-              className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
+              className="relative aspect-[3/4] rounded-2xl overflow-hidden"
             >
               <img
                 src={photo.src}

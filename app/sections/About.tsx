@@ -145,7 +145,7 @@ export default function About() {
         {/*<Background sectionRef={aboutSectionRef} />*/}
         {/* Overview */}
         <ScrollReveal>
-          <h2 className="text-5xl font-bold text-center my-14 text-[rgb(57,123,255)]">
+          <h2 className="text-4xl md:text-[3.5vw] font-bold text-center my-14 text-[rgb(57,123,255)]">
             What is Buildspace?
           </h2>
 

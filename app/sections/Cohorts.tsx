@@ -10,6 +10,16 @@ export default function Cohorts() {
   const [searchTerm, setSearchTerm] = useState("");
   const PROJECTS_PER_COHORT = 12;
   const [expandedCohorts, setExpandedCohorts] = useState<Record<number, boolean>>({});
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [galleryIndexMap, setGalleryIndexMap] = useState<{ [key: number]: number }>({});
+
+  const handleExpand = (index: number) => {
+    setExpandedIndex(index); // new card expands
+  };
+
+  const handleCollapse = () => {
+    setExpandedIndex(null); // collapse all
+  };
 
   // Filter projects based on track, cohort, and search
   const filteredProjects = projects.filter((project) => {
@@ -45,6 +55,31 @@ export default function Cohorts() {
   const cohortsToDisplay = cohortFilter === "all" 
     ? [4, 3, 2, 1, 0]
     : [cohortFilter];
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (expandedIndex === null) return;
+
+      if (e.key === "ArrowRight") {
+        setExpandedIndex((prev) => (prev! + 1) % filteredProjects.length);
+      } else if (e.key === "ArrowLeft") {
+        setExpandedIndex((prev) => (prev! - 1 + filteredProjects.length) % filteredProjects.length);
+      } else if (e.key === "ArrowDown") {
+        const card = filteredProjects[expandedIndex];
+        if (card.gallery && card.gallery.length > 0) {
+          // Move to next gallery image
+        }
+      } else if (e.key === "ArrowUp") {
+        const card = filteredProjects[expandedIndex];
+        if (card.gallery && card.gallery.length > 0) {
+          // Move to prev gallery image
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [expandedIndex, filteredProjects]);
 
   return (
     <main>
@@ -148,11 +183,19 @@ export default function Cohorts() {
                     0,
                     expandedCohorts[cohort] ? cohortProjects.length : PROJECTS_PER_COHORT
                   )
-                  .map((project, i) => (
+                  .map((project, index) => (
                     <ProjectCard
-                      key={`${project.projectName}-${i}`}
+                      key={`${project.projectName}-${index}`}
                       {...project}
-                      index={i}
+                      index={index}
+                      isExpanded={expandedIndex === index}
+                      selectedGalleryImage={galleryIndexMap[index] ?? 0}
+                      onGalleryChange={(newIndex) =>
+                        setGalleryIndexMap((prev) => ({ ...prev, [index]: newIndex }))
+                      }
+                      onExpand={() => handleExpand(index)}
+                      onCollapse={() => handleCollapse()}
+                      totalCards={filteredProjects.length} 
                     />
                   ))}
                 </div>

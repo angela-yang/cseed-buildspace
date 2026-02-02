@@ -64,34 +64,10 @@ const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; dela
 }
 
 export default function Projects() {
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      setMousePos({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      const x = ((e.clientX - innerWidth / 2) / innerWidth) * -30;
-      const y = ((e.clientY - innerHeight / 2) / innerHeight) * -30;
-      setOffset({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   const [filter, setFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [galleryIndexMap, setGalleryIndexMap] = useState<{ [key: number]: number }>({});
 
   const handleExpand = (index: number) => {
     setExpandedIndex(index); // new card expands
@@ -110,6 +86,31 @@ export default function Projects() {
                          project.description.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (expandedIndex === null) return;
+
+      if (e.key === "ArrowRight") {
+        setExpandedIndex((prev) => (prev! + 1) % filteredProjects.length);
+      } else if (e.key === "ArrowLeft") {
+        setExpandedIndex((prev) => (prev! - 1 + filteredProjects.length) % filteredProjects.length);
+      } else if (e.key === "ArrowDown") {
+        const card = filteredProjects[expandedIndex];
+        if (card.gallery && card.gallery.length > 0) {
+          // Move to next gallery image
+        }
+      } else if (e.key === "ArrowUp") {
+        const card = filteredProjects[expandedIndex];
+        if (card.gallery && card.gallery.length > 0) {
+          // Move to prev gallery image
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [expandedIndex, filteredProjects]);
 
   return (
     <main>
@@ -188,8 +189,13 @@ export default function Projects() {
                     {...project}
                     index={index}
                     isExpanded={expandedIndex === index}
+                    selectedGalleryImage={galleryIndexMap[index] ?? 0}
+                    onGalleryChange={(newIndex) =>
+                      setGalleryIndexMap((prev) => ({ ...prev, [index]: newIndex }))
+                    }
                     onExpand={() => handleExpand(index)}
                     onCollapse={() => handleCollapse()}
+                    totalCards={filteredProjects.length} 
                   />
                 ))}
               </div>

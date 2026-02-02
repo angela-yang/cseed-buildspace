@@ -38,12 +38,13 @@ export default function ProjectCard({
   index = 0,
   onNavigateNext,
   onNavigatePrev,
-  hasNext = false,
-  hasPrev = false,
   gridColumn = 1,
   isExpanded = false,
+  selectedGalleryImage = 0,
+  onGalleryChange,
   onExpand,
   onCollapse,
+  totalCards,
 }: {
   projectName?: string;
   creatorName?: string;
@@ -57,17 +58,17 @@ export default function ProjectCard({
   index?: number;
   onNavigateNext?: () => void;
   onNavigatePrev?: () => void;
-  hasNext?: boolean;
-  hasPrev?: boolean;
   gridColumn?: number;
   isExpanded?: boolean;
+  selectedGalleryImage?: number;
+  onGalleryChange?: (newIndex: number) => void;
   onExpand?: () => void;
   onCollapse?: () => void;
+  totalCards: number;
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedGalleryImage, setSelectedGalleryImage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const colors = trackColors[track as keyof typeof trackColors];
@@ -83,7 +84,6 @@ export default function ProjectCard({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -96,6 +96,10 @@ export default function ProjectCard({
       setIsFlipped(false);
     }
   }, [isExpanded]);
+
+  const handleThumbnailClick = (idx: number) => {
+    onGalleryChange?.(idx);
+  };
 
   const handleCardClick = () => {
     if (isExpanded) {
@@ -110,22 +114,6 @@ export default function ProjectCard({
     e.stopPropagation();
     isExpanded = false;
     setTimeout(() => setIsFlipped(false), 300);
-  };
-
-  const handleNavigateNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onNavigateNext) {
-      onNavigateNext();
-      setSelectedGalleryImage(0);
-    }
-  };
-
-  const handleNavigatePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onNavigatePrev) {
-      onNavigatePrev();
-      setSelectedGalleryImage(0);
-    }
   };
 
   const expandToLeft = gridColumn === 3;
@@ -323,29 +311,6 @@ export default function ProjectCard({
               </div>
 
               <div className="flex items-center gap-2">
-                {/* Navigation */}
-                {isExpanded && hasPrev && (
-                  <button
-                    onClick={handleNavigatePrev}
-                    className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200"
-                  >
-                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-                )}
-
-                {isExpanded && hasNext && (
-                  <button
-                    onClick={handleNavigateNext}
-                    className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200"
-                  >
-                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                )}
-
                 {/* Close */}
                 <button
                   onClick={handleClose}
@@ -399,12 +364,13 @@ export default function ProjectCard({
                     <h4 className="text-lg font-bold uppercase tracking-wider text-gray-700 mb-4">
                       Gallery
                     </h4>
+
                     <div className="space-y-4">
                       {/* Main Image */}
-                      <div className="w-full h-80 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
-                        {gallery[selectedGalleryImage]?.endsWith('.mp4') ? (
-                          <video 
-                            src={gallery[selectedGalleryImage]} 
+                      <div className="relative w-full h-80 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
+                        {gallery[selectedGalleryImage]?.endsWith(".mp4") ? (
+                          <video
+                            src={gallery[selectedGalleryImage]}
                             autoPlay
                             loop
                             muted
@@ -412,11 +378,65 @@ export default function ProjectCard({
                             className="w-full h-full object-contain"
                           />
                         ) : (
-                          <img 
-                            src={gallery[selectedGalleryImage]} 
+                          <img
+                            src={gallery[selectedGalleryImage]}
                             alt={`Gallery ${selectedGalleryImage + 1}`}
                             className="w-full h-full object-contain"
                           />
+                        )}
+
+                        {/* Left gallery arrow */}
+                        {gallery.length > 1 && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onGalleryChange?.(
+                                (selectedGalleryImage - 1 + gallery.length) % gallery.length
+                              );
+                            }}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition"
+                          >
+                            <svg
+                              className="w-5 h-5 text-gray-700"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15 19l-7-7 7-7"
+                              />
+                            </svg>
+                          </button>
+                        )}
+
+                        {/* Right gallery arrow */}
+                        {gallery.length > 1 && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onGalleryChange?.(
+                                (selectedGalleryImage + 1) % gallery.length
+                              );
+                            }}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition"
+                          >
+                            <svg
+                              className="w-5 h-5 text-gray-700"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                          </button>
                         )}
                       </div>
                       
@@ -427,12 +447,12 @@ export default function ProjectCard({
                             key={idx}
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSelectedGalleryImage(idx);
+                              handleThumbnailClick(idx);
                             }}
                             className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden transition-all hover:scale-105"
                             style={{
-                              border: selectedGalleryImage === idx 
-                                ? `3px solid ${colors.primary}` 
+                              border: selectedGalleryImage === idx
+                                ? `3px solid ${colors.primary}`
                                 : '3px solid transparent',
                               opacity: selectedGalleryImage === idx ? 1 : 0.6
                             }}

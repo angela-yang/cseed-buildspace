@@ -645,7 +645,7 @@ export const cohort2Projects: Project[] = [
     coverImage: "/images/projects/walk.png",
     longDescription: "An Uber app for Husky NightWalk, where students can track their ride, view estimated wait time, and find meeting point with driver.",
     details: { tech: ["React Native", "Figma", "Expo"] }, 
-    gallery: ["/images/projects/walk1.png", "/images/projects/walk.png"],
+    gallery: ["/images/projects/walk.png", "/images/projects/walk1.png"],
     featured: false
   },
   {

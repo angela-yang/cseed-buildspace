@@ -115,21 +115,21 @@ export default function About() {
 
   const features = [
     { 
-      image: '/images/passion.jpg', 
+      image: '/images/passion.webp', 
       title: '1. Build your passion', 
       desc: 'Commit to a project youre passionate about, and report your weekly progress.',
       color: 'text-[rgb(255,0,102)]',
       bgColor: 'bg-gradient-to-br from-orange-50 to-pink-50'
     },
     { 
-      image: '/images/community.jpg', 
+      image: '/images/community.webp', 
       title: '2. Meet the community', 
       desc: 'Connect with a space of other amazing people, and learn from experienced mentors.',
       color: 'text-[rgb(136,0,185)]',
       bgColor: 'bg-gradient-to-br from-blue-50 to-purple-50'
     },
     { 
-      image: '/images/showcase.jpg', 
+      image: '/images/showcase.webp', 
       title: '3. Showcase your project!', 
       desc: 'At the end of the 6 weeks, showcase your project and display the fruition of your work.',
       color: 'text-[rgb(19,163,122)]',
@@ -272,24 +272,31 @@ export default function About() {
           </motion.div>
         ))}
       </div>
-      <section className="relative flex flex-col text-left left-[5vw] md:px-16 pb-32 overflow-hidden">
+      <section className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-[5vw]">
         <div className="relative z-10 max-w-3xl">
           <h2 className="text-4xl md:text-5xl font-bold mb-10 text-[rgb(57,123,255)]">
-            endless possibilities
+            Endless Possibilities
           </h2>
 
           <p className="text-xl md:text-3xl text-gray-600 leading-relaxed space-y-2">
-            <span>maybe you want to create your own app.</span><br />
-            <span>maybe you want to turn a hobby into something more.</span><br />
-            <span>maybe you want to launch a business.</span><br />
-            <span>maybe you want to build your tech startup.</span><br />
-            <span>maybe you want to launch your youtube channel.</span><br />
-            <span>maybe you want to experiment with large language models.</span><br />
-            <span>maybe you want to write your own book.</span><br /><br />
-            <span className="font-semibold text-gray-800">
-              buildspace is the place for you 💫
-            </span>
+            <span>Maybe you want to create your own app.</span><br />
+            <span>Maybe you want to turn a hobby into something more.</span><br />
+            <span>Maybe you want to launch a business.</span><br />
+            <span>Maybe you want to build your tech startup.</span><br />
+            <span>Maybe you want to launch your youtube channel.</span><br />
+            <span>Maybe you want to experiment with large language models.</span><br />
+            <span>Maybe you want to write your own book.</span><br /><br />
           </p>
+          <span className="font-bold text-2xl md:text-4xl text-gray-600">
+            Buildspace is the place for you 💫
+          </span>
+        </div>
+        <div className="flex justify-center md:justify-end">
+          <img
+            src="/images/buildspace.webp"
+            alt="Buildspace"
+            className="w-full"
+          />
         </div>
       </section>
 

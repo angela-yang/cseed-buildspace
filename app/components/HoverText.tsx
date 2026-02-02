@@ -17,9 +17,9 @@ export default function ValuesSection() {
   });
 
   const images: Record<HoverWordKey, string[]> = {
-    passion: ["/images/hover-pics/p1.png", "/images/hover-pics/p2.jpg", "/images/hover-pics/p3.jpg"],
-    community: ["/images/hover-pics/c3.jpg", "/images/hover-pics/c4.jpg", "/images/hover-pics/c5.jpg"],
-    accountability: ["/images/hover-pics/a1.png", "/images/hover-pics/a2.jpg", "/images/hover-pics/a3.jpg"],
+    passion: ["/images/hover-pics/p1.png", "/images/hover-pics/p2.webp", "/images/hover-pics/p3.webp"],
+    community: ["/images/hover-pics/c3.webp", "/images/hover-pics/c4.webp", "/images/hover-pics/c5.webp"],
+    accountability: ["/images/hover-pics/a1.png", "/images/hover-pics/a2.webp", "/images/hover-pics/a3.webp"],
   };
 
   const highlightColors: Record<HoverWordKey, string> = {
@@ -44,7 +44,11 @@ export default function ValuesSection() {
   return (
     <section className="relative flex flex-col items-center justify-center pb-30 px-6">
       <p className="max-w-5xl text-center text-4xl leading-tight text-gray-700 font-medium relative">
-        We believe meaningful work is built through{" "}
+        Buildspace is for you to come and build what you want. Its a place where creators find inspiration, friends, & loud fails…
+      </p>
+      <br />
+      <p className="max-w-5xl text-center text-4xl leading-tight text-gray-700 font-medium relative">
+        We are fueled by{" "}
         <HoverWord
           word="passion"
           hovered={hovered}

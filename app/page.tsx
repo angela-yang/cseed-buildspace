@@ -5,7 +5,9 @@ import About from "./sections/About"
 import Projects from "./sections/Projects"
 import Cohorts from "./sections/Cohorts"
 import Contact from "./sections/Contact"
-import Background from "./components/Background";
+import ScrollingPhotos from "./components/ScrollingPhotos"
+import PhotoGallery from "./sections/PhotoGallery"
+import Background from "./components/Background"
 import { useState, useEffect } from 'react';
 
 export default function Home() {
@@ -90,8 +92,10 @@ export default function Home() {
 
       <Landing />
       <About/>
+      <ScrollingPhotos />
       <Projects />
       <Cohorts />
+      <PhotoGallery />
       <Contact />
 
     </main>

@@ -30,6 +30,7 @@ export default function ProjectCard({
   demoLink = "https://demo.example.com",
   coverImage = "",
   track = "software" as keyof typeof trackColors,
+  cohort = 0,
   longDescription = "",
   details = {
     tech: [""],
@@ -52,6 +53,7 @@ export default function ProjectCard({
   demoLink?: string;
   coverImage?: string;
   track?: keyof typeof trackColors;
+  cohort?: number;
   longDescription?: string;
   details?: { tech: string[] };
   gallery?: string[];
@@ -204,6 +206,17 @@ export default function ProjectCard({
               >
                 {track}
               </div>
+            </div>
+
+            <div 
+              className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-lg font-bold tracking-wider backdrop-blur-md"
+              style={{
+                backgroundColor: "rgba(70,128,245,0.7)",
+                color: 'white',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              }}
+            >
+              {cohort}
             </div>
             
             {/* Content Section */}

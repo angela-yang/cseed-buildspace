@@ -131,7 +131,7 @@ export default function Projects() {
                     Featured Projects
                   </h2>
                   <p className="text-lg sm:text-xl lg:text-2xl text-white/90">
-                    Discover amazing projects from our past cohorts
+                    Browse our selected featured projects!
                   </p>
                 </div>
 

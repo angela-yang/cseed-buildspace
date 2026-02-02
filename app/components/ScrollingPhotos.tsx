@@ -30,6 +30,7 @@ export default function ScrollingPhotoGallery({
   backgroundColor = "rgb(241,239,235)"
 }: ScrollingPhotoGalleryProps) {
   const [scrollY, setScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const defaultPhotos = {
@@ -66,6 +67,13 @@ export default function ScrollingPhotoGallery({
   ];
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
@@ -84,10 +92,10 @@ export default function ScrollingPhotoGallery({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Much stronger parallax speeds for dramatic effect
-  const leftOffset = scrollY * 500;
-  const middleOffset = -scrollY * 1000; // Opposite direction
-  const rightOffset = scrollY * 600;
+  const speed = isMobile ? 0.4 : 1;
+  const leftOffset = scrollY * 500 * speed;
+  const middleOffset = -scrollY * 1000 * speed; // Opposite direction
+  const rightOffset = scrollY * 600 * speed;
 
   return (
     <section 
@@ -124,7 +132,8 @@ export default function ScrollingPhotoGallery({
               <img 
                 src={photo.src}
                 alt={photo.alt}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
+                loading="lazy"
               />
             </div>
           ))}
@@ -148,7 +157,8 @@ export default function ScrollingPhotoGallery({
               <img 
                 src={photo.src}
                 alt={photo.alt}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
+                loading="lazy"
               />
             </div>
           ))}
@@ -172,7 +182,8 @@ export default function ScrollingPhotoGallery({
               <img 
                 src={photo.src}
                 alt={photo.alt}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
+                loading="lazy"
               />
             </div>
           ))}
@@ -190,6 +201,7 @@ export default function ScrollingPhotoGallery({
                 src={photo.src}
                 alt={photo.alt}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
           )

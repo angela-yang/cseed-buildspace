@@ -105,10 +105,10 @@ export default function ScrollingPhotoGallery({
       </div>
 
       {/* Scrolling Photo Columns */}
-      <div className="flex gap-8 md:gap-16 lg:gap-24 px-6 md:px-12 lg:px-20">
+      <div className="flex justify-center items-center gap-8 md:gap-16 lg:gap-24 px-6 md:px-12 lg:px-20">
         {/* Left Column - Scrolls Down */}
         <div 
-          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/3 will-change-transform"
+          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/4 will-change-transform"
           style={{ 
             transform: `translateY(${leftOffset}px)`,
           }}
@@ -132,7 +132,7 @@ export default function ScrollingPhotoGallery({
 
         {/* Middle Column - Scrolls Up (Opposite Direction) */}
         <div 
-          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/3 will-change-transform pt-32 md:pt-48"
+          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/4 will-change-transform pt-32 md:pt-48"
           style={{ 
             transform: `translateY(${middleOffset}px)`,
           }}
@@ -156,7 +156,7 @@ export default function ScrollingPhotoGallery({
 
         {/* Right Column - Scrolls Down */}
         <div 
-          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/3 will-change-transform pt-16 md:pt-24"
+          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/4 will-change-transform pt-16 md:pt-24"
           style={{ 
             transform: `translateY(${rightOffset}px)`,
           }}

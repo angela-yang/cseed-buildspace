@@ -33,7 +33,7 @@ export default function Landing() {
   });
 
   return (
-    <main id="home" className="section min-h-[110vh] relative">
+    <main id="home" className="section min-h-[110vh] mb-120 relative">
       <div className="absolute inset-0 flex flex-col items-center justify-center -translate-y-40 text-center z-10 px-4">
         <motion.h1
           className="text-5xl sm:text-8xl md:text-9xl font-bold text-[rgb(57,123,255)]"

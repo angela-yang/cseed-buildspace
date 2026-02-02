@@ -97,6 +97,76 @@ export default function ScrollingPhotoGallery({
   const middleOffset = -scrollY * 1000 * speed; // Opposite direction
   const rightOffset = scrollY * 600 * speed;
 
+  if (isMobile) {
+    return (
+      <section
+        ref={sectionRef}
+        className="relative overflow-hidden py-10"
+        style={{ backgroundColor, minHeight: "120vh" }}
+      >
+        {/* Faint background text - mobile */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+          <h2 className="text-[18vw] font-black tracking-tighter leading-[0.85] text-gray-900 opacity-[0.06] select-none">
+            <span className="block text-center">{title.line1}</span>
+            <span className="block text-center italic">{title.line2}</span>
+            <span className="block text-center">{title.line3}</span>
+          </h2>
+        </div>
+
+        {/* Two columns on mobile */}
+        <div className="flex gap-4 px-4">
+          {/* Left column */}
+          <div
+            className="flex flex-col gap-4 w-1/2"
+            style={{
+              transform: `translateY(${leftOffset}px)`,
+              willChange: "transform",
+            }}
+          >
+            {leftColumnPhotos.map((photo, index) => (
+              <div
+                key={`left-${index}`}
+                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md"
+                style={{ transform: `rotate(${index % 2 === 0 ? 1.5 : -1.5}deg)` }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Right column */}
+          <div
+            className="flex flex-col gap-4 w-1/2 mt-20"
+            style={{
+              transform: `translateY(${middleOffset}px)`,
+              willChange: "transform",
+            }}
+          >
+            {middleColumnPhotos.map((photo, index) => (
+              <div
+                key={`middle-${index}`}
+                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md"
+                style={{ transform: `rotate(${index % 2 === 0 ? -1.5 : 1.5}deg)` }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section 
       ref={sectionRef}
@@ -188,24 +258,6 @@ export default function ScrollingPhotoGallery({
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="flex flex-col gap-8 px-6 md:hidden">
-        {[leftColumnPhotos[0], middleColumnPhotos[0], rightColumnPhotos[0]].map(
-          (photo, index) => (
-            <div
-              key={`mobile-${index}`}
-              className="relative aspect-[3/4] rounded-2xl overflow-hidden"
-            >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          )
-        )}
       </div>
     </section>
   );

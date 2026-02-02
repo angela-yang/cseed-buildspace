@@ -55,7 +55,7 @@ export default function About() {
       desc: "Learn to build full-stack applications and scalable software solutions.",
       showDesc: showDesc,
       setShowDesc: setShowDesc,
-      width: "200px",
+      width: 200,
       parallax: { x: 1.2, y: 0.4 }
     },
     {
@@ -64,7 +64,7 @@ export default function About() {
       desc: "Dive into electronics, circuits, and embedded systems development.",
       showDesc: showDesc1,
       setShowDesc: setShowDesc1,
-      width: "150px",
+      width: 150,
       parallax: { x: 0.8, y: 0.7 }
     },
     {
@@ -73,7 +73,7 @@ export default function About() {
       desc: "Explore unconventional tracks and creative projects beyond standard boundaries.",
       showDesc: showDesc2,
       setShowDesc: setShowDesc2,
-      width: "210px",
+      width: 210,
       parallax: { x: 1.5, y: 1.0 }
     },
     {
@@ -82,7 +82,7 @@ export default function About() {
       desc: "Focus on design, visual storytelling, and creative problem-solving.",
       showDesc: showDesc3,
       setShowDesc: setShowDesc3,
-      width: "210px",
+      width: 210,
       parallax: { x: 1.5, y: 1.0 }
     }
   ];
@@ -254,13 +254,14 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1, duration: 0.6 }}
-            className="bg-white rounded-2xl p-6 shadow-lg"
+            className="bg-white/60 backdrop-blur rounded-2xl p-6 shadow-lg"
           >
             <div className="flex items-center gap-4 mb-4">
               <img
                 src={track.image}
                 alt={`${track.name} track`}
-                className="object-contain w-16 h-16"
+                className="object-contain"
+                width={track.width/3}
               />
               <h4 className="text-xl font-bold text-[rgb(55,58,65)] capitalize">
                 {track.name}
@@ -272,6 +273,7 @@ export default function About() {
           </motion.div>
         ))}
       </div>
+
       <section className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-[5vw]">
         <div className="relative z-10">
           <h2 className="text-4xl md:text-[3vw] font-bold mb-10 text-[rgb(57,123,255)]">

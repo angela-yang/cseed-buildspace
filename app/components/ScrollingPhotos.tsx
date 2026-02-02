@@ -96,7 +96,7 @@ export default function ScrollingPhotoGallery({
       style={{ backgroundColor }}
     >
       {/* Large Background Text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+      <div className="hidden md:absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <h2 className="text-[10vw] md:text-[15vw] lg:text-[20vw] font-black tracking-tighter leading-[0.85] text-gray-900 opacity-[0.1] select-none whitespace-nowrap">
           <span className="block text-center">{title.line1}</span>
           <span className="block text-center italic">{title.line2}</span>
@@ -116,7 +116,7 @@ export default function ScrollingPhotoGallery({
           {leftColumnPhotos.map((photo, index) => (
             <div 
               key={`left-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 group"
+              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl hover:shadow-3xl transition-all duration-500 group"
               style={{
                 transform: `rotate(${index % 2 === 0 ? 2 : -2}deg)`,
               }}
@@ -140,7 +140,7 @@ export default function ScrollingPhotoGallery({
           {middleColumnPhotos.map((photo, index) => (
             <div 
               key={`middle-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 group"
+              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl hover:shadow-3xl transition-all duration-500 group"
               style={{
                 transform: `rotate(${index % 2 === 0 ? -2 : 2}deg)`,
               }}
@@ -164,7 +164,7 @@ export default function ScrollingPhotoGallery({
           {rightColumnPhotos.map((photo, index) => (
             <div 
               key={`right-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 group"
+              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl hover:shadow-3xl transition-all duration-500 group"
               style={{
                 transform: `rotate(${index % 2 === 0 ? 2 : -2}deg)`,
               }}
@@ -178,6 +178,7 @@ export default function ScrollingPhotoGallery({
           ))}
         </div>
       </div>
+
       <div className="flex flex-col gap-8 px-6 md:hidden">
         {[leftColumnPhotos[0], middleColumnPhotos[0], rightColumnPhotos[0]].map(
           (photo, index) => (

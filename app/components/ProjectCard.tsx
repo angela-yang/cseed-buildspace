@@ -130,8 +130,8 @@ export default function ProjectCard({
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         } ${
           isExpanded 
-            ? 'col-span-2 w-[60vw] h-[90vh] duration-500 z-50' 
-            : 'w-100 h-125 duration-700'
+            ? 'w-full md:w-[40vw] h-[80vh] duration-500 z-50'
+            : 'w-full h-125 duration-700'
         }`}
         style={{
           transformOrigin: expandToLeft

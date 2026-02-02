@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 
 const polaroids = [
-  "/images/cohort-3/img22.jpg",
-  "/images/cohort-3/img9.jpg",
-  "/images/cohort-3/img19.jpg",
-  "/images/cohort-4/img5.jpg",
-  "/images/cohort-4/img3.jpg",
-  "/images/cohort-4/img10.jpg",
+  "/images/cohort-3/img22.webp",
+  "/images/cohort-3/img9.webp",
+  "/images/cohort-3/img19.webp",
+  "/images/cohort-4/img5.webp",
+  "/images/cohort-4/img3.webp",
+  "/images/cohort-4/img10.webp",
 ];
 
 interface PolaroidData {

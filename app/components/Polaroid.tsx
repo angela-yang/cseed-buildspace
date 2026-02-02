@@ -65,7 +65,7 @@ export default function Polaroid({
       </div>
 
       {/* POLAROID */}
-      <div className={`${bgColor} w-full sm:w-85 h-auto sm:h-105 rounded-md shadow-2xl border border-gray-200`}>
+      <div className={`${bgColor} w-full sm:w-85 h-auto sm:h-108 rounded-md shadow-2xl border border-gray-200`}>
         {/* Image */}
         <img
           src={feature.image}
@@ -74,11 +74,11 @@ export default function Polaroid({
         />
 
         {/* Text Content */}
-        <div className="p-4 sm:p-6 md:p-7 text-center">
+        <div className="py-4 px-2 sm:py-6 sm:px-4 md:py-7 md:px-5 text-center">
           <h3 className={`text-lg sm:text-xl md:text-2xl ${color} font-bold mb-1 sm:mb-2`}>
             {feature.title}
           </h3>
-          <p className="text-sm sm:text-base md:text-lg ibm-plex-sans text-gray-500 leading-relaxed">
+          <p className="text-lg sm:text-base md:text-xl mb-3 ibm-plex-sans text-gray-600 leading-relaxed">
             {feature.desc}
           </p>
         </div>

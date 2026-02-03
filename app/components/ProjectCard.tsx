@@ -294,7 +294,7 @@ export default function ProjectCard({
             </div>
           </div>
 
-          {/* Back of card - Expanded view with professional layout */}
+          {/* Back of card */}
           <div
             className="absolute w-full h-full bg-white rounded-2xl overflow-hidden"
             style={{ 
@@ -339,23 +339,23 @@ export default function ProjectCard({
 
             {/* Content Area */}
             <div className="h-[calc(100%-4rem)] overflow-y-auto">
-              <div className="p-8 space-y-8">
+              <div className="p-4 space-y-8">
                 {/* Description Section */}
                 <section>
-                  <h4 className="text-lg font-bold uppercase tracking-wider text-gray-700 mb-3">
+                  <h4 className="text-lg px-4 font-bold uppercase tracking-wider text-gray-700 mb-3">
                     Overview
                   </h4>
-                  <p className="text-gray-700 ibm-plex-sans leading-relaxed">
+                  <p className="text-gray-700 px-4 ibm-plex-sans leading-relaxed">
                     {longDescription}
                   </p>
                 </section>
                 
                 {/* Technologies */}
                 <section>
-                  <h4 className="text-lg font-bold uppercase tracking-wider text-gray-700 mb-3">
+                  <h4 className="text-lg font-bold px-4 uppercase tracking-wider text-gray-700 mb-3">
                     Tech Stack
                   </h4>
-                  <div className="flex flex-wrap gap-2.5">
+                  <div className="flex flex-wrap px-4 gap-2.5">
                     {details.tech.map((tech, idx) => (
                       <span 
                         key={idx}
@@ -375,13 +375,13 @@ export default function ProjectCard({
                 {/* Gallery */}
                 {isExpanded && gallery && gallery.length > 0 && (
                   <section>
-                    <h4 className="text-lg font-bold uppercase tracking-wider text-gray-700 mb-4">
+                    <h4 className="text-lg px-4 font-bold uppercase tracking-wider text-gray-700 mb-4">
                       Gallery
                     </h4>
 
                     <div className="space-y-4">
                       {/* Main Image */}
-                      <div className="relative w-full h-80 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
+                      <div className="relative w-full h-60 md:h-80 rounded-xl overflow-hidden">
                         {gallery[selectedGalleryImage]?.endsWith(".mp4") ? (
                           <video
                             src={gallery[selectedGalleryImage]}
@@ -494,7 +494,7 @@ export default function ProjectCard({
                 
                 {/* CTA Button */}
                 {hasValidDemo && (
-                  <section className="pt-2 sm:pt-4">
+                  <section className="pt-2 pb-8 p-2 sm:pt-4">
                     <a 
                       href={demoLink}
                       onClick={(e) => e.stopPropagation()}

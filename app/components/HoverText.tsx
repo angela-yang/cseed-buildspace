@@ -43,11 +43,11 @@ export default function ValuesSection() {
 
   return (
     <section className="relative flex flex-col items-center justify-center pb-30 px-6">
-      <p className="max-w-5xl text-center text-4xl md:text-[2.2vw] leading-relaxed text-gray-700 font-medium relative">
+      <p className="max-w-5xl text-center text-3xl md:text-[2.2vw] leading-relaxed text-gray-700 font-medium relative">
         Buildspace is for you to come and build what you want. Its a place where creators find inspiration, friends, & loud fails…
       </p>
       <br />
-      <p className="max-w-5xl text-center text-4xl md:text-[2.2vw] leading-relaxed text-gray-700 font-medium relative">
+      <p className="max-w-5xl text-center text-3xl md:text-[2.2vw] leading-relaxed text-gray-700 font-medium relative">
         We are fueled by{" "}
         <HoverWord
           word="passion"

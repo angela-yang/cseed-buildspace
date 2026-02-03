@@ -32,6 +32,7 @@ export default function ScrollingPhotoGallery({
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
 
   const defaultPhotos = {
     left: [
@@ -75,26 +76,31 @@ export default function ScrollingPhotoGallery({
 
   useEffect(() => {
     const handleScroll = () => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        const sectionTop = rect.top;
-        const windowHeight = window.innerHeight;
-        
-        // Calculate scroll progress relative to section visibility
-        const scrollProgress = (windowHeight - sectionTop) / (windowHeight + rect.height);
-        setScrollY(scrollProgress);
-      }
+      if (rafRef.current !== null) return;
+
+      rafRef.current = requestAnimationFrame(() => {
+        if (sectionRef.current) {
+          const rect = sectionRef.current.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+          setScrollY(scrollProgress);
+        }
+        rafRef.current = null;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
 
-  const speed = isMobile ? 0.4 : 1;
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+  
+  const speed = isMobile ? 0.35 : 1;
   const leftOffset = scrollY * 500 * speed;
-  const middleOffset = -scrollY * 1000 * speed; // Opposite direction
+  const middleOffset = -scrollY * 1000 * speed;
   const rightOffset = scrollY * 600 * speed;
 
   if (isMobile) {

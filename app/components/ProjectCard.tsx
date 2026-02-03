@@ -305,7 +305,7 @@ export default function ProjectCard({
           >
             {/* Header Bar */}
             <div 
-              className="relative h-20 flex items-center justify-between px-8 border-b"
+              className="relative h-20 flex items-center justify-between py-3 px-8 border-b"
               style={{ 
                 backgroundColor: colors.light,
                 borderColor: `${colors.primary}20`

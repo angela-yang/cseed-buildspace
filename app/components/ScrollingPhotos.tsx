@@ -61,7 +61,7 @@ export default function ScrollingPhotoGallery({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Smooth scroll with requestAnimationFrame
+  // Smooth scroll using container transform
   useEffect(() => {
     const handleScroll = () => {
       if (rafRef.current !== null) return;
@@ -74,7 +74,7 @@ export default function ScrollingPhotoGallery({
 
         if (leftRef.current) leftRef.current.style.transform = `translateY(${progress * 400 * speed}px)`;
         if (middleRef.current) middleRef.current.style.transform = `translateY(${-progress * 300 * speed}px)`;
-        if (rightRef.current) rightRef.current.style.transform = `translateY(${progress * 500 * speed}px)`;
+        if (!isMobile && rightRef.current) rightRef.current.style.transform = `translateY(${progress * 500 * speed}px)`;
 
         rafRef.current = null;
       });
@@ -82,14 +82,11 @@ export default function ScrollingPhotoGallery({
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, [isMobile]);
-
-  const speed = isMobile ? 0.35 : 1;
 
   return (
     <section
@@ -109,43 +106,27 @@ export default function ScrollingPhotoGallery({
       {isMobile ? (
         <div className="relative z-10 flex gap-4">
           {/* Left Column */}
-          <div
-            ref={leftRef}
-            className="flex flex-col gap-4 w-1/2 will-change-transform"
-          >
+          <div ref={leftRef} className="flex flex-col gap-4 w-1/2 will-change-transform">
             {galleryPhotos.left.map((photo, i) => (
               <div
                 key={i}
                 className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md"
                 style={{ transform: `rotate(${i % 2 === 0 ? 1.5 : -1.5}deg)` }}
               >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover" loading="lazy" />
               </div>
             ))}
           </div>
 
           {/* Middle Column */}
-          <div
-            ref={middleRef}
-            className="flex flex-col gap-4 w-1/2 will-change-transform"
-          >
+          <div ref={middleRef} className="flex flex-col gap-4 w-1/2 will-change-transform">
             {galleryPhotos.middle.map((photo, i) => (
               <div
                 key={i}
                 className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md"
                 style={{ transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)` }}
               >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover" loading="lazy" />
               </div>
             ))}
           </div>
@@ -153,64 +134,40 @@ export default function ScrollingPhotoGallery({
       ) : (
         <div className="relative z-10 flex justify-center gap-10 md:gap-20 lg:gap-30">
           {/* Left */}
-          <div
-            ref={leftRef}
-            className="flex flex-col gap-10 w-[18%] will-change-transform"
-          >
+          <div ref={leftRef} className="flex flex-col gap-10 w-[18%] will-change-transform">
             {galleryPhotos.left.map((photo, i) => (
               <div
                 key={i}
                 className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl"
                 style={{ transform: `rotate(${i % 2 === 0 ? 2 : -2}deg)` }}
               >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover" loading="lazy" />
               </div>
             ))}
           </div>
 
           {/* Middle */}
-          <div
-            ref={middleRef}
-            className="flex flex-col gap-10 w-[18%] will-change-transform"
-          >
+          <div ref={middleRef} className="flex flex-col gap-10 w-[18%] will-change-transform">
             {galleryPhotos.middle.map((photo, i) => (
               <div
                 key={i}
                 className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl"
                 style={{ transform: `rotate(${i % 2 === 0 ? -2 : 2}deg)` }}
               >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover" loading="lazy" />
               </div>
             ))}
           </div>
 
           {/* Right */}
-          <div
-            ref={rightRef}
-            className="flex flex-col gap-10 w-[18%] will-change-transform"
-          >
+          <div ref={rightRef} className="flex flex-col gap-10 w-[18%] will-change-transform">
             {galleryPhotos.right.map((photo, i) => (
               <div
                 key={i}
                 className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl"
                 style={{ transform: `rotate(${i % 2 === 0 ? 2 : -2}deg)` }}
               >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover" loading="lazy" />
               </div>
             ))}
           </div>

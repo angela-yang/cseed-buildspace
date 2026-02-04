@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Photo {
   src: string;
@@ -26,7 +26,10 @@ export default function ScrollingPhotoGallery({
   backgroundColor = "rgb(241,239,235)",
 }: ScrollingPhotoGalleryProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [scrollY, setScrollY] = useState(0);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const middleRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   const galleryPhotos = photos ?? {
@@ -58,25 +61,35 @@ export default function ScrollingPhotoGallery({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Track scrollY
+  // Smooth scroll with requestAnimationFrame
   useEffect(() => {
     const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const progress =
-        (window.innerHeight - rect.top) /
-        (window.innerHeight + rect.height);
-      setScrollY(progress);
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        if (!sectionRef.current) return;
+        const rect = sectionRef.current.getBoundingClientRect();
+        const progress =
+          (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        const speed = isMobile ? 0.35 : 1;
+
+        if (leftRef.current) leftRef.current.style.transform = `translateY(${progress * 400 * speed}px)`;
+        if (middleRef.current) middleRef.current.style.transform = `translateY(${-progress * 300 * speed}px)`;
+        if (rightRef.current) rightRef.current.style.transform = `translateY(${progress * 500 * speed}px)`;
+
+        rafRef.current = null;
+      });
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, [isMobile]);
 
   const speed = isMobile ? 0.35 : 1;
-  const leftOffset = scrollY * 400 * speed;
-  const middleOffset = scrollY * 300 * speed * -1;
-  const rightOffset = scrollY * 500 * speed;
 
   return (
     <section
@@ -93,13 +106,12 @@ export default function ScrollingPhotoGallery({
         </h2>
       </div>
 
-      {/* Mobile */}
       {isMobile ? (
         <div className="relative z-10 flex gap-4">
           {/* Left Column */}
           <div
+            ref={leftRef}
             className="flex flex-col gap-4 w-1/2 will-change-transform"
-            style={{ transform: `translateY(${scrollY * 400 * speed}px)` }}
           >
             {galleryPhotos.left.map((photo, i) => (
               <div
@@ -117,10 +129,10 @@ export default function ScrollingPhotoGallery({
             ))}
           </div>
 
-          {/* Right Column */}
+          {/* Middle Column */}
           <div
+            ref={middleRef}
             className="flex flex-col gap-4 w-1/2 will-change-transform"
-            style={{ transform: `translateY(${-scrollY * 500 * speed}px)` }}
           >
             {galleryPhotos.middle.map((photo, i) => (
               <div
@@ -142,8 +154,8 @@ export default function ScrollingPhotoGallery({
         <div className="relative z-10 flex justify-center gap-10 md:gap-20 lg:gap-30">
           {/* Left */}
           <div
+            ref={leftRef}
             className="flex flex-col gap-10 w-[18%] will-change-transform"
-            style={{ transform: `translateY(${leftOffset}px)` }}
           >
             {galleryPhotos.left.map((photo, i) => (
               <div
@@ -163,8 +175,8 @@ export default function ScrollingPhotoGallery({
 
           {/* Middle */}
           <div
+            ref={middleRef}
             className="flex flex-col gap-10 w-[18%] will-change-transform"
-            style={{ transform: `translateY(${middleOffset}px)` }}
           >
             {galleryPhotos.middle.map((photo, i) => (
               <div
@@ -184,8 +196,8 @@ export default function ScrollingPhotoGallery({
 
           {/* Right */}
           <div
+            ref={rightRef}
             className="flex flex-col gap-10 w-[18%] will-change-transform"
-            style={{ transform: `translateY(${rightOffset}px)` }}
           >
             {galleryPhotos.right.map((photo, i) => (
               <div

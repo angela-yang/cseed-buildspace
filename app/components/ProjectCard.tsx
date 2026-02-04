@@ -126,15 +126,15 @@ export default function ProjectCard({
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         } ${
           isExpanded 
-            ? 'w-full md:w-[40vw] h-[80vh] duration-500 z-50'
+            ? 'w-full md:w-[30vw] h-[80vh] duration-500 z-50'
             : 'w-full h-125 duration-700'
         }`}
         style={{
           transformOrigin: expandToLeft
-            ? 'top right'          // expands left
+            ? 'top right'
             : expandToRight
-            ? 'top left'           // expands right
-            : 'top center'         // middle column, expands from center
+            ? 'top left'
+            : 'top center'
         }}
       >
         <div 

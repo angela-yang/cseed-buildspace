@@ -3,7 +3,17 @@ import Link from "next/link";
 
 export default function PhotoGallery() {
   return (
-    <section id="gallery" className="section py-24 px-[5vw] mx-auto">
+    <section id="gallery" className="section py-25 px-[5vw] min-h-[80vh] mx-auto">
+      <div 
+        className="absolute min-h-[100vh] opacity-95 pointer-events-none z-0"
+        style={{
+          backgroundImage: 'url(/images/grid.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+
       <h2 className="text-5xl font-bold text-center mb-2 mt-10 text-gray-900">
         Buildspace Moments 📸
       </h2>

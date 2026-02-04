@@ -199,7 +199,7 @@ export default function PhotoGallery() {
     },
   };
   return (
-    <main id="gallery" className= "cursor-none py-24 px-[5vw] mx-auto">
+    <main className= "cursor-none py-24 px-[5vw] mx-auto">
       <NavBar />
       <div 
         className="hidden md:flex absolute min-h-[600vh] inset-0 opacity-95 pointer-events-none z-0"

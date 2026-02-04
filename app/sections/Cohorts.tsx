@@ -93,7 +93,7 @@ export default function Cohorts() {
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-white">
                 Cohort Showcase
               </h2>
-              <p className="text-lg sm:text-xl lg:text-2xl text-white/90">
+              <p className="text-lg sm:text-xl lg:text-2xl ibm-plex-sans text-white/90">
                 See all works from past cohorts.
               </p>
             </div>

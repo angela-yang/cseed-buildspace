@@ -46,6 +46,7 @@ export default function About() {
   const [showDesc1, setShowDesc1] = useState(false);
   const [showDesc2, setShowDesc2] = useState(false);
   const [showDesc3, setShowDesc3] = useState(false);
+  const [showClickHint, setShowClickHint] = useState(false);
   const aboutSectionRef = useRef<HTMLElement>(null);
 
   const tracks = [
@@ -56,7 +57,8 @@ export default function About() {
       showDesc: showDesc,
       setShowDesc: setShowDesc,
       width: 200,
-      parallax: { x: 1.2, y: 0.4 }
+      parallax: { x: 1.2, y: 0.4 },
+      showHint: true
     },
     {
       image: "/images/purple.png",
@@ -65,7 +67,8 @@ export default function About() {
       showDesc: showDesc1,
       setShowDesc: setShowDesc1,
       width: 150,
-      parallax: { x: 0.8, y: 0.7 }
+      parallax: { x: 0.8, y: 0.7 },
+      showHint: false
     },
     {
       image: "/images/pink.png",
@@ -74,7 +77,8 @@ export default function About() {
       showDesc: showDesc2,
       setShowDesc: setShowDesc2,
       width: 210,
-      parallax: { x: 1.5, y: 1.0 }
+      parallax: { x: 1.5, y: 1.0 },
+      showHint: false
     },
     {
       image: "/images/yellow.png",
@@ -83,7 +87,8 @@ export default function About() {
       showDesc: showDesc3,
       setShowDesc: setShowDesc3,
       width: 210,
-      parallax: { x: 1.5, y: 1.0 }
+      parallax: { x: 1.5, y: 1.0 },
+      showHint: false
     }
   ];
 
@@ -229,7 +234,7 @@ export default function About() {
                   exit={{ opacity: 0, y: -20 }}
                   className="absolute top-0 w-64 md:w-72 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl text-center z-50"
                 >
-                  <p className="text-gray-700 text-sm md:text-base">{track.desc}</p>
+                  <p className="text-gray-700 ibm-plex-sans text-sm md:text-base">{track.desc}</p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -267,20 +272,20 @@ export default function About() {
                 {track.name}
               </h4>
             </div>
-            <p className="text-gray-600 text-sm leading-relaxed">
+            <p className="text-gray-600 text-sm ibm-plex-sans leading-relaxed">
               {track.desc}
             </p>
           </motion.div>
         ))}
       </div>
 
-      <section className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-[5vw]">
+      <section className="relative xl:max-w-[90vw] z-10 grid grid-cols-1 md:grid-cols-2 gap-10 mx-auto items-center px-[10vw]">
         <div className="relative z-10">
-          <h2 className="text-4xl md:text-[3vw] font-bold mb-10 text-[rgb(57,123,255)]">
+          <h2 className="text-4xl md:text-5xl font-bold mb-10 text-[rgb(57,123,255)]">
             Endless Possibilities
           </h2>
 
-          <p className="text-xl md:text-[2vw] text-gray-600 leading-relaxed space-y-2">
+          <p className="text-xl md:text-2xl text-gray-600 ibm-plex-sans leading-relaxed space-y-2">
             <span>Maybe you want to create your own app.</span><br />
             <span>Maybe you want to turn a hobby into something more.</span><br />
             <span>Maybe you want to launch a business.</span><br />
@@ -289,7 +294,7 @@ export default function About() {
             <span>Maybe you want to experiment with large language models.</span><br />
             <span>Maybe you want to write your own book.</span><br /><br />
           </p>
-          <span className="font-bold text-2xl md:text-[2vw] text-gray-600">
+          <span className="font-bold text-2xl md:text-3xl text-gray-600">
             Buildspace is the place for you 💫
           </span>
         </div>

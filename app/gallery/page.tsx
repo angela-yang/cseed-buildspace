@@ -1,4 +1,7 @@
+"use client"
+
 import { useEffect, useRef, useState } from "react";
+import NavBar from "../components/NavBar";
 
 type Cohort = {
   name: string;
@@ -125,13 +128,13 @@ function CohortGallery({ title, photos }: { title: string; photos: string[] }) {
   const { ref, visible } = useOnScreen();
 
   return (
-    <section ref={ref} className="py-16">
-      <h3 className="text-3xl font-bold mb-8 text-center text-gray-800">
+    <section ref={ref} className="py-16 z-10">
+      <h3 className="text-3xl font-bold mb-8 text-center text-gray-800 z-10">
         {title}
       </h3>
 
       {visible && (
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3 z-10">
           {photos.map((src, i) => (
             <img
               key={i}
@@ -148,20 +151,98 @@ function CohortGallery({ title, photos }: { title: string; photos: string[] }) {
 }
 
 export default function PhotoGallery() {
-  return (
-    <section id="gallery" className="section py-24 px-[5vw] mx-auto">
-      <h2 className="text-5xl font-bold text-center mb-2 mt-10 text-gray-900">
-        Buildspace Moments 📸
-      </h2>
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
+  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'text'>('default');
 
-      {cohorts.map((cohort) => (
-        <CohortGallery
-          key={cohort.name}
-          title={cohort.name}
-          photos={cohort.photos}
+  useEffect(() => {
+    const updateMousePosition = (e : MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      setIsVisible(true);
+
+      const target = e.target as HTMLElement;
+      
+      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.dataset.cursor === 'pointer' || target.style.cursor === 'pointer') {
+        setCursorType('pointer');
+      } else if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+        setCursorType('text');
+      } else {
+        setCursorType('default');
+      }
+    };
+
+    const handleMouseLeave = () => {
+      setIsVisible(false);
+    };
+
+    window.addEventListener('mousemove', updateMousePosition);
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      window.removeEventListener('mousemove', updateMousePosition);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
+
+  const cursorConfig = {
+    default: {
+      image: 'images/cursor.png',
+      size: 'h-10'
+    },
+    pointer: {
+      image: 'images/pointer-cursor.png',
+      size: 'h-10'
+    },
+    text: {
+      image: 'images/text-cursor.png',
+      size: 'h-8'
+    },
+  };
+  return (
+    <main id="gallery" className= "cursor-none py-24 px-[5vw] mx-auto">
+      <NavBar />
+      <div 
+        className="absolute min-h-[600vh] inset-0 opacity-95 pointer-events-none z-0"
+        style={{
+          backgroundImage: 'url(/images/grid.png)',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'repeat',
+        }}
+      />
+      
+      {/* Custom Cursor */}
+      <div
+        className={`fixed pointer-events-none z-100 transition-opacity duration-200 ${
+          isVisible ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{
+          left: `${mousePosition.x}px`,
+          top: `${mousePosition.y}px`,
+          transform: 'translate(-50%, -50%)',
+        }}
+      >
+        <img
+          src={cursorConfig[cursorType].image}
+          alt="cursor"
+          className={`${cursorConfig[cursorType].size}`}
         />
-      ))}
-    </section>
+      </div>
+
+      <div className="absolute inset-0 items-center justify-center text-center z-10 py-30 px-10">
+        <h2 className="text-5xl font-bold text-center mb-2 mt-10 text-gray-900 z-10">
+          Buildspace Moments 📸
+        </h2>
+
+        {cohorts.map((cohort) => (
+          <CohortGallery
+            key={cohort.name}
+            title={cohort.name}
+            photos={cohort.photos}
+          />
+        ))}
+      </div>
+    </main>
   );
 }
 

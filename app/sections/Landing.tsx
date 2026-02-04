@@ -45,7 +45,7 @@ export default function Landing() {
         </motion.h1>
 
         <motion.h3
-          className="mt-4 text-3xl md:text-[2.5vw] text-[rgb(57,123,255)] font-light"
+          className="mt-4 text-3xl ibm-plex-sans md:text-4xl text-[rgb(57,123,255)] font-light"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -65,7 +65,7 @@ export default function Landing() {
                 behavior: "smooth",
               })
             }
-            className="bg-[rgb(57,123,255)] hover:bg-[rgb(109,156,249)] text-white text-xl font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+            className="bg-[rgb(57,123,255)] hover:bg-[rgb(109,156,249)] text-white text-xl ibm-plex-sans font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
           >
             Explore projects
           </button>

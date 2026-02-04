@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 
 const sections = [
   { id: "home", label: "Home" },
@@ -19,6 +20,8 @@ export default function NavBar() {
   const [iconX, setIconX] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Detect mobile screen size
   useEffect(() => {
@@ -95,9 +98,28 @@ export default function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [labelXs, isMobile]);
 
-  /* Scroll to section smoothly */
+  useEffect(() => {
+    if (!labelXs.length || isMobile) return;
+
+    if (pathname === "/gallery") {
+      const galleryIndex = sections.findIndex(
+        (s) => s.id === "gallery"
+      );
+
+      if (galleryIndex !== -1) {
+        setActiveIndex(galleryIndex);
+        setIconX(labelXs[galleryIndex]);
+      }
+    }
+  }, [pathname, labelXs, isMobile]);
+
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    if (pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/#${id}`);
+    }
+
     setIsMobileMenuOpen(false);
   };
 
@@ -109,7 +131,7 @@ export default function NavBar() {
         className="fixed left-[2vw] top-5 w-[65vw] z-50 bg-white/80 backdrop-blur-md shadow-sm border-1 border-[rgba(57,123,255,0.25)] rounded-full px-15 py-3"
       >
         <div className="relative w-full h-5 flex items-center">
-          <div className="absolute top-1/2 left-0 w-full h-1 rounded-full" />
+          <div className="absolute top-1/2 px-3 left-0 w-full h-10 rounded-full" />
           {/* Section labels */}
           {sections.map((section, index) => (
             <button
@@ -119,14 +141,14 @@ export default function NavBar() {
               }}
               onClick={() => scrollToSection(section.id)}
               style={{ left: `${(index / (sections.length - 1)) * 100}%` }}
-              className={`absolute -translate-x-1/2 top-1/2 -translate-y-1/2 text-lg transition-colors group
+              className={`absolute -translate-x-1/2 top-1/2 -translate-y-1/2 py-5 text-lg transition-colors group
                 ${index === activeIndex 
                   ? "text-[rgb(57,123,255)] font-bold" 
                   : "text-gray-700 hover:text-[rgb(57,123,255)] font-normal"
                 }`}
             >
               {section.label}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(57,123,255)] transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute bottom-5 left-0 w-0 h-0.5 bg-[rgb(57,123,255)] transition-all duration-300 group-hover:w-full"></span>
             </button>
           ))}
 

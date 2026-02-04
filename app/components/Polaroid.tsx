@@ -51,7 +51,7 @@ export default function Polaroid({
   return (
     <motion.div
       {...animationProps}
-      className="relative flex flex-col items-center w-full max-w-sm mx-auto"
+      className="relative flex flex-col items-center w-full max-w-7xl mx-auto"
     >
       {/* CLOTHESPIN */}
       <div className={`absolute z-20 ${isMobile ? 'hidden' : '-top-6'}`}>

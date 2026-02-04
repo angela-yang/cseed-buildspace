@@ -6,7 +6,7 @@ import Projects from "./sections/Projects"
 import Cohorts from "./sections/Cohorts"
 import Contact from "./sections/Contact"
 import ScrollingPhotos from "./components/ScrollingPhotos"
-import PhotoGallery from "./sections/PhotoGallery"
+import Gallery from "./sections/Gallery"
 import Background from "./components/Background"
 import { useState, useEffect } from 'react';
 
@@ -95,7 +95,7 @@ export default function Home() {
       <ScrollingPhotos />
       <Projects />
       <Cohorts />
-      <PhotoGallery />
+      <Gallery />
       <Contact />
 
     </main>

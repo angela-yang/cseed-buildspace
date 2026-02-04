@@ -1,5 +1,5 @@
-"use client"
-import { useEffect, useRef, useState } from "react";
+"use client";
+import { useEffect, useState, useRef } from "react";
 
 interface Photo {
   src: string;
@@ -22,19 +22,14 @@ interface ScrollingPhotoGalleryProps {
 
 export default function ScrollingPhotoGallery({
   photos,
-  title = {
-    line1: "BUILD",
-    line2: "your",
-    line3: "passion"
-  },
-  backgroundColor = "rgb(241,239,235)"
+  title = { line1: "BUILD", line2: "your", line3: "passion" },
+  backgroundColor = "rgb(241,239,235)",
 }: ScrollingPhotoGalleryProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number | null>(null);
 
-  const defaultPhotos = {
+  const galleryPhotos = photos ?? {
     left: [
       { src: "/images/cohort-0/img1.webp", alt: "Photo 1" },
       { src: "/images/cohort-0/img13.webp", alt: "Photo 2" },
@@ -52,219 +47,163 @@ export default function ScrollingPhotoGallery({
       { src: "/images/cohort-3/img1.webp", alt: "Photo 10" },
       { src: "/images/cohort-3/img45.webp", alt: "Photo 11" },
       { src: "/images/cohort-4/img3.webp", alt: "Photo 12" },
-    ]
+    ],
   };
 
-  const galleryPhotos = photos || defaultPhotos;
-
-  const leftColumnPhotos = [
-    ...galleryPhotos.left
-  ];
-  const middleColumnPhotos = [
-    ...galleryPhotos.middle
-  ];
-  const rightColumnPhotos = [
-    ...galleryPhotos.right
-  ];
-
+  // Detect mobile
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // Track scrollY
   useEffect(() => {
     const handleScroll = () => {
-      if (rafRef.current !== null) return;
-
-      rafRef.current = requestAnimationFrame(() => {
-        if (sectionRef.current) {
-          const rect = sectionRef.current.getBoundingClientRect();
-          const windowHeight = window.innerHeight;
-          const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
-          setScrollY(scrollProgress);
-        }
-        rafRef.current = null;
-      });
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const progress =
+        (window.innerHeight - rect.top) /
+        (window.innerHeight + rect.height);
+      setScrollY(progress);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
+
   const speed = isMobile ? 0.35 : 1;
-  const leftOffset = scrollY * 500 * speed;
-  const middleOffset = -scrollY * 1000 * speed;
-  const rightOffset = scrollY * 600 * speed;
-
-  if (isMobile) {
-    return (
-      <section
-        ref={sectionRef}
-        className="relative overflow-hidden py-10"
-        style={{ backgroundColor, minHeight: "120vh" }}
-      >
-        {/* Faint background text - mobile */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <h2 className="text-[18vw] font-black tracking-tighter leading-[0.85] text-gray-900 opacity-[0.06] select-none">
-            <span className="block text-center">{title.line1}</span>
-            <span className="block text-center italic">{title.line2}</span>
-            <span className="block text-center">{title.line3}</span>
-          </h2>
-        </div>
-
-        {/* Two columns on mobile */}
-        <div className="flex gap-4 px-4">
-          {/* Left column */}
-          <div
-            className="flex flex-col gap-4 w-1/2"
-            style={{
-              transform: `translateY(${leftOffset}px)`,
-              willChange: "transform",
-            }}
-          >
-            {leftColumnPhotos.map((photo, index) => (
-              <div
-                key={`left-${index}`}
-                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md"
-                style={{ transform: `rotate(${index % 2 === 0 ? 1.5 : -1.5}deg)` }}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Right column */}
-          <div
-            className="flex flex-col gap-4 w-1/2 mt-20"
-            style={{
-              transform: `translateY(${middleOffset}px)`,
-              willChange: "transform",
-            }}
-          >
-            {middleColumnPhotos.map((photo, index) => (
-              <div
-                key={`middle-${index}`}
-                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md"
-                style={{ transform: `rotate(${index % 2 === 0 ? -1.5 : 1.5}deg)` }}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const leftOffset = scrollY * 400 * speed;
+  const middleOffset = scrollY * 300 * speed * -1;
+  const rightOffset = scrollY * 500 * speed;
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      className="relative min-h-[200vh] overflow-hidden py-20"
+      className="relative min-h-[90vh] md:min-h-[200vh] overflow-hidden py-24 px-6 md:px-12 lg:px-20"
       style={{ backgroundColor }}
     >
-      {/* Large Background Text */}
-      <div className="hidden md:absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        <h2 className="text-[10vw] md:text-[15vw] lg:text-[20vw] font-black tracking-tighter leading-[0.85] text-gray-900 opacity-[0.1] select-none whitespace-nowrap">
-          <span className="block text-center">{title.line1}</span>
-          <span className="block text-center italic">{title.line2}</span>
-          <span className="block text-center">{title.line3}</span>
+      {/* Background Text */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+        <h2 className="text-[10vw] md:text-[15vw] lg:text-[20vw] font-black tracking-tighter leading-[0.85] text-gray-900 opacity-[0.1] text-center select-none whitespace-nowrap">
+          <span className="block">{title.line1}</span>
+          <span className="block italic">{title.line2}</span>
+          <span className="block">{title.line3}</span>
         </h2>
       </div>
 
-      {/* Scrolling Photo Columns */}
-      <div className="flex justify-center items-center gap-8 md:gap-16 lg:gap-24 px-6 md:px-12 lg:px-20">
-        {/* Left Column - Scrolls Down */}
-        <div 
-          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/4 will-change-transform"
-          style={{ 
-            transform: `translateY(${leftOffset}px)`,
-          }}
-        >
-          {leftColumnPhotos.map((photo, index) => (
-            <div 
-              key={`left-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl md:hover:shadow-3xl transition-all duration-500 group"
-              style={{
-                transform: `rotate(${index % 2 === 0 ? 2 : -2}deg)`,
-              }}
-            >
-              <img 
-                src={photo.src}
-                alt={photo.alt}
-                className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
-                loading="lazy"
-              />
-            </div>
-          ))}
-        </div>
+      {/* Mobile */}
+      {isMobile ? (
+        <div className="relative z-10 flex gap-4">
+          {/* Left Column */}
+          <div
+            className="flex flex-col gap-4 w-1/2 will-change-transform"
+            style={{ transform: `translateY(${scrollY * 400 * speed}px)` }}
+          >
+            {galleryPhotos.left.map((photo, i) => (
+              <div
+                key={i}
+                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md"
+                style={{ transform: `rotate(${i % 2 === 0 ? 1.5 : -1.5}deg)` }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
 
-        {/* Middle Column - Scrolls Up (Opposite Direction) */}
-        <div 
-          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/4 will-change-transform pt-32 md:pt-48"
-          style={{ 
-            transform: `translateY(${middleOffset}px)`,
-          }}
-        >
-          {middleColumnPhotos.map((photo, index) => (
-            <div 
-              key={`middle-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl md:hover:shadow-3xl transition-all duration-500 group"
-              style={{
-                transform: `rotate(${index % 2 === 0 ? -2 : 2}deg)`,
-              }}
-            >
-              <img 
-                src={photo.src}
-                alt={photo.alt}
-                className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
-                loading="lazy"
-              />
-            </div>
-          ))}
+          {/* Right Column */}
+          <div
+            className="flex flex-col gap-4 w-1/2 will-change-transform"
+            style={{ transform: `translateY(${-scrollY * 500 * speed}px)` }}
+          >
+            {galleryPhotos.middle.map((photo, i) => (
+              <div
+                key={i}
+                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md"
+                style={{ transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)` }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
         </div>
+      ) : (
+        <div className="relative z-10 flex justify-center gap-10 md:gap-20 lg:gap-30">
+          {/* Left */}
+          <div
+            className="flex flex-col gap-10 w-[18%] will-change-transform"
+            style={{ transform: `translateY(${leftOffset}px)` }}
+          >
+            {galleryPhotos.left.map((photo, i) => (
+              <div
+                key={i}
+                className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl"
+                style={{ transform: `rotate(${i % 2 === 0 ? 2 : -2}deg)` }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
 
-        {/* Right Column - Scrolls Down */}
-        <div 
-          className="flex flex-col gap-12 md:gap-20 lg:gap-32 w-1/4 will-change-transform pt-16 md:pt-24"
-          style={{ 
-            transform: `translateY(${rightOffset}px)`,
-          }}
-        >
-          {rightColumnPhotos.map((photo, index) => (
-            <div 
-              key={`right-${index}`}
-              className="relative aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden md:shadow-2xl md:hover:shadow-3xl transition-all duration-500 group"
-              style={{
-                transform: `rotate(${index % 2 === 0 ? 2 : -2}deg)`,
-              }}
-            >
-              <img 
-                src={photo.src}
-                alt={photo.alt}
-                className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700"
-                loading="lazy"
-              />
-            </div>
-          ))}
+          {/* Middle */}
+          <div
+            className="flex flex-col gap-10 w-[18%] will-change-transform"
+            style={{ transform: `translateY(${middleOffset}px)` }}
+          >
+            {galleryPhotos.middle.map((photo, i) => (
+              <div
+                key={i}
+                className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl"
+                style={{ transform: `rotate(${i % 2 === 0 ? -2 : 2}deg)` }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Right */}
+          <div
+            className="flex flex-col gap-10 w-[18%] will-change-transform"
+            style={{ transform: `translateY(${rightOffset}px)` }}
+          >
+            {galleryPhotos.right.map((photo, i) => (
+              <div
+                key={i}
+                className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl"
+                style={{ transform: `rotate(${i % 2 === 0 ? 2 : -2}deg)` }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

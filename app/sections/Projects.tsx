@@ -130,7 +130,7 @@ export default function Projects() {
                   <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-white">
                     Featured Projects
                   </h2>
-                  <p className="text-lg sm:text-xl lg:text-2xl text-white/90">
+                  <p className="text-lg sm:text-xl ibm-plex-sans lg:text-2xl text-white/90">
                     Browse our selected featured projects!
                   </p>
                 </div>

@@ -113,9 +113,7 @@ export default function ProjectCard({
   };
 
   const handleClose = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    isExpanded = false;
-    setTimeout(() => setIsFlipped(false), 300);
+    onCollapse?.();
   };
 
   const expandToLeft = gridColumn === 3;

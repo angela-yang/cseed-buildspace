@@ -214,7 +214,7 @@ export default function Projects() {
         className="min-h-[80vh] flex flex-col justify-center items-center text-center relative text-[rgb(57,123,255)] pt-5 z-20"
       >
         <div 
-          className="absolute inset-0 opacity-95 pointer-events-none z-0"
+          className="hidden md:flex absolute inset-0 opacity-95 pointer-events-none z-0"
           style={{
             backgroundImage: 'url(/images/grid.png)',
             backgroundSize: 'cover',
@@ -222,7 +222,7 @@ export default function Projects() {
             backgroundRepeat: 'no-repeat',
           }}
         />
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-30">
+        <div className="hidden md:flex absolute inset-0 pointer-events-none overflow-hidden z-30">
           <DraggableToy imageSrc="/images/purple.png" initialX={150} initialY={150} size="8vw" showHint />
           <DraggableToy imageSrc="/images/yellow.png" initialX={1000} initialY={100} size="10vw" />
           <DraggableToy imageSrc="/images/green.png" initialX={1200} initialY={400} size="9vw" />

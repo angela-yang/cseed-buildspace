@@ -45,7 +45,7 @@ export default function Landing() {
         </motion.h1>
 
         <motion.h3
-          className="mt-4 text-3xl ibm-plex-sans md:text-4xl text-[rgb(57,123,255)] font-light"
+          className="mt-4 text-3xl md:text-4xl text-[rgb(57,123,255)] font-light"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}

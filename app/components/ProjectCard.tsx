@@ -43,6 +43,7 @@ export default function ProjectCard({
   isExpanded = false,
   selectedGalleryImage = 0,
   onGalleryChange,
+  width = '34vw',
   onExpand,
   onCollapse,
   totalCards,
@@ -64,6 +65,7 @@ export default function ProjectCard({
   isExpanded?: boolean;
   selectedGalleryImage?: number;
   onGalleryChange?: (newIndex: number) => void;
+  width: string;
   onExpand?: () => void;
   onCollapse?: () => void;
   totalCards: number;
@@ -126,8 +128,8 @@ export default function ProjectCard({
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         } ${
           isExpanded 
-            ? 'w-full md:w-[34vw] h-[80vh] duration-500 z-50'
-            : 'w-full h-125 duration-700'
+            ? `w-full md:w-[${width}] h-[80vh] duration-500 z-50`
+            : 'w-full h-135 xl:h-125 duration-700'
         }`}
         style={{
           transformOrigin: expandToLeft
@@ -235,7 +237,7 @@ export default function ProjectCard({
               
               {/* Tech Stack Preview */}
               <div className="flex flex-wrap gap-2 pt-2">
-                {details.tech.slice(0, 3).map((tech, idx) => (
+                {details.tech.slice(0, 2).map((tech, idx) => (
                   <span 
                     key={idx}
                     className="px-2.5 py-1 rounded-md ibm-plex-sans text-xs font-medium transition-colors"

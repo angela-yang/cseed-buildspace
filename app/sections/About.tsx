@@ -301,9 +301,9 @@ export default function About() {
         <ScrollReveal>
           <div className="flex justify-center md:justify-end">
             <img
-              src="/images/buildspace.webp"
+              src="/images/buildspace.jpg"
               alt="Buildspace"
-              className="w-full"
+              className="w-full rounded-lg"
             />
           </div>
         </ScrollReveal>

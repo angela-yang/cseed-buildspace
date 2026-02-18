@@ -878,7 +878,7 @@ export const cohort0Projects: Project[] = [
     creatorName: "Carter Swartout & Andrew Edwards",
     track: "hardware",
     cohort: 0,
-    description: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",
+    description: "A homemade Alexa and digital assistant.",
     demoLink: "/images/projects/bobby.mp4",
     coverImage: "/images/projects/bobby.png",
     longDescription: "A homemade Alexa and digital assistant that incorporates hardware, software, and gen AI.",

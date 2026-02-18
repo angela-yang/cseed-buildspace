@@ -193,6 +193,7 @@ export default function Projects() {
                     onGalleryChange={(newIndex) =>
                       setGalleryIndexMap((prev) => ({ ...prev, [index]: newIndex }))
                     }
+                    width='45vw'
                     onExpand={() => handleExpand(index)}
                     onCollapse={() => handleCollapse()}
                     totalCards={filteredProjects.length} 

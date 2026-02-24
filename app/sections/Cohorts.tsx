@@ -4,6 +4,8 @@ import ProjectCard from "../components/ProjectCard"
 import { FaSearch } from "react-icons/fa";
 import { projects, type Project, type Cohort } from "../components/ProjectsData";
 
+const COLS = 4;
+
 export default function Cohorts() {
   const [filter, setFilter] = useState("all");
   const [cohortFilter, setCohortFilter] = useState<"all" | Cohort>("all");
@@ -12,71 +14,49 @@ export default function Cohorts() {
   const [expandedCohorts, setExpandedCohorts] = useState<Record<number, boolean>>({});
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [galleryIndexMap, setGalleryIndexMap] = useState<{ [key: number]: number }>({});
+  const [viewportCols, setViewportCols] = useState(COLS);
 
-  const handleExpand = (index: number) => {
-    setExpandedIndex(index); // new card expands
-  };
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 768) setViewportCols(1);
+      else if (w < 1024) setViewportCols(2);
+      else if (w < 1280) setViewportCols(3);
+      else setViewportCols(4);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
-  const handleCollapse = () => {
-    setExpandedIndex(null); // collapse all
-  };
+  const handleExpand = (index: number) => setExpandedIndex(index);
+  const handleCollapse = () => setExpandedIndex(null);
 
-  // Filter projects based on track, cohort, and search
   const filteredProjects = projects.filter((project) => {
-    const matchesTrack =
-      filter === "all" || project.track === filter;
-
-    const matchesCohort =
-      cohortFilter === "all" || project.cohort === cohortFilter;
-
-    const matchesSearch =
+    const matchesTrack   = filter === "all" || project.track === filter;
+    const matchesCohort  = cohortFilter === "all" || project.cohort === cohortFilter;
+    const matchesSearch  =
       project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.creatorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.description.toLowerCase().includes(searchTerm.toLowerCase());
-
     return matchesTrack && matchesCohort && matchesSearch;
   });
 
-  useEffect(() => {
-    setExpandedCohorts({});
-  }, [filter, cohortFilter, searchTerm]);
+  useEffect(() => { setExpandedCohorts({}); }, [filter, cohortFilter, searchTerm]);
 
-  // Group projects by cohort
   const projectsByCohort = filteredProjects.reduce<Record<number, Project[]>>(
-    (acc, project) => {
-      acc[project.cohort] ||= [];
-      acc[project.cohort].push(project);
-      return acc;
-    },
+    (acc, project) => { acc[project.cohort] ||= []; acc[project.cohort].push(project); return acc; },
     {}
   );
 
-  // Determine which cohorts to display
-  const cohortsToDisplay = cohortFilter === "all" 
-    ? [4, 3, 2, 1, 0]
-    : [cohortFilter];
+  const cohortsToDisplay = cohortFilter === "all" ? [4, 3, 2, 1, 0] : [cohortFilter];
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (expandedIndex === null) return;
-
-      if (e.key === "ArrowRight") {
-        setExpandedIndex((prev) => (prev! + 1) % filteredProjects.length);
-      } else if (e.key === "ArrowLeft") {
-        setExpandedIndex((prev) => (prev! - 1 + filteredProjects.length) % filteredProjects.length);
-      } else if (e.key === "ArrowDown") {
-        const card = filteredProjects[expandedIndex];
-        if (card.gallery && card.gallery.length > 0) {
-          // Move to next gallery image
-        }
-      } else if (e.key === "ArrowUp") {
-        const card = filteredProjects[expandedIndex];
-        if (card.gallery && card.gallery.length > 0) {
-          // Move to prev gallery image
-        }
-      }
+      if (e.key === "ArrowRight") setExpandedIndex((prev) => (prev! + 1) % filteredProjects.length);
+      else if (e.key === "ArrowLeft") setExpandedIndex((prev) => (prev! - 1 + filteredProjects.length) % filteredProjects.length);
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [expandedIndex, filteredProjects]);
@@ -85,20 +65,13 @@ export default function Cohorts() {
     <main>
       <section id="cohorts" className="section py-24 px-6 bg-[rgb(57,123,255)]">
         <div className="max-w-8xl mx-auto space-y-8 md:space-y-12">
+          
           {/* Header */}
           <div className="grid grid-cols-1 px-[5vw] lg:grid-cols-2 gap-6 lg:gap-12 items-end">
-            
-            {/* Title and Description */}
             <div>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-white">
-                Cohort Showcase
-              </h2>
-              <p className="text-lg sm:text-xl lg:text-2xl ibm-plex-sans text-white/90">
-                See all works from past cohorts.
-              </p>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-white">Cohort Showcase</h2>
+              <p className="text-lg sm:text-xl lg:text-2xl ibm-plex-sans text-white/90">See all works from past cohorts.</p>
             </div>
-
-            {/* Search Bar */}
             <div className="relative">
               <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-white/50 pointer-events-none z-10" />
               <input
@@ -113,23 +86,16 @@ export default function Cohorts() {
 
           {/* Cohort Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-10">
-            {(["all", 0, 2, 3, 4] as const).map((cohort) => {
-              const isActive = cohortFilter === cohort;
-
-              return (
-                <button
-                  key={cohort}
-                  onClick={() => setCohortFilter(cohort)}
-                  className={`px-6 py-2 rounded-full border border-gray-800/75 font-semibold transition-all transform hover:scale-105 ${
-                    isActive
-                      ? "bg-[rgb(124,165,249)] text-black shadow-lg"
-                      : "bg-[rgb(241,239,235)] text-gray-900 hover:bg-gray-100 shadow-sm"
-                  }`}
-                >
-                  {cohort === "all" ? "All Cohorts" : `Cohort ${cohort}`}
-                </button>
-              );
-            })}
+            {(["all", 0, 2, 3, 4] as const).map((cohort) => (
+              <button key={cohort} onClick={() => setCohortFilter(cohort)}
+                className={`px-6 py-2 rounded-full border border-gray-800/75 font-semibold transition-all transform hover:scale-105 ${
+                  cohortFilter === cohort
+                    ? "bg-[rgb(124,165,249)] text-black shadow-lg"
+                    : "bg-[rgb(241,239,235)] text-gray-900 hover:bg-gray-100 shadow-sm"
+                }`}>
+                {cohort === "all" ? "All Cohorts" : `Cohort ${cohort}`}
+              </button>
+            ))}
           </div>
 
           {/* Track Filter Buttons */}
@@ -145,18 +111,12 @@ export default function Cohorts() {
                   default: return "rgb(124,165,249)";
                 }
               };
-
               return (
-                <button
-                  key={track}
-                  onClick={() => setFilter(track)}
+                <button key={track} onClick={() => setFilter(track)}
                   className={`px-6 py-2 rounded-full border-1 border-gray-800/75 font-semibold transition-all transform hover:scale-105 ${
-                    filter === track
-                      ? "text-black shadow-lg"
-                      : "bg-[rgb(241,239,235)] text-gray-900 hover:bg-gray-100 shadow-sm"
+                    filter === track ? "text-black shadow-lg" : "bg-[rgb(241,239,235)] text-gray-900 hover:bg-gray-100 shadow-sm"
                   }`}
-                  style={filter === track ? { backgroundColor: getActiveColor() } : {}}
-                >
+                  style={filter === track ? { backgroundColor: getActiveColor() } : {}}>
                   {track.charAt(0).toUpperCase() + track.slice(1)}
                 </button>
               );
@@ -166,81 +126,60 @@ export default function Cohorts() {
           {/* Display Cohorts */}
           {cohortsToDisplay.map((cohort) => {
             const cohortProjects = projectsByCohort[cohort];
-            
-            if (!cohortProjects || cohortProjects.length === 0) {
-              return null;
-            }
+            if (!cohortProjects || cohortProjects.length === 0) return null;
+
+            const visibleProjects = cohortProjects.slice(
+              0, expandedCohorts[cohort] ? cohortProjects.length : PROJECTS_PER_COHORT
+            );
 
             return (
               <div key={cohort} className="mb-20 px-[5vw] text-left">
-                <h3 className="text-4xl font-bold text-white mb-8">
-                  Cohort {cohort}
-                </h3>
+                <h3 className="text-4xl font-bold text-white mb-8">Cohort {cohort}</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
-                  {cohortProjects
-                  .slice(
-                    0,
-                    expandedCohorts[cohort] ? cohortProjects.length : PROJECTS_PER_COHORT
-                  )
-                  .map((project, index) => (
-                    <ProjectCard
-                      key={`${project.projectName}-${index}`}
-                      {...project}
-                      index={index}
-                      isExpanded={expandedIndex === index}
-                      selectedGalleryImage={galleryIndexMap[index] ?? 0}
-                      onGalleryChange={(newIndex) =>
-                        setGalleryIndexMap((prev) => ({ ...prev, [index]: newIndex }))
-                      }
-                      width='35vw'
-                      onExpand={() => handleExpand(index)}
-                      onCollapse={() => handleCollapse()}
-                      totalCards={filteredProjects.length} 
-                    />
-                  ))}
+                  {visibleProjects.map((project, index) => {
+                    // Column within the active viewport grid (1-based)
+                    const gridColumn = (index % viewportCols) + 1;
+                    return (
+                      <ProjectCard
+                        key={`${project.projectName}-${index}`}
+                        {...project}
+                        index={index}
+                        gridColumn={gridColumn}
+                        totalColumns={viewportCols}
+                        expandedWidth="48vw"
+                        isExpanded={expandedIndex === index}
+                        selectedGalleryImage={galleryIndexMap[index] ?? 0}
+                        onGalleryChange={(newIndex) =>
+                          setGalleryIndexMap((prev) => ({ ...prev, [index]: newIndex }))
+                        }
+                        onExpand={() => handleExpand(index)}
+                        onCollapse={handleCollapse}
+                        totalCards={filteredProjects.length} 
+                      />
+                    );
+                  })}
                 </div>
+
                 {cohortProjects.length > PROJECTS_PER_COHORT && (
                   <div className="flex justify-center mt-10 space-x-4">
-                    {!expandedCohorts[cohort] ? (
-                      <button
-                        onClick={() =>
-                          setExpandedCohorts((prev) => ({
-                            ...prev,
-                            [cohort]: true,
-                          }))
-                        }
-                        className="px-8 py-3 rounded-full bg-white text-black font-semibold shadow-lg hover:scale-105 transition-transform"
-                      >
-                        View more
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() =>
-                          setExpandedCohorts((prev) => ({
-                            ...prev,
-                            [cohort]: false,
-                          }))
-                        }
-                        className="px-8 py-3 rounded-full bg-white text-black font-semibold shadow-lg hover:scale-105 transition-transform"
-                      >
-                        View less
-                      </button>
-                    )}
+                    <button
+                      onClick={() => setExpandedCohorts((prev) => ({ ...prev, [cohort]: !prev[cohort] }))}
+                      className="px-8 py-3 rounded-full bg-white text-black font-semibold shadow-lg hover:scale-105 transition-transform"
+                    >
+                      {expandedCohorts[cohort] ? "View less" : "View more"}
+                    </button>
                   </div>
-                  )}
+                )}
               </div>
             );
           })}
 
-          {/* No Results Message */}
           {filteredProjects.length === 0 && (
-            <p className="text-gray-200 text-xl text-center py-12">
-              No projects found matching your filters
-            </p>
+            <p className="text-gray-200 text-xl text-center py-12">No projects found matching your filters</p>
           )}
         </div>
       </section>
-   </main>
+    </main>
   );
 }

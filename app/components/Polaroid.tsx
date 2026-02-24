@@ -21,10 +21,7 @@ export default function Polaroid({
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -64,21 +61,41 @@ export default function Polaroid({
         <div className="w-15 h-5 bg-gray-100/50 shadow-md border border-gray-400/90" />
       </div>
 
-      {/* POLAROID */}
-      <div className={`${bgColor} w-full sm:w-85 h-auto sm:h-108 rounded-md shadow-2xl border border-gray-200`}>
+      <div
+        className={`${bgColor} rounded-md shadow-2xl border border-gray-200`}
+        style={isMobile ? { width: '100%', height: 'auto' } : {
+          width: 'clamp(180px, 23vw, 340px)',
+          height: 'clamp(200px, 25vw, 400px)', 
+        }}
+      >
         {/* Image */}
         <img
           src={feature.image}
           alt={feature.title}
-          className="w-[90%] mx-auto h-48 sm:h-56 pt-4 sm:pt-6 object-cover rounded-t-md"
+          className="w-[90%] mx-auto object-cover rounded-t-md"
+          style={isMobile ? { height: '12rem', paddingTop: '1rem' } : {
+            height: 'clamp(100px, 14vw, 224px)',
+            paddingTop: 'clamp(8px, 1.5vw, 24px)', 
+          }}
         />
 
         {/* Text Content */}
-        <div className="py-4 px-2 sm:py-6 sm:px-4 md:py-7 md:px-5 text-center">
-          <h3 className={`text-lg sm:text-xl md:text-2xl ${color} font-bold mb-1 sm:mb-2`}>
+        <div
+          className="text-center"
+          style={isMobile ? { padding: '1rem 0.5rem' } : {
+            padding: 'clamp(8px, 1vw, 28px) clamp(8px, 1.2vw, 20px)',
+          }}
+        >
+          <h3
+            className={`${color} font-bold`}
+            style={{ fontSize: isMobile ? '1.125rem' : 'clamp(12px, 1.2vw, 24px)', marginBottom: '0.25rem' }}
+          >
             {feature.title}
           </h3>
-          <p className="text-lg sm:text-base md:text-xl mb-3 ibm-plex-sans text-gray-600 leading-relaxed">
+          <p
+            className="ibm-plex-sans text-gray-600 leading-relaxed"
+            style={{ fontSize: isMobile ? '1rem' : 'clamp(10px, 1vw, 20px)', marginBottom: '0.75rem' }}
+          >
             {feature.desc}
           </p>
         </div>

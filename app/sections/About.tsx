@@ -122,7 +122,7 @@ export default function About() {
     { 
       image: '/images/passion.webp', 
       title: '1. Build your passion', 
-      desc: 'Commit to a project youre passionate about, and report your weekly progress.',
+      desc: 'Commit to a project you\'re passionate about, and report your weekly progress.',
       color: 'text-[rgb(255,0,102)]',
       bgColor: 'bg-gradient-to-br from-orange-50 to-pink-50'
     },

@@ -40,10 +40,11 @@ export default function ProjectCard({
   onNavigateNext,
   onNavigatePrev,
   gridColumn = 1,
+  totalColumns = 3,
   isExpanded = false,
   selectedGalleryImage = 0,
   onGalleryChange,
-  width = '34vw',
+  expandedWidth = '50vw',
   onExpand,
   onCollapse,
   totalCards,
@@ -62,10 +63,12 @@ export default function ProjectCard({
   onNavigateNext?: () => void;
   onNavigatePrev?: () => void;
   gridColumn?: number;
+  totalColumns?: number;
   isExpanded?: boolean;
   selectedGalleryImage?: number;
   onGalleryChange?: (newIndex: number) => void;
-  width: string;
+  width?: string;
+  expandedWidth?: string;
   onExpand?: () => void;
   onCollapse?: () => void;
   totalCards: number;
@@ -79,31 +82,22 @@ export default function ProjectCard({
   const hasValidDemo = demoLink && demoLink.trim() !== "" && !demoLink.includes("example.com");
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, index * 100);
+    const timer = setTimeout(() => setIsVisible(true), index * 100);
     return () => clearTimeout(timer);
   }, [index]);
 
   useEffect(() => {
-    if (!isExpanded) {
-      setIsFlipped(false);
-    }
+    if (!isExpanded) setIsFlipped(false);
   }, [isExpanded]);
 
-  const handleThumbnailClick = (idx: number) => {
-    onGalleryChange?.(idx);
-  };
+  const handleThumbnailClick = (idx: number) => onGalleryChange?.(idx);
 
   const handleCardClick = () => {
     if (isExpanded) {
@@ -114,50 +108,47 @@ export default function ProjectCard({
     }
   };
 
-  const handleClose = (e: React.MouseEvent) => {
-    onCollapse?.();
-  };
+  const handleClose = (e: React.MouseEvent) => onCollapse?.();
 
-  const expandToLeft = gridColumn === 3;
-  const expandToRight = gridColumn === 1;
+  const getExpandedPosition = (): React.CSSProperties => {
+    if (isMobile || !isExpanded) return {};
+    if (gridColumn === 1) return { position: 'absolute', left: '-30%', top: 0 };
+    if (gridColumn === totalColumns) return { position: 'absolute', right: '-20%', top: 0 };
+    return { position: 'absolute', left: '50%', top: 0 };
+  };
 
   return (
     <>
-      <div 
-        className={`perspective-1000 transition-all ease-out ${
+      <div
+        className={`transition-all ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         } ${
-          isExpanded 
-            ? `w-full md:w-[${width}] h-[80vh] duration-500 z-50`
+          isExpanded
+            ? 'w-full h-135 xl:h-125 duration-500 relative z-50'
             : 'w-full h-135 xl:h-125 duration-700'
         }`}
-        style={{
-          transformOrigin: expandToLeft
-            ? 'top right'
-            : expandToRight
-            ? 'top left'
-            : 'top center'
-        }}
       >
-        <div 
-          className={`relative w-full h-full transition-all ease-out ${
+        <div
+          className={`transition-all ease-out ${
             isExpanded ? 'duration-500' : 'duration-700'
           } transform-style-3d cursor-pointer group`}
           onClick={handleCardClick}
-          onMouseEnter={() => setIsHovered(true)}
+          onMouseEnter={() => { if (!isFlipped && !isExpanded) setIsHovered(true) }}
           onMouseLeave={() => setIsHovered(false)}
-          style={{ 
+          style={{
+            width: isExpanded ? expandedWidth : '100%',
+            height: isExpanded ? '80vh' : '100%',
             transformStyle: 'preserve-3d',
-            transform: isExpanded 
-              ? 'rotateY(180deg)'
-              : `
-                rotateY(${isFlipped ? 180 : 0}deg)
-                translateY(${isHovered && !isFlipped ? -8 : 0}px)
-              `,
-            transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+            transform: isExpanded
+              ? (gridColumn !== 1 && gridColumn !== totalColumns
+                  ? 'translateX(-50%) rotateY(180deg)'
+                  : 'rotateY(180deg)')
+              : `rotateY(${isFlipped ? 180 : 0}deg) translateY(${isHovered && !isFlipped && !isExpanded ? -8 : 0}px)`,
+            transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+            ...getExpandedPosition(),
           }}
         >
-          {/* Front of card */}
+          {/* ── Front of card ───────────────────────────────────────────── */}
           <div 
             className="absolute w-full h-full backface-hidden bg-white rounded-2xl overflow-hidden"
             style={{ 
@@ -167,21 +158,16 @@ export default function ProjectCard({
                 : '0 10px 30px -15px rgba(0, 0, 0, 0.3)'
             }}
           >
-            {/* Image Container with Overlay */}
+            {/* Image Container */}
             <div className="relative h-56 overflow-hidden bg-gray-100">
               {coverImage.endsWith('.mp4') ? (
                 <video 
-                  src={coverImage} 
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                  src={coverImage} autoPlay loop muted playsInline
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               ) : (
                 <img 
-                  src={coverImage} 
-                  alt={projectName}
+                  src={coverImage} alt={projectName}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   onLoad={() => setImageLoaded(true)}
                 />
@@ -190,103 +176,55 @@ export default function ProjectCard({
               {/* Gradient Overlay */}
               <div 
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: `linear-gradient(to bottom, transparent 0%, ${colors.primary}15 100%)`
-                }}
+                style={{ background: `linear-gradient(to bottom, transparent 0%, ${colors.primary}15 100%)` }}
               />
 
               {/* Track Badge */}
               <div 
                 className="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-md font-semibold uppercase tracking-wider backdrop-blur-md"
-                style={{
-                  backgroundColor: `${colors.primary}`,
-                  color: 'white',
-                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                }}
+                style={{ backgroundColor: colors.primary, color: 'white', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
               >
                 {track}
               </div>
             </div>
-
-            {/* Cohort Badge 
-            <div 
-              className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-lg font-bold tracking-wider backdrop-blur-md"
-              style={{
-                backgroundColor: "rgba(70,128,245,0.7)",
-                color: 'white',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-              }}
-            >
-              {cohort}
-            </div>*/}
             
-            {/* Content Section */}
+            {/* Content */}
             <div className="p-6 space-y-3">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-1 line-clamp-1">
-                  {projectName}
-                </h3>
-                <p className="text-md font-medium ibm-plex-sans text-gray-500">
-                  by {creatorName}
-                </p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-1 line-clamp-1">{projectName}</h3>
+                <p className="text-md font-medium ibm-plex-sans text-gray-500">by {creatorName}</p>
               </div>
-              
-              <p className="text-gray-600 text-md ibm-plex-sans leading-relaxed line-clamp-3">
-                {description}
-              </p>
-              
-              {/* Tech Stack Preview */}
+              <p className="text-gray-600 text-md ibm-plex-sans leading-relaxed line-clamp-3">{description}</p>
               <div className="flex flex-wrap gap-2 pt-2">
                 {details.tech.slice(0, 2).map((tech, idx) => (
-                  <span 
-                    key={idx}
-                    className="px-2.5 py-1 rounded-md ibm-plex-sans text-xs font-medium transition-colors"
-                    style={{
-                      backgroundColor: colors.light,
-                      color: colors.primary
-                    }}
-                  >
+                  <span key={idx} className="px-2.5 py-1 rounded-md ibm-plex-sans text-xs font-medium transition-colors"
+                    style={{ backgroundColor: colors.light, color: colors.primary }}>
                     {tech}
                   </span>
                 ))}
                 {details.tech.length > 3 && (
-                  <span 
-                    className="px-2.5 py-1 rounded-md text-xs ibm-plex-sans font-medium"
-                    style={{
-                      backgroundColor: colors.light,
-                      color: colors.primary
-                    }}
-                  >
+                  <span className="px-2.5 py-1 rounded-md text-xs ibm-plex-sans font-medium"
+                    style={{ backgroundColor: colors.light, color: colors.primary }}>
                     +{details.tech.length - 3}
                   </span>
                 )}
               </div>
             </div>
 
-            {/* Footer with CTA */}
+            {/* Footer */}
             <div className="absolute bottom-0 left-0 right-0 p-6 pt-4 border-t border-gray-100">
               <div className={`flex items-center ${hasValidDemo ? 'justify-between' : 'justify-start'}`}>
-                <button 
-                  className="text-sm font-semibold flex ibm-plex-sans items-center gap-1.5 transition-all"
-                  style={{ color: colors.primary }}
-                >
+                <button className="text-sm font-semibold flex ibm-plex-sans items-center gap-1.5 transition-all"
+                  style={{ color: colors.primary }}>
                   View Details
                   <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
-                
                 {hasValidDemo && (
-                  <a 
-                    href={demoLink}
-                    onClick={(e) => e.stopPropagation()}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <a href={demoLink} onClick={(e) => e.stopPropagation()} target="_blank" rel="noopener noreferrer"
                     className="px-4 py-2 rounded-lg text-md font-semibold text-white transition-all cursor-pointer hover:shadow-lg"
-                    style={{ 
-                      backgroundColor: colors.primary,
-                    }}
-                  >
+                    style={{ backgroundColor: colors.primary }}>
                     Live Demo
                   </a>
                 )}
@@ -294,7 +232,7 @@ export default function ProjectCard({
             </div>
           </div>
 
-          {/* Back of card */}
+          {/* ── Back of card ────────────────────────────────────────────── */}
           <div
             className="absolute w-full h-full bg-white rounded-2xl overflow-hidden"
             style={{ 
@@ -306,16 +244,11 @@ export default function ProjectCard({
             {/* Header Bar */}
             <div 
               className="relative h-20 flex items-center justify-between py-3 px-8 border-b"
-              style={{ 
-                backgroundColor: colors.light,
-                borderColor: `${colors.primary}20`
-              }}
+              style={{ backgroundColor: colors.light, borderColor: `${colors.primary}20` }}
             >
               <div className="flex items-center gap-3">
-                <div 
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
-                  style={{ backgroundColor: colors.primary }}
-                >
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
+                  style={{ backgroundColor: colors.primary }}>
                   {projectName.charAt(0)}
                 </div>
                 <div>
@@ -323,167 +256,84 @@ export default function ProjectCard({
                   <p className="text-lg text-gray-700">by {creatorName}</p>
                 </div>
               </div>
-
-              <div className="flex items-center gap-2">
-                {/* Close */}
-                <button
-                  onClick={handleClose}
-                  className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200"
-                >
-                  <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
+              <button
+                onClick={handleClose}
+                className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200"
+              >
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
 
             {/* Content Area */}
             <div className="h-[calc(100%-4rem)] overflow-y-auto">
               <div className="p-4 space-y-8">
-                {/* Description Section */}
                 <section>
-                  <h4 className="text-lg px-4 font-bold uppercase tracking-wider text-gray-700 mb-3">
-                    Overview
-                  </h4>
-                  <p className="text-gray-700 px-4 ibm-plex-sans leading-relaxed">
-                    {longDescription}
-                  </p>
+                  <h4 className="text-lg px-4 font-bold uppercase tracking-wider text-gray-700 mb-3">Overview</h4>
+                  <p className="text-gray-700 px-4 ibm-plex-sans leading-relaxed">{longDescription}</p>
                 </section>
                 
-                {/* Technologies */}
                 <section>
-                  <h4 className="text-lg font-bold px-4 uppercase tracking-wider text-gray-700 mb-3">
-                    Tech Stack
-                  </h4>
+                  <h4 className="text-lg font-bold px-4 uppercase tracking-wider text-gray-700 mb-3">Tech Stack</h4>
                   <div className="flex flex-wrap px-4 gap-2.5">
                     {details.tech.map((tech, idx) => (
-                      <span 
-                        key={idx}
+                      <span key={idx}
                         className="px-4 py-2 rounded-lg ibm-plex-sans text-sm font-semibold transition-all hover:shadow-md"
-                        style={{
-                          backgroundColor: colors.light,
-                          color: colors.primary,
-                          border: `1.5px solid ${colors.primary}30`
-                        }}
-                      >
+                        style={{ backgroundColor: colors.light, color: colors.primary, border: `1.5px solid ${colors.primary}30` }}>
                         {tech}
                       </span>
                     ))}
                   </div>
                 </section>
 
-                {/* Gallery */}
                 {isExpanded && gallery && gallery.length > 0 && (
                   <section>
-                    <h4 className="text-lg px-4 font-bold uppercase tracking-wider text-gray-700 mb-4">
-                      Gallery
-                    </h4>
-
+                    <h4 className="text-lg px-4 font-bold uppercase tracking-wider text-gray-700 mb-4">Gallery</h4>
                     <div className="space-y-4">
-                      {/* Main Image */}
                       <div className="relative w-full h-60 md:h-80 rounded-xl overflow-hidden">
                         {gallery[selectedGalleryImage]?.endsWith(".mp4") ? (
-                          <video
-                            src={gallery[selectedGalleryImage]}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className="w-full h-full object-contain"
-                          />
+                          <video src={gallery[selectedGalleryImage]} autoPlay loop muted playsInline
+                            className="w-full h-full object-contain" />
                         ) : (
-                          <img
-                            src={gallery[selectedGalleryImage]}
-                            alt={`Gallery ${selectedGalleryImage + 1}`}
-                            className="w-full h-full object-contain"
-                          />
+                          <img src={gallery[selectedGalleryImage]} alt={`Gallery ${selectedGalleryImage + 1}`}
+                            className="w-full h-full object-contain" />
                         )}
-
-                        {/* Left gallery arrow */}
                         {gallery.length > 1 && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onGalleryChange?.(
-                                (selectedGalleryImage - 1 + gallery.length) % gallery.length
-                              );
-                            }}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition"
-                          >
-                            <svg
-                              className="w-5 h-5 text-gray-700"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
+                          <>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); onGalleryChange?.((selectedGalleryImage - 1 + gallery.length) % gallery.length); }}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15 19l-7-7 7-7"
-                              />
-                            </svg>
-                          </button>
-                        )}
-
-                        {/* Right gallery arrow */}
-                        {gallery.length > 1 && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onGalleryChange?.(
-                                (selectedGalleryImage + 1) % gallery.length
-                              );
-                            }}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition"
-                          >
-                            <svg
-                              className="w-5 h-5 text-gray-700"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
+                              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); onGalleryChange?.((selectedGalleryImage + 1) % gallery.length); }}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
-                              />
-                            </svg>
-                          </button>
+                              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </>
                         )}
                       </div>
-                      
-                      {/* Thumbnails */}
                       <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
                         {gallery.map((img, idx) => (
-                          <button
-                            key={idx}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleThumbnailClick(idx);
-                            }}
+                          <button key={idx}
+                            onClick={(e) => { e.stopPropagation(); handleThumbnailClick(idx); }}
                             className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden transition-all hover:scale-105"
                             style={{
-                              border: selectedGalleryImage === idx
-                                ? `3px solid ${colors.primary}`
-                                : '3px solid transparent',
+                              border: selectedGalleryImage === idx ? `3px solid ${colors.primary}` : '3px solid transparent',
                               opacity: selectedGalleryImage === idx ? 1 : 0.6
                             }}
                           >
                             {img.endsWith('.mp4') ? (
-                              <video 
-                                src={img} 
-                                muted
-                                playsInline
-                                className="w-full h-full object-cover"
-                              />
+                              <video src={img} muted playsInline className="w-full h-full object-cover" />
                             ) : (
-                              <img 
-                                src={img} 
-                                alt={`Thumbnail ${idx + 1}`}
-                                className="w-full h-full object-cover"
-                              />
+                              <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
                             )}
                           </button>
                         ))}
@@ -492,19 +342,11 @@ export default function ProjectCard({
                   </section>
                 )}
                 
-                {/* CTA Button */}
                 {hasValidDemo && (
                   <section className="pt-2 pb-8 p-2 sm:pt-4">
-                    <a 
-                      href={demoLink}
-                      onClick={(e) => e.stopPropagation()}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <a href={demoLink} onClick={(e) => e.stopPropagation()} target="_blank" rel="noopener noreferrer"
                       className="block w-full text-center font-bold text-base sm:text-lg py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition-all hover:shadow-xl text-white"
-                      style={{
-                        backgroundColor: colors.primary,
-                      }}
-                    >
+                      style={{ backgroundColor: colors.primary }}>
                       Launch Live Demo →
                     </a>
                   </section>

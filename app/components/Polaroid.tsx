@@ -65,7 +65,7 @@ export default function Polaroid({
         className={`${bgColor} rounded-md shadow-2xl border border-gray-200`}
         style={isMobile ? { width: '100%', height: 'auto' } : {
           width: 'clamp(180px, 23vw, 340px)',
-          height: 'clamp(200px, 25vw, 400px)', 
+          height: 'clamp(228px, 29vw, 432px)', 
         }}
       >
         {/* Image */}

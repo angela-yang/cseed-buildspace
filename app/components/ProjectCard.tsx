@@ -67,6 +67,7 @@ export default function ProjectCard({
   isExpanded?: boolean;
   selectedGalleryImage?: number;
   onGalleryChange?: (newIndex: number) => void;
+  /** @deprecated use expandedWidth instead */
   width?: string;
   expandedWidth?: string;
   onExpand?: () => void;
@@ -103,48 +104,73 @@ export default function ProjectCard({
     if (isExpanded) {
       onCollapse?.();
     } else if (!isFlipped) {
+      setIsHovered(false);   // kill hover lift immediately before flip starts
       setIsFlipped(true);
-      setTimeout(() => onExpand?.(), 300);
+      setTimeout(() => onExpand?.(), 500);
     }
   };
 
   const handleClose = (e: React.MouseEvent) => onCollapse?.();
 
+  // Determine how to anchor the expanded card so it never goes off-screen.
+  // We keep a normal-flow placeholder div at cell size, then absolutely position
+  // the card relative to that anchor point.
+  //   col 1 (left edge):   anchor left  → card grows rightward  (left: 0)
+  //   col last (right):    anchor right → card grows leftward   (right: 0)
+  //   middle:              anchor center → card grows symmetrically (left:50%, translateX:-50%)
   const getExpandedPosition = (): React.CSSProperties => {
-    if (isMobile || !isExpanded) return {};
-    if (gridColumn === 1) return { position: 'absolute', left: '-30%', top: 0 };
+    // On mobile or narrow grids (1-2 cols), just expand inline — no room to reposition
+    if (!isExpanded || isMobile || totalColumns <= 2) return {};
+    if (gridColumn === 1) return { position: 'absolute', left: '-20%', top: 0 };
     if (gridColumn === totalColumns) return { position: 'absolute', right: '-20%', top: 0 };
     return { position: 'absolute', left: '50%', top: 0 };
   };
 
   return (
     <>
+      {/* Anchor div: stays in the grid flow at collapsed size, becomes a relative
+          positioning context when expanded so the card can escape via absolute pos */}
       <div
         className={`transition-all ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        } ${
-          isExpanded
-            ? 'w-full h-135 xl:h-125 duration-500 relative z-50'
-            : 'w-full h-135 xl:h-125 duration-700'
         }`}
+        style={{
+          width: '100%',
+          // Collapsed: fixed card height (matches original h-135/xl:h-125)
+          // Expanded wide: keep anchor at collapsed height so card floats above others  
+          // Expanded mobile/narrow: anchor grows with card so content below shifts down
+          height: isExpanded && !isMobile && totalColumns > 2
+            ? 'clamp(460px, 54vw, 540px)'
+            : isExpanded && (isMobile || totalColumns <= 2)
+            ? '80vh'
+            : 'clamp(460px, 54vw, 540px)',
+          position: 'relative',
+          zIndex: isExpanded ? 50 : undefined,
+          transitionDuration: '700ms',
+        }}
       >
+        {/* Card div: when expanded, breaks out of the anchor via absolute positioning */}
         <div
           className={`transition-all ease-out ${
-            isExpanded ? 'duration-500' : 'duration-700'
+            isExpanded ? 'duration-700' : 'duration-700'
           } transform-style-3d cursor-pointer group`}
           onClick={handleCardClick}
           onMouseEnter={() => { if (!isFlipped && !isExpanded) setIsHovered(true) }}
           onMouseLeave={() => setIsHovered(false)}
           style={{
-            width: isExpanded ? expandedWidth : '100%',
+            // Collapsed: fill the anchor naturally
+            // Expanded: absolute, sized to expandedWidth, anchored by column position
+            width: isExpanded
+              ? (isMobile || totalColumns === 1 ? '95vw' : totalColumns === 2 ? '80vw' : expandedWidth)
+              : '100%',
             height: isExpanded ? '80vh' : '100%',
             transformStyle: 'preserve-3d',
             transform: isExpanded
-              ? (gridColumn !== 1 && gridColumn !== totalColumns
+              ? (!isMobile && totalColumns > 2 && gridColumn !== 1 && gridColumn !== totalColumns
                   ? 'translateX(-50%) rotateY(180deg)'
                   : 'rotateY(180deg)')
               : `rotateY(${isFlipped ? 180 : 0}deg) translateY(${isHovered && !isFlipped && !isExpanded ? -8 : 0}px)`,
-            transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'transform 0.85s cubic-bezier(0.45, 0, 0.15, 1)',
             ...getExpandedPosition(),
           }}
         >

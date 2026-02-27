@@ -1,220 +1,138 @@
 import { useState, useEffect } from "react";
 
 const trackColors = {
-  software: {
-    primary: "rgb(19,163,122)",
-    light: "rgb(19,163,122,0.1)",
-    accent: "rgb(16,185,129)",
-  },
-  hardware: {
-    primary: "rgb(136,0,185)",
-    light: "rgb(136,0,185,0.1)",
-    accent: "rgb(168,85,247)",
-  },
-  wildcard: {
-    primary: "rgb(255,0,102)",
-    light: "rgb(255,0,102,0.1)",
-    accent: "rgb(244,63,94)",
-  },
-  creatives: {
-    primary: "rgb(239,183,27)",
-    light: "rgb(239,183,27,0.1)",
-    accent: "rgb(251,191,36)",
-  }
+  software: { primary: "rgb(19,163,122)", light: "rgb(19,163,122,0.1)", accent: "rgb(16,185,129)" },
+  hardware: { primary: "rgb(136,0,185)",  light: "rgb(136,0,185,0.1)",  accent: "rgb(168,85,247)" },
+  wildcard: { primary: "rgb(255,0,102)",  light: "rgb(255,0,102,0.1)",  accent: "rgb(244,63,94)"  },
+  creatives:{ primary: "rgb(239,183,27)", light: "rgb(239,183,27,0.1)", accent: "rgb(251,191,36)" },
 };
 
 export default function ProjectCard({ 
-  projectName = "",
-  creatorName = "",
-  description = "",
-  demoLink = "https://demo.example.com",
-  coverImage = "",
+  projectName = "", creatorName = "", description = "",
+  demoLink = "https://demo.example.com", coverImage = "",
   track = "software" as keyof typeof trackColors,
-  cohort = 0,
-  longDescription = "",
-  details = {
-    tech: [""],
-  },
-  gallery = [],
-  index = 0,
-  onNavigateNext,
-  onNavigatePrev,
-  gridColumn = 1,
-  totalColumns = 3,
-  isExpanded = false,
-  selectedGalleryImage = 0,
-  onGalleryChange,
-  expandedWidth = '50vw',
-  onExpand,
-  onCollapse,
-  totalCards,
+  cohort = 0, longDescription = "",
+  details = { tech: [""] },
+  gallery = [], index = 0,
+  onNavigateNext, onNavigatePrev,
+  gridColumn = 1, totalColumns = 3,
+  isExpanded = false, selectedGalleryImage = 0,
+  onGalleryChange, expandedWidth = '50vw',
+  onExpand, onCollapse, totalCards,
 }: {
-  projectName?: string;
-  creatorName?: string;
-  description?: string;
-  demoLink?: string;
-  coverImage?: string;
-  track?: keyof typeof trackColors;
-  cohort?: number;
-  longDescription?: string;
-  details?: { tech: string[] };
-  gallery?: string[];
-  index?: number;
-  onNavigateNext?: () => void;
-  onNavigatePrev?: () => void;
-  gridColumn?: number;
-  totalColumns?: number;
-  isExpanded?: boolean;
-  selectedGalleryImage?: number;
+  projectName?: string; creatorName?: string; description?: string;
+  demoLink?: string; coverImage?: string;
+  track?: keyof typeof trackColors; cohort?: number;
+  longDescription?: string; details?: { tech: string[] };
+  gallery?: string[]; index?: number;
+  onNavigateNext?: () => void; onNavigatePrev?: () => void;
+  gridColumn?: number; totalColumns?: number;
+  isExpanded?: boolean; selectedGalleryImage?: number;
   onGalleryChange?: (newIndex: number) => void;
-  /** @deprecated use expandedWidth instead */
-  width?: string;
-  expandedWidth?: string;
-  onExpand?: () => void;
-  onCollapse?: () => void;
+  width?: string; expandedWidth?: string;
+  onExpand?: () => void; onCollapse?: () => void;
   totalCards: number;
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isMobile, setIsMobile]   = useState(false);
   const colors = trackColors[track as keyof typeof trackColors];
   const hasValidDemo = demoLink && demoLink.trim() !== "" && !demoLink.includes("example.com");
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), index * 100);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setIsVisible(true), index * 100);
+    return () => clearTimeout(t);
   }, [index]);
 
-  useEffect(() => {
-    if (!isExpanded) setIsFlipped(false);
-  }, [isExpanded]);
-
-  const handleThumbnailClick = (idx: number) => onGalleryChange?.(idx);
+  useEffect(() => { if (!isExpanded) setIsFlipped(false); }, [isExpanded]);
 
   const handleCardClick = () => {
-    if (isExpanded) {
-      onCollapse?.();
-    } else if (!isFlipped) {
-      setIsHovered(false);   // kill hover lift immediately before flip starts
+    if (isExpanded) { onCollapse?.(); return; }
+    if (!isFlipped) {
+      setIsHovered(false);
       setIsFlipped(true);
       setTimeout(() => onExpand?.(), 500);
     }
   };
 
-  const handleClose = (e: React.MouseEvent) => onCollapse?.();
+  const isMiddle = gridColumn !== 1 && gridColumn !== totalColumns;
 
-  // Determine how to anchor the expanded card so it never goes off-screen.
-  // We keep a normal-flow placeholder div at cell size, then absolutely position
-  // the card relative to that anchor point.
-  //   col 1 (left edge):   anchor left  → card grows rightward  (left: 0)
-  //   col last (right):    anchor right → card grows leftward   (right: 0)
-  //   middle:              anchor center → card grows symmetrically (left:50%, translateX:-50%)
   const getExpandedPosition = (): React.CSSProperties => {
-    // On mobile or narrow grids (1-2 cols), just expand inline — no room to reposition
     if (!isExpanded || isMobile || totalColumns <= 2) return {};
-    if (gridColumn === 1) return { position: 'absolute', left: '-20%', top: 0 };
+    if (gridColumn === 1)            return { position: 'absolute', left: '-20%', top: 0 };
     if (gridColumn === totalColumns) return { position: 'absolute', right: '-20%', top: 0 };
     return { position: 'absolute', left: '50%', top: 0 };
   };
 
   return (
     <>
-      {/* Anchor div: stays in the grid flow at collapsed size, becomes a relative
-          positioning context when expanded so the card can escape via absolute pos */}
       <div
-        className={`transition-all ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`}
+        className={`transition-all ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
         style={{
           width: '100%',
-          // Collapsed: fixed card height (matches original h-135/xl:h-125)
-          // Expanded wide: keep anchor at collapsed height so card floats above others  
-          // Expanded mobile/narrow: anchor grows with card so content below shifts down
-          height: isExpanded && !isMobile && totalColumns > 2
-            ? 'clamp(460px, 54vw, 540px)'
-            : isExpanded && (isMobile || totalColumns <= 2)
-            ? '80vh'
-            : 'clamp(460px, 54vw, 540px)',
+          height: 'clamp(460px, 54vw, 540px)',
           position: 'relative',
           zIndex: isExpanded ? 50 : undefined,
           transitionDuration: '700ms',
         }}
       >
-        {/* Card div: when expanded, breaks out of the anchor via absolute positioning */}
         <div
-          className={`transition-all ease-out ${
-            isExpanded ? 'duration-700' : 'duration-700'
-          } transform-style-3d cursor-pointer group`}
+          className="transform-style-3d cursor-pointer group"
           onClick={handleCardClick}
-          onMouseEnter={() => { if (!isFlipped && !isExpanded) setIsHovered(true) }}
+          onMouseEnter={() => { if (!isFlipped && !isExpanded) setIsHovered(true); }}
           onMouseLeave={() => setIsHovered(false)}
           style={{
-            // Collapsed: fill the anchor naturally
-            // Expanded: absolute, sized to expandedWidth, anchored by column position
             width: isExpanded
-              ? (isMobile || totalColumns === 1 ? '95vw' : totalColumns === 2 ? '80vw' : expandedWidth)
+              ? (isMobile ? '92vw' : totalColumns <= 2 ? '80vw' : expandedWidth)
               : '100%',
             height: isExpanded ? '80vh' : '100%',
+
             transformStyle: 'preserve-3d',
-            transform: isExpanded
-              ? (!isMobile && totalColumns > 2 && gridColumn !== 1 && gridColumn !== totalColumns
-                  ? 'translateX(-50%) rotateY(180deg)'
-                  : 'rotateY(180deg)')
-              : `rotateY(${isFlipped ? 180 : 0}deg) translateY(${isHovered && !isFlipped && !isExpanded ? -8 : 0}px)`,
-            transition: 'transform 0.85s cubic-bezier(0.45, 0, 0.15, 1)',
+            transform: (() => {
+              const flip = isExpanded || isFlipped ? 180 : 0;
+              const lift = !isFlipped && !isExpanded && isHovered ? ' translateY(-8px)' : '';
+              const center = isExpanded && !isMobile && isMiddle ? 'translateX(-50%) ' : '';
+              return `${center}rotateY(${flip}deg)${lift}`;
+            })(),
+            transition: 'transform 1s cubic-bezier(0.35, 0, 0.1, 1), width 0.6s cubic-bezier(0.35, 0, 0.1, 1), height 0.6s cubic-bezier(0.35, 0, 0.1, 1)',
             ...getExpandedPosition(),
           }}
         >
-          {/* ── Front of card ───────────────────────────────────────────── */}
-          <div 
-            className="absolute w-full h-full backface-hidden bg-white rounded-2xl overflow-hidden"
-            style={{ 
+
+          {/* ── FRONT ─────────────────────────────────────────────────── */}
+          <div
+            className="absolute w-full h-full bg-white rounded-2xl overflow-hidden"
+            style={{
               backfaceVisibility: 'hidden',
-              boxShadow: isHovered && !isFlipped 
-                ? '0 25px 50px -12px rgba(0, 0, 0, 0.25)' 
-                : '0 10px 30px -15px rgba(0, 0, 0, 0.3)'
+              boxShadow: isHovered && !isFlipped
+                ? '0 25px 50px -12px rgba(0,0,0,0.25)'
+                : '0 10px 30px -15px rgba(0,0,0,0.3)',
             }}
           >
-            {/* Image Container */}
             <div className="relative h-56 overflow-hidden bg-gray-100">
               {coverImage.endsWith('.mp4') ? (
-                <video 
-                  src={coverImage} autoPlay loop muted playsInline
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                <video src={coverImage} autoPlay loop muted playsInline
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               ) : (
-                <img 
-                  src={coverImage} alt={projectName}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  onLoad={() => setImageLoaded(true)}
-                />
+                <img src={coverImage} alt={projectName}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               )}
-              
-              {/* Gradient Overlay */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: `linear-gradient(to bottom, transparent 0%, ${colors.primary}15 100%)` }}
-              />
-
-              {/* Track Badge */}
-              <div 
-                className="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-md font-semibold uppercase tracking-wider backdrop-blur-md"
-                style={{ backgroundColor: colors.primary, color: 'white', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
-              >
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: `linear-gradient(to bottom, transparent 0%, ${colors.primary}15 100%)` }} />
+              <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-md font-semibold uppercase tracking-wider backdrop-blur-md"
+                style={{ backgroundColor: colors.primary, color: 'white', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
                 {track}
               </div>
             </div>
-            
-            {/* Content */}
+
             <div className="p-6 space-y-3">
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-1 line-clamp-1">{projectName}</h3>
@@ -224,9 +142,7 @@ export default function ProjectCard({
               <div className="flex flex-wrap gap-2 pt-2">
                 {details.tech.slice(0, 2).map((tech, idx) => (
                   <span key={idx} className="px-2.5 py-1 rounded-md ibm-plex-sans text-xs font-medium transition-colors"
-                    style={{ backgroundColor: colors.light, color: colors.primary }}>
-                    {tech}
-                  </span>
+                    style={{ backgroundColor: colors.light, color: colors.primary }}>{tech}</span>
                 ))}
                 {details.tech.length > 3 && (
                   <span className="px-2.5 py-1 rounded-md text-xs ibm-plex-sans font-medium"
@@ -237,7 +153,6 @@ export default function ProjectCard({
               </div>
             </div>
 
-            {/* Footer */}
             <div className="absolute bottom-0 left-0 right-0 p-6 pt-4 border-t border-gray-100">
               <div className={`flex items-center ${hasValidDemo ? 'justify-between' : 'justify-start'}`}>
                 <button className="text-sm font-semibold flex ibm-plex-sans items-center gap-1.5 transition-all"
@@ -248,7 +163,7 @@ export default function ProjectCard({
                   </svg>
                 </button>
                 {hasValidDemo && (
-                  <a href={demoLink} onClick={(e) => e.stopPropagation()} target="_blank" rel="noopener noreferrer"
+                  <a href={demoLink} onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer"
                     className="px-4 py-2 rounded-lg text-md font-semibold text-white transition-all cursor-pointer hover:shadow-lg"
                     style={{ backgroundColor: colors.primary }}>
                     Live Demo
@@ -258,20 +173,17 @@ export default function ProjectCard({
             </div>
           </div>
 
-          {/* ── Back of card ────────────────────────────────────────────── */}
+          {/* ── BACK ──────────────────────────────────────────────────── */}
           <div
             className="absolute w-full h-full bg-white rounded-2xl overflow-hidden"
-            style={{ 
+            style={{
               backfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)'
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.35)',
             }}
           >
-            {/* Header Bar */}
-            <div 
-              className="relative h-20 flex items-center justify-between py-3 px-8 border-b"
-              style={{ backgroundColor: colors.light, borderColor: `${colors.primary}20` }}
-            >
+            <div className="relative h-20 flex items-center justify-between py-3 px-8 border-b"
+              style={{ backgroundColor: colors.light, borderColor: `${colors.primary}20` }}>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
                   style={{ backgroundColor: colors.primary }}>
@@ -282,30 +194,26 @@ export default function ProjectCard({
                   <p className="text-lg text-gray-700">by {creatorName}</p>
                 </div>
               </div>
-              <button
-                onClick={handleClose}
-                className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200"
-              >
+              <button onClick={e => { e.stopPropagation(); onCollapse?.(); }}
+                className="w-9 h-9 rounded-lg bg-white hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm border border-gray-200">
                 <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
-            {/* Content Area */}
             <div className="h-[calc(100%-4rem)] overflow-y-auto">
               <div className="p-4 space-y-8">
                 <section>
                   <h4 className="text-lg px-4 font-bold uppercase tracking-wider text-gray-700 mb-3">Overview</h4>
                   <p className="text-gray-700 px-4 ibm-plex-sans leading-relaxed">{longDescription}</p>
                 </section>
-                
+
                 <section>
                   <h4 className="text-lg font-bold px-4 uppercase tracking-wider text-gray-700 mb-3">Tech Stack</h4>
                   <div className="flex flex-wrap px-4 gap-2.5">
                     {details.tech.map((tech, idx) => (
-                      <span key={idx}
-                        className="px-4 py-2 rounded-lg ibm-plex-sans text-sm font-semibold transition-all hover:shadow-md"
+                      <span key={idx} className="px-4 py-2 rounded-lg ibm-plex-sans text-sm font-semibold transition-all hover:shadow-md"
                         style={{ backgroundColor: colors.light, color: colors.primary, border: `1.5px solid ${colors.primary}30` }}>
                         {tech}
                       </span>
@@ -325,52 +233,39 @@ export default function ProjectCard({
                           <img src={gallery[selectedGalleryImage]} alt={`Gallery ${selectedGalleryImage + 1}`}
                             className="w-full h-full object-contain" />
                         )}
-                        {gallery.length > 1 && (
-                          <>
-                            <button
-                              onClick={(e) => { e.stopPropagation(); onGalleryChange?.((selectedGalleryImage - 1 + gallery.length) % gallery.length); }}
-                              className="absolute left-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition"
-                            >
-                              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                            <button
-                              onClick={(e) => { e.stopPropagation(); onGalleryChange?.((selectedGalleryImage + 1) % gallery.length); }}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition"
-                            >
-                              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </>
-                        )}
+                        {gallery.length > 1 && (<>
+                          <button onClick={e => { e.stopPropagation(); onGalleryChange?.((selectedGalleryImage - 1 + gallery.length) % gallery.length); }}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition">
+                            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                          </button>
+                          <button onClick={e => { e.stopPropagation(); onGalleryChange?.((selectedGalleryImage + 1) % gallery.length); }}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center transition">
+                            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
+                        </>)}
                       </div>
                       <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
                         {gallery.map((img, idx) => (
-                          <button key={idx}
-                            onClick={(e) => { e.stopPropagation(); handleThumbnailClick(idx); }}
+                          <button key={idx} onClick={e => { e.stopPropagation(); onGalleryChange?.(idx); }}
                             className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden transition-all hover:scale-105"
-                            style={{
-                              border: selectedGalleryImage === idx ? `3px solid ${colors.primary}` : '3px solid transparent',
-                              opacity: selectedGalleryImage === idx ? 1 : 0.6
-                            }}
-                          >
-                            {img.endsWith('.mp4') ? (
-                              <video src={img} muted playsInline className="w-full h-full object-cover" />
-                            ) : (
-                              <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
-                            )}
+                            style={{ border: selectedGalleryImage === idx ? `3px solid ${colors.primary}` : '3px solid transparent', opacity: selectedGalleryImage === idx ? 1 : 0.6 }}>
+                            {img.endsWith('.mp4')
+                              ? <video src={img} muted playsInline className="w-full h-full object-cover" />
+                              : <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />}
                           </button>
                         ))}
                       </div>
                     </div>
                   </section>
                 )}
-                
+
                 {hasValidDemo && (
                   <section className="pt-2 pb-8 p-2 sm:pt-4">
-                    <a href={demoLink} onClick={(e) => e.stopPropagation()} target="_blank" rel="noopener noreferrer"
+                    <a href={demoLink} onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer"
                       className="block w-full text-center font-bold text-base sm:text-lg py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition-all hover:shadow-xl text-white"
                       style={{ backgroundColor: colors.primary }}>
                       Launch Live Demo →
@@ -380,6 +275,7 @@ export default function ProjectCard({
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </>

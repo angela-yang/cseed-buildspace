@@ -88,13 +88,13 @@ export default function Polaroid({
         >
           <h3
             className={`${color} font-bold`}
-            style={{ fontSize: isMobile ? '1.125rem' : 'clamp(12px, 1.2vw, 24px)', marginBottom: '0.25rem' }}
+            style={{ fontSize: isMobile ? '1.125rem' : 'clamp(18px, 1.5vw, 25px)', marginBottom: '0.25rem' }}
           >
             {feature.title}
           </h3>
           <p
             className="ibm-plex-sans text-gray-600 leading-relaxed"
-            style={{ fontSize: isMobile ? '1rem' : 'clamp(10px, 1vw, 20px)', marginBottom: '0.75rem' }}
+            style={{ fontSize: isMobile ? '1rem' : 'clamp(14px, 1.2vw, 20px)', marginBottom: '0.75rem' }}
           >
             {feature.desc}
           </p>

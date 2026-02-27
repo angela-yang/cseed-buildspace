@@ -120,7 +120,7 @@ export default function Projects() {
             </div>
 
             {/* Projects grid */}
-            <div className="max-w-7xl mx-auto">
+            <div className="mx-[2vw] md:mx-[10vw]">
               <div className="grid grid-cols-1 px-4 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
                 {filteredProjects.map((project, index) => {
                   const gridColumn = (index % COLS) + 1;

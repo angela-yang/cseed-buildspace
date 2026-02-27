@@ -64,7 +64,7 @@ export default function Cohorts() {
   return (
     <main>
       <section id="cohorts" className="section py-24 px-6 bg-[rgb(57,123,255)]">
-        <div className="max-w-8xl mx-auto space-y-8 md:space-y-12">
+        <div className="mx-[3vw] space-y-8 md:space-y-12">
           
           {/* Header */}
           <div className="grid grid-cols-1 px-[5vw] lg:grid-cols-2 gap-6 lg:gap-12 items-end">

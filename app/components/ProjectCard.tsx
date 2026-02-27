@@ -78,7 +78,7 @@ export default function ProjectCard({
         className={`transition-all ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
         style={{
           width: '100%',
-          height: 'clamp(460px, 54vw, 540px)',
+          height: 'clamp(520px, 31vw, 540px)',
           position: 'relative',
           zIndex: isExpanded ? 50 : undefined,
           transitionDuration: '700ms',

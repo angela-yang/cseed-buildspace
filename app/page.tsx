@@ -14,7 +14,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress]   = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [cursorVisible, setCursorVisible] = useState(false);
+  const [cursorVisible, setCursorVisible] = useState(true);
   const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'text'>('default');
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -54,13 +54,18 @@ export default function Home() {
       setMousePosition({ x: e.clientX, y: e.clientY });
       setCursorVisible(true);
       const t = e.target as HTMLElement;
-      if (t.tagName === 'A' || t.tagName === 'BUTTON' || t.dataset.cursor === 'pointer' || t.style.cursor === 'pointer') {
-        setCursorType('pointer');
-      } else if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable) {
-        setCursorType('text');
-      } else {
-        setCursorType('default');
+      let el: HTMLElement | null = t;
+      let type: 'default' | 'pointer' | 'text' = 'default';
+      while (el) {
+        if (el.tagName === 'A' || el.tagName === 'BUTTON' || el.dataset.cursor === 'pointer') {
+          type = 'pointer'; break;
+        }
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable) {
+          type = 'text'; break;
+        }
+        el = el.parentElement;
       }
+      setCursorType(type);
     };
 
     window.addEventListener('mousemove', onMove);
@@ -114,8 +119,26 @@ export default function Home() {
         </p>
       </div>
 
+      {/* Custom cursor */}
+      {!isMobile && (
+        <div
+          className={`fixed pointer-events-none z-[9998] transition-opacity duration-200 ${cursorVisible ? 'opacity-100' : 'opacity-0'}`}
+          style={{
+            left: mousePosition.x,
+            top: mousePosition.y,
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <img src={cursorConfig[cursorType].image} alt="" className={cursorConfig[cursorType].size} />
+        </div>
+      )}
+
+      {!isMobile && (
+        <style>{`body { cursor: none !important; } * { cursor: none !important; } a, button { cursor: none !important; }`}</style>
+      )}
+
       <main
-        className={`${!isMobile ? 'cursor-none' : ''} max-w-[100vw] overflow-hidden`}
+        className="max-w-[100vw] overflow-hidden"
         style={{ visibility: isLoading ? 'hidden' : 'visible' }}
       >
         <NavBar />
@@ -130,20 +153,6 @@ export default function Home() {
               backgroundRepeat: 'no-repeat',
             }}
           />
-        )}
-
-        {/* Custom cursor */}
-        {!isMobile && (
-          <div
-            className={`fixed pointer-events-none z-[100] transition-opacity duration-200 ${cursorVisible ? 'opacity-100' : 'opacity-0'}`}
-            style={{
-              left: mousePosition.x,
-              top: mousePosition.y,
-              transform: 'translate(-50%, -50%)',
-            }}
-          >
-            <img src={cursorConfig[cursorType].image} alt="" className={cursorConfig[cursorType].size} />
-          </div>
         )}
 
         <Landing />

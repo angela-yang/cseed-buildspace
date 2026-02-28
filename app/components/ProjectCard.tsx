@@ -91,7 +91,7 @@ export default function ProjectCard({
           onMouseLeave={() => setIsHovered(false)}
           style={{
             width: isExpanded
-              ? (isMobile ? '92vw' : totalColumns <= 2 ? '80vw' : expandedWidth)
+              ? (isMobile ? '100%' : totalColumns <= 2 ? '80vw' : expandedWidth)
               : '100%',
             height: isExpanded ? '80vh' : '100%',
 

@@ -93,7 +93,7 @@ export default function ProjectCard({
             width: isExpanded
               ? (isMobile ? '100%' : totalColumns <= 2 ? '80vw' : expandedWidth)
               : '100%',
-            height: isExpanded ? '80vh' : '100%',
+            height: isExpanded ? (isMobile ? '100%' : '80vh') : '100%',
 
             transformStyle: 'preserve-3d',
             transform: (() => {

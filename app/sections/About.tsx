@@ -26,6 +26,33 @@ const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; dela
   );
 };
 
+const resources = [
+  {
+    title: "Mentor Support",
+    desc: "Get paired with experienced mentors (from engineers, to designers, to founders) who give you real, personalized guidance throughout the program.",
+    color: "rgb(57,123,255)",
+    bg: "rgba(57,123,255,0.08)",
+    border: "rgba(57,123,255,0.18)",
+    cutout: "/images/resource-2.png",
+  },
+  {
+    title: "Software & Hardware Access",
+    desc: "Get special access to industry-grade software licenses and cutting-edge hardware. No need to own expensive tools to build something incredible.",
+    color: "rgb(136,0,185)",
+    bg: "rgba(136,0,185,0.08)",
+    border: "rgba(136,0,185,0.18)",
+    cutout: "/images/resource-3.png",
+  },
+  {
+    title: "Free Snacks",
+    desc: "Build better on a full stomach. We keep the workspace stocked so you can stay in flow and focus on what matters!",
+    color: "rgb(255,0,102)",
+    bg: "rgba(255,0,102,0.08)",
+    border: "rgba(220,80,30,0.18)",
+    cutout: "/images/resource-4.png",
+  },
+];
+
 export default function About() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [showDesc, setShowDesc]   = useState(false);
@@ -66,9 +93,7 @@ export default function About() {
       <section
         ref={aboutSectionRef}
         className="py-24 px-10 relative"
-        style={{
-          marginTop: "clamp(20px, 3vw, 30px)",
-        }}
+        style={{ marginTop: "clamp(20px, 3vw, 30px)" }}
       >
         <ScrollReveal>
           <h2 className="text-4xl md:text-[3.5vw] font-bold text-center my-14 text-[rgb(57,123,255)]">
@@ -166,7 +191,57 @@ export default function About() {
           </motion.div>
         ))}
       </div>
+      
+      {/* Resources */}
+      <section className="relative px-[8vw] xl:px-[10vw] mb-40">
+        <ScrollReveal>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-[rgb(57,123,255)]">
+            What You Get
+          </h2>
+          <p className="text-center text-2xl text-gray-500 ibm-plex-sans mb-16 max-w-xl mx-auto">
+            We set you up for success, with every resource you need to build, learn, and grow.
+          </p>
 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {resources.map((resource, idx) => (
+              <motion.div
+                key={resource.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.12, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="relative rounded-2xl p-7 flex flex-col gap-4"
+                style={{
+                  background: resource.bg,
+                  border: `1.5px solid ${resource.border}`,
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+                }}
+              >
+                <div>
+                  <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: resource.color }}>
+                    {resource.title}
+                  </h3>
+                  <p className="text-gray-600 text-lg pb-2 ibm-plex-sans text-base leading-relaxed">
+                    {resource.desc}
+                  </p>
+                </div>
+
+                <motion.img
+                  src={resource.cutout}
+                  alt=""
+                  className="absolute bottom-[-25] right-[-20] pointer-events-none select-none opacity-80"
+                  style={{ height: "100px", objectFit: "contain" }}
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ duration: 3.5 + idx * 0.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* Endless Possibilities */}
       <section className="relative xl:max-w-[90vw] z-10 grid grid-cols-1 md:grid-cols-2 gap-10 mx-auto items-center px-[10vw]">
         <div className="relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold mb-10 text-[rgb(57,123,255)]">

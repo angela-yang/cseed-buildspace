@@ -145,7 +145,7 @@ export default function Home() {
 
         {!isMobile && (
           <div
-            className="absolute min-h-[300vh] inset-0 opacity-95 pointer-events-none z-0"
+            className="absolute min-h-[400vh] inset-0 opacity-95 pointer-events-none z-0"
             style={{
               backgroundImage: 'url(/images/grid.png)',
               backgroundSize: 'cover',

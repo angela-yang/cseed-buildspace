@@ -73,7 +73,7 @@ export default function Projects() {
       <section id="projects" className="section py-16 md:py-24 px-4 sm:px-6 lg:px-10 relative bg-[rgb(57,123,255)]">
         <ScrollReveal>
           <div className="min-h-screen py-10">
-            <div className="max-w-7xl mx-auto space-y-8 md:space-y-12">
+            <div className="max-w-6xl mx-auto space-y-8 md:space-y-12">
               
               {/* Header */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-end">
